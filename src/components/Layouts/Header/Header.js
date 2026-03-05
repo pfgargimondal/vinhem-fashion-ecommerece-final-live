@@ -3,7 +3,6 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { SwiperSlide } from 'swiper/react';
 import { useAuth } from "../../../context/AuthContext";
-  // eslint-disable-next-line
 import { DropdownLoggedIn } from "../../Elements/Dropdown/DropdownLoggedIn";
 import http from "../../../http";
 import Logo from "../../../assets/images/logo.png";
@@ -15,6 +14,9 @@ import { useWishlist } from "../../../context/WishlistContext";
 import { useCurrency } from "../../../context/CurrencyContext";
 import { useAuthModal } from "../../../context/AuthModalContext";
 import { ResponsiveNavbarBottom } from "../../../components";
+  // eslint-disable-next-line
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, shouldHideHeaderCategoryRoutes }) => {
   const [resMenu, setResMenu] = useState(false);
@@ -271,6 +273,13 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
 
       navigate("/");
 
+      // toast.success("Register Successfull", {
+      //   style: {
+      //     background: "#2ecc71",
+      //     color: "#fff",
+      //   },
+      // });
+
     } catch (err) {
       alert(err.response?.data?.message || "Signup failed");
     } finally {
@@ -458,10 +467,26 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
       );
 
       if (res.data.action === "login") {
-        localStorage.setItem("token", res.data.token);
+
         setOtpModal(false);
+
+        dispatch({
+          type: "LOGIN",
+          payload: {
+            token: res.data.data.jwtToken,
+            user: res.data.data.user,
+          }
+        });
+
         handleLoginClose();
+        // navigate('/');
         window.location.reload();
+        // toast.success("Login Successfull", {
+        //   style: {
+        //     background: "#2ecc71",
+        //     color: "#fff",
+        //   },
+        // });
       }
 
       if (res.data.action === "register") {
@@ -473,7 +498,7 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
     } catch (err) {
       console.error(err);
     }
-  }, [setOtpModal, setCompleteLoginModal, handleLoginClose]);
+  }, [setOtpModal, setCompleteLoginModal, handleLoginClose, dispatch]);
 
   useEffect(() => {
     window.phoneEmailListener = function (userObj) {
@@ -1524,6 +1549,13 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
           </div>
         </div>
       </div>
+
+      <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          style={{ zIndex: 9999999999 }}
+        />
+
     </>
   )
 }

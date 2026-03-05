@@ -740,7 +740,7 @@ export default function FilterSection({ setResFltrMenu, allFilterMappingdata, fi
                 </Col>
 
                 <Col xs={8}>
-                  <Tab.Content className="pt-4">
+                  <Tab.Content className="py-4">
                     <Tab.Pane className="h-100" eventKey="resfilter-price-range">
                       <div className="dohwekrjiwejr">
                         <div className="wrapper">

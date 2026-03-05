@@ -27,6 +27,8 @@ const Invoice = () => {
     const [getCurrenyCode, setGetCurrenyCode] = useState(null);
     const [loading, setLoading] = useState(true);
 
+   
+
     const fetchInvoiceData = useCallback(async () => {
       try {
         const res = await http.get("/user/get-invoice-details", {
@@ -39,21 +41,17 @@ const Invoice = () => {
         setOrder(data.orders);
         setUser(data.user);
         setUserOrderProduct(data.user_order_product_details);
-        setGetProductDetails(data.get_product_details);
-        setGetGSTDetails(data.get_gst_value);
+        // setGetProductDetails(data.get_product_details);
+        // setGetGSTDetails(data.get_gst_value);
         setGetCurrenyCode(data.get_currency_code);
         setLoading(false);
-
-        // setTimeout(() => {
-        //   previewPDF();
-        // }, 800);
 
       } catch (error) {
         console.error("Invoice fetch failed:", error);
       }
     }, [orderId, token]); // ✅ dependencies added here
 
-    console.log(userOrderProduct, 'userOrderProduct');
+    // console.log(userOrderProduct, 'userOrderProduct');
 
     useEffect(() => {
       if (!token) return;
@@ -61,18 +59,31 @@ const Invoice = () => {
     }, [fetchInvoiceData, token]); // ✅ no warning now
 
 
-    const previewPDF = useCallback(async () => {
+  const previewPDF = useCallback(async () => {
       if (!invoiceRef.current) return;
 
       // Show temporarily to capture
-      invoiceRef.current.style.display = "block";
+      // invoiceRef.current.style.display = "block";
 
-      const canvas = await html2canvas(invoiceRef.current, { scale: 2 });
+      // const canvas = await html2canvas(invoiceRef.current, { scale: 2 });
+      
+
+      // Hide again
+      // invoiceRef.current.style.display = "none";
+
+
+      const element = invoiceRef.current;
+      if (!element) return;
+
+      element.style.display = "block";
+
+      const canvas = await html2canvas(element, { scale: 2 });
+
       // eslint-disable-next-line
       const imgData = canvas.toDataURL("image/png");
 
-      // Hide again
-      invoiceRef.current.style.display = "none";
+      if (element) element.style.display = "none";
+
 
       const pdf = new jsPDF("p", "mm", "a4");
 
@@ -98,13 +109,20 @@ const Invoice = () => {
       const blob = pdf.output("blob");
       const url = URL.createObjectURL(blob);
       window.open(url, "_blank"); // Opens in new tab
-      pdf.save(`invoice-${order?.order_id || "Invoice"}.pdf`);
+      pdf.save(`invoice-${orderId || "Invoice"}.pdf`);
 
       // ✅ Redirect to previous page after 1s
       setTimeout(() => {
-        navigate(-1); // 🔙 goes back to previous route
+        navigate("/your-orders"); // 🔙 goes back to previous route
       }, 100);
-    }, [navigate, order]);
+    }, [navigate, orderId]);
+
+    useEffect(() => {
+      if (!loading) {
+        previewPDF();
+      }
+    }, [loading, previewPDF]);
+
 
     if (loading) {
         return <Loader />;
@@ -254,10 +272,10 @@ const Invoice = () => {
         <table className="info-table">
           <tbody>
             <tr className="address-head">
-              <td style={{ borderTop: 0, borderLeft: 0 }} className="invoice-total-label-color">
+              <td style={{ border: 0 }} className="invoice-total-label-color">
                 <b>SOLD BY :</b>
               </td>
-              <td style={{ borderBottom: 0, borderTop: 0, paddingBottom: 0 }}>
+              <td style={{ borderBottom: 0, borderTop: 0, borderRight: 0, paddingBottom: 0 }}>
                 <b>CIN Number : N/A</b>
               </td>
               <td style={{ borderBottom: 0, borderTop: 0, borderRight: 0, paddingBottom: 0 }}>
@@ -266,7 +284,7 @@ const Invoice = () => {
             </tr>
 
             <tr>
-              <td className="col-left" style={{ borderLeft: 0, width: "50%", paddingTop: 0 }}>
+              <td className="col-left" style={{ borderInline: 0, width: "50%" }}>
                 <strong>Name :</strong> VinHem Fashion<br />
                 <strong>Address :</strong> 13, Rameswar Mallick 1st Bye Lane, 3rd Floor,<br />
                 Room - 3A, Howrah - 711101<br />
@@ -277,7 +295,7 @@ const Invoice = () => {
                 <strong> PAN :</strong> AMIPB0423A
               </td>
 
-              <td style={{ width: "25%", borderTop: 0, paddingTop: 0, transform: "translateY(-5px)" }} className="col-middle">
+              <td style={{ width: "25%", borderTop: 0, borderRight: 0 }} className="col-middle">
                 <strong>Invoice No :</strong> {order?.invoice_no}<br />
                 <strong>Dated :</strong> {order?.order_date &&
                   new Date(order.order_date).toLocaleDateString("en-US", {
@@ -293,7 +311,7 @@ const Invoice = () => {
                 <strong>Country Code :</strong> {getCurrenyCode?.cuntry_code ? getCurrenyCode.cuntry_code : "-"}
               </td>
 
-              <td className="col-right" style={{ width: "25%",borderRight: 0, borderTop: 0, paddingTop: 0, transform: "translateY(-5px)" }}>
+              <td className="col-right" style={{ width: "25%", borderRight: 0, borderTop: 0}}>
                 <strong>Customer Code :</strong> {user?.customer_code}<br />
                 <strong>Order No :</strong> {order?.order_id}<br />
                 <strong style={{ textDecoration: "underline" }}>Shipment Details :</strong><br />
@@ -309,16 +327,16 @@ const Invoice = () => {
         <table className="address-table">
           <tbody>
             <tr className="invoice-total-label-color">
-              <td style={{ borderTop: 0, borderLeft: 0 }}>
+              <td style={{ borderTop: 0, borderBottom: 0, borderInline: 0 }}>
                 <b>Customer (Billing Address)</b>
               </td>
-              <td style={{ borderTop: 0, borderRight: 0 }}>
+              <td style={{ borderTop: 0, borderBottom: 0, borderRight: 0 }}>
                 <b>Customer (Shipping Address)</b>
               </td>
             </tr>
 
             <tr>
-              <td style={{ borderLeft: 0 }}>
+              <td style={{ borderInline: 0 }}>
                 <strong>Name :</strong> {order?.billingName}<br />
                 <strong>Address :</strong> {order?.billingFullAddress}<br />
                 <strong>GSTIN :</strong> {order?.gst_number ? order.gst_number : "N/A"}
@@ -337,27 +355,26 @@ const Invoice = () => {
         <table className="product-table">
           <tbody>
             <tr className="invoice-total-label-color">
-              <th style={{borderTop: 0, borderLeft: 0}}>S/N</th>
-              <th style={{borderTop: 0}}>Product Description</th>
-              <th style={{borderTop: 0}}>HSN Code</th>
-              <th style={{borderTop: 0}}>Size</th>
-              <th style={{borderTop: 0}}>Qty</th>
-              <th style={{borderTop: 0}}>Taxable Value</th>
-              <th style={{borderTop: 0}} colSpan="2">CGST</th>
-              <th style={{borderTop: 0}} colSpan="2">SGST</th>
-              <th style={{borderTop: 0}} colSpan="2">IGST</th>
-              <th style={{borderTop: 0, borderRight: 0, borderBottom: 0, transform: "translateY(1rem)"}}>Total Amount</th>
+              <th style={{borderTop: 0, borderInline: 0}}>S/N</th>
+              <th style={{borderTop: 0, borderRight: 0}}>Product Description</th>
+              <th style={{borderTop: 0, borderRight: 0}}>HSN Code</th>
+              <th style={{borderTop: 0, borderRight: 0}}>Size</th>
+              <th style={{borderTop: 0, borderRight: 0}}>Qty</th>
+              <th style={{borderTop: 0, borderRight: 0}}>Taxable Value</th>
+              <th style={{borderTop: 0, borderRight: 0}} colSpan="2">CGST</th>
+              <th style={{borderTop: 0, borderRight: 0}} colSpan="2">SGST</th>
+              <th style={{borderTop: 0, borderRight: 0}} colSpan="2">IGST</th>
+              <th rowSpan={2} style={{borderTop: 0, borderRight: 0, borderBottom: 0, paddingTop: "1.5rem", backgroundColor: "e0e0e0"}}>Total Amount</th>
             </tr>
 
             <tr className="sub-head">
-              <th colspan="6" style={{borderLeft: 0}}></th>
-              <th>Rate</th>
-              <th>Amount</th>
-              <th>Rate</th>
-              <th>Amount</th>
-              <th>Rate</th>
-              <th>Amount</th>
-              <th style={{borderTop: 0, borderRight: 0}}></th>
+              <th colspan="6" style={{border: 0 }}></th>
+              <th style={{borderTop: 0, borderRight: 0, borderBottom: 0 }}>Rate</th>
+              <th style={{borderTop: 0, borderRight: 0, borderBottom: 0 }}>Amount</th>
+              <th style={{borderTop: 0, borderRight: 0, borderBottom: 0 }}>Rate</th>
+              <th style={{borderTop: 0, borderRight: 0, borderBottom: 0 }}>Amount</th>
+              <th style={{borderTop: 0, borderRight: 0, borderBottom: 0 }}>Rate</th>
+              <th style={{borderTop: 0, borderRight: 0, borderBottom: 0 }}>Amount</th>
             </tr>
 
                   
@@ -373,19 +390,19 @@ const Invoice = () => {
 
                   {/* MAIN PRODUCT ROW */}
                   <tr style={{border: "none"}}>
-                    <td>{++serial}</td>
-                    <td style={{ textAlign: "left" }}>{item.product_name}</td>
-                    <td>60052378</td>
-                    <td>{item.product_size || '-'}</td>
-                    <td>{item.quantity || '-'}</td>
-                    <td>{gst.net.toFixed(2)}</td>
-                    <td>{gst.cgstRate}%</td>
-                    <td>{gst.cgst.toFixed(2)}</td>
-                    <td>{gst.sgstRate}%</td>
-                    <td>{gst.sgst.toFixed(2)}</td>
-                    <td>{gst.igstRate}%</td>
-                    <td>{gst.igst.toFixed(2)}</td>
-                    <td>{gross.toFixed(2)}</td>
+                    <td style={{borderRight: "none", borderBottom: "none", borderLeft: "none"}}>{++serial}</td>
+                    <td style={{ borderRight: "none", borderBottom: "none" }}>{item.product_name}</td>
+                    <td style={{ borderRight: "none", borderBottom: "none" }}>{item.get_gst_value.hsn}</td>
+                    <td style={{ borderRight: "none", borderBottom: "none" }}>{item.product_size || '-'}</td>
+                    <td style={{ borderRight: "none", borderBottom: "none" }}>{item.quantity || '-'}</td>
+                    <td style={{ borderRight: "none", borderBottom: "none" }}>{gst.net.toFixed(2)}</td>
+                    <td style={{ borderRight: "none", borderBottom: "none" }}>{gst.cgstRate}%</td>
+                    <td style={{ borderRight: "none", borderBottom: "none" }}>{gst.cgst.toFixed(2)}</td>
+                    <td style={{ borderRight: "none", borderBottom: "none" }}>{gst.sgstRate}%</td>
+                    <td style={{ borderRight: "none", borderBottom: "none" }}>{gst.sgst.toFixed(2)}</td>
+                    <td style={{ borderRight: "none", borderBottom: "none" }}>{gst.igstRate}%</td>
+                    <td style={{ borderRight: "none", borderBottom: "none" }}>{gst.igst.toFixed(2)}</td>
+                    <td style={{ borderRight: "none", borderBottom: "none" }}>{gross.toFixed(2)}</td>
                   </tr>
 
 
@@ -397,19 +414,19 @@ const Invoice = () => {
 
                     return (
                       <tr>
-                        <td>{++serial}</td>
-                        <td style={{ textAlign: "left" }}>Matching Turban</td>
-                        <td>60052378</td>
-                        <td>{item.turban_size || '-'}</td>
-                        <td>1</td>
-                        <td>{gstAddon.net.toFixed(2)}</td>
-                        <td>{gstAddon.cgstRate}%</td>
-                        <td>{gstAddon.cgst.toFixed(2)}</td>
-                        <td>{gstAddon.sgstRate}%</td>
-                        <td>{gstAddon.sgst.toFixed(2)}</td>
-                        <td>{gstAddon.igstRate}%</td>
-                        <td>{gstAddon.igst.toFixed(2)}</td>
-                        <td>{grossAddon.toFixed(2)}</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none", borderLeft: "none" }}>{++serial}</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>Matching Turban</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{item.get_gst_value.hsn}</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{item.turban_size || '-'}</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>1</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{gstAddon.net.toFixed(2)}</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{gstAddon.cgstRate}%</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{gstAddon.cgst.toFixed(2)}</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{gstAddon.sgstRate}%</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{gstAddon.sgst.toFixed(2)}</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{gstAddon.igstRate}%</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{gstAddon.igst.toFixed(2)}</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{grossAddon.toFixed(2)}</td>
                       </tr>
                     );
                   })()}
@@ -423,19 +440,19 @@ const Invoice = () => {
 
                     return (
                       <tr>
-                        <td>{++serial}</td>
-                        <td style={{ textAlign: "left" }}>Matching Mojri</td>
-                        <td>60052378</td>
-                        <td>{item.mojri_size || '-'}</td>
-                        <td>1</td>
-                        <td>{gstAddon.net.toFixed(2)}</td>
-                        <td>{gstAddon.cgstRate}%</td>
-                        <td>{gstAddon.cgst.toFixed(2)}</td>
-                        <td>{gstAddon.sgstRate}%</td>
-                        <td>{gstAddon.sgst.toFixed(2)}</td>
-                        <td>{gstAddon.igstRate}%</td>
-                        <td>{gstAddon.igst.toFixed(2)}</td>
-                        <td>{grossAddon.toFixed(2)}</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none", borderLeft: "none" }}>{++serial}</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>Matching Mojri</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{item.get_gst_value.hsn}</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{item.mojri_size || '-'}</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>1</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{gstAddon.net.toFixed(2)}</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{gstAddon.cgstRate}%</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{gstAddon.cgst.toFixed(2)}</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{gstAddon.sgstRate}%</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{gstAddon.sgst.toFixed(2)}</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{gstAddon.igstRate}%</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{gstAddon.igst.toFixed(2)}</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{grossAddon.toFixed(2)}</td>
                       </tr>
                     );
                   })()}
@@ -449,19 +466,19 @@ const Invoice = () => {
 
                     return (
                       <tr>
-                        <td>{++serial}</td>
-                        <td style={{ textAlign: "left" }}>Matching Stole</td>
-                        <td>60052378</td>
-                        <td>{item.stole_size || '-'}</td>
-                        <td>1</td>
-                        <td>{gstAddon.net.toFixed(2)}</td>
-                        <td>{gstAddon.cgstRate}%</td>
-                        <td>{gstAddon.cgst.toFixed(2)}</td>
-                        <td>{gstAddon.sgstRate}%</td>
-                        <td>{gstAddon.sgst.toFixed(2)}</td>
-                        <td>{gstAddon.igstRate}%</td>
-                        <td>{gstAddon.igst.toFixed(2)}</td>
-                        <td>{grossAddon.toFixed(2)}</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none", borderLeft: "none" }}>{++serial}</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>Matching Stole</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{item.get_gst_value.hsn}</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{item.stole_size || '-'}</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>1</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{gstAddon.net.toFixed(2)}</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{gstAddon.cgstRate}%</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{gstAddon.cgst.toFixed(2)}</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{gstAddon.sgstRate}%</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{gstAddon.sgst.toFixed(2)}</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{gstAddon.igstRate}%</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{gstAddon.igst.toFixed(2)}</td>
+                        <td style={{ borderRight: "none", borderBottom: "none", borderTop: "none" }}>{grossAddon.toFixed(2)}</td>
                       </tr>
                     );
                   })()}
@@ -473,36 +490,36 @@ const Invoice = () => {
             
 
             <tr>
-              <td colspan="4" className="right" style={{ borderLeft: 0 }}><strong>Total Qty</strong></td>
-              <td>{totalQty}</td>
-              <td style={{ borderBottom: 0, borderTop: 0 }}></td>
-              <td style={{ borderBottom: 0, borderTop: 0 }}></td>
-              <td style={{ borderBottom: 0, borderTop: 0 }}></td>
-              <td style={{ borderBottom: 0, borderTop: 0 }}></td>
-              <td style={{ borderBottom: 0, borderTop: 0 }}></td>
-              <td style={{ borderBottom: 0, borderTop: 0 }}></td>
-              <td style={{ borderBottom: 0, borderTop: 0 }}></td>
+              <td colspan="4" className="right" style={{ borderInline: 0, borderBottom: 0 }}><strong>Total Qty</strong></td>
+              <td style={{ borderRight: 0, borderBottom: 0 }}>{totalQty}</td>
+              <td style={{ borderRight: 0, borderBottom: 0, borderTop: 0 }}></td>
+              <td style={{ borderRight: 0, borderBottom: 0, borderTop: 0 }}></td>
+              <td style={{ borderRight: 0, borderBottom: 0, borderTop: 0 }}></td>
+              <td style={{ borderRight: 0, borderBottom: 0, borderTop: 0 }}></td>
+              <td style={{ borderRight: 0, borderBottom: 0, borderTop: 0 }}></td>
+              <td style={{ borderRight: 0, borderBottom: 0, borderTop: 0 }}></td>
+              <td style={{ borderRight: 0, borderBottom: 0, borderTop: 0 }}></td>
               <td style={{ borderBottom: 0, borderTop: 0, borderRight: 0 }}></td>
             </tr>
 
             <tr>
-              <td colspan="5" style={{ borderLeft: 0 }}><strong>Shipping &amp; Duties</strong></td>
-              <td>{totalTaxable.toFixed(2)}</td>
-              <td>{shippingGst.cgstRate}%</td>
-              <td>{totalCgst.toFixed(2)}</td>
-              <td>{shippingGst.sgstRate}%</td>
-              <td>{totalSgst.toFixed(2)}</td>
-              <td>{shippingGst.igstRate}%</td>
-              <td>{totalIgst.toFixed(2)}</td>
-              <td style={{ borderRight: 0 }}>{totalAmount.toFixed(2)}</td>
+              <td colspan="5" style={{ borderInline: 0, borderBottom: 0 }}><strong>Shipping &amp; Duties</strong></td>
+              <td style={{ borderBottom: 0, borderRight: 0 }}>{totalTaxable.toFixed(2)}</td>
+              <td style={{ borderBottom: 0, borderRight: 0 }}>{shippingGst.cgstRate}%</td>
+              <td style={{ borderBottom: 0, borderRight: 0 }}>{totalCgst.toFixed(2)}</td>
+              <td style={{ borderBottom: 0, borderRight: 0 }}>{shippingGst.sgstRate}%</td>
+              <td style={{ borderBottom: 0, borderRight: 0 }}>{totalSgst.toFixed(2)}</td>
+              <td style={{ borderBottom: 0, borderRight: 0 }}>{shippingGst.igstRate}%</td>
+              <td style={{ borderBottom: 0, borderRight: 0 }}>{totalIgst.toFixed(2)}</td>
+              <td style={{ borderBottom: 0, borderRight: 0 }}>{totalAmount.toFixed(2)}</td>
             </tr>
 
             <tr>
-              <td colspan="8" className="words gdfgdf" style={{ borderLeft: 0, borderBottom: 0 }}>
+              <td colspan="8" className="words gdfgdf" style={{ borderInline: 0, borderBottom: 0 }}>
                 <strong>Amount In Words :</strong>
                 &nbsp; {amountInWords} Only.
               </td>
-              <td colspan="4" style={{ borderBottom: 0 }} className="invoice-total-label invoice-total-label-color">
+              <td colspan="4" style={{ borderBottom: 0, borderRight: 0 }} className="invoice-total-label invoice-total-label-color">
                 <strong style={{ fontSize: "1rem" }}>Invoice Total</strong>
               </td>
               <td class="invoice-total" style={{ borderRight: 0, fontSize: "1rem", borderBottom: 0 }}>{totalAmount.toFixed(2)}</td>
@@ -514,19 +531,19 @@ const Invoice = () => {
         <table className="footer-table">
           <tbody>
             <tr>
-              <td style={{ borderLeft: 0, textAlign: "center" }}>
+              <td style={{ borderInline: 0, borderBottom: 0, textAlign: "center" }}>
                 <strong>Returning your item:</strong><br />
                 Go to "Your Account" on Vinhemfashion.com, click <strong>"Orders History"</strong>
                 and then click the <strong>"Mark Return"</strong> link for this order to get information about the return and refund policies that apply.
               </td>
 
-              <td style={{ borderRight: 0, fontSize: "1rem", width: "20%" }} className="company-name">
+              <td style={{ borderRight: 0, borderBottom: 0, fontSize: "1rem", width: "20%" }} className="company-name">
                 VinHem Fashion
               </td>
             </tr>
 
             <tr>
-              <td className="website" style={{ borderLeft: 0, borderBottom: 0 }}>
+              <td className="website" style={{ borderInline: 0, borderBottom: 0 }}>
                 www.vinhemfashion.com
               </td>
 
@@ -539,7 +556,7 @@ const Invoice = () => {
       </div>
       {/* </div> */}
 
-      <button onClick={previewPDF}>Preview PDF</button>
+      {/* <button onClick={previewPDF}>Preview PDF</button> */}
 
     </>
    
