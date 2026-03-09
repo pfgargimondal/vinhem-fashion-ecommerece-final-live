@@ -589,8 +589,8 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
                               >
                                 <span className="me-2">
                                   <img
-                                    // src={selectedCurrency?.flag_icon || "https://flagcdn.com/24x18/in.png"}
-                                    src={selectedCurrency?.flag_icon}
+                                    src={selectedCurrency?.flag_icon || "https://flagcdn.com/24x18/in.png"}
+                                    // src={selectedCurrency?.flag_icon}
                                     alt={selectedCurrency?.currency_code || "INR"}
                                     width="24"
                                     height="18"
@@ -686,8 +686,8 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
                               >
                                 <span className="me-2">
                                   <img
-                                    // src={selectedCurrency?.flag_icon || "https://flagcdn.com/24x18/in.png"}
-                                    src={selectedCurrency?.flag_icon}
+                                    src={selectedCurrency?.flag_icon || "https://flagcdn.com/24x18/in.png"}
+                                    // src={selectedCurrency?.flag_icon}
                                     alt={selectedCurrency?.currency_code || "INR"}
                                     width="24"
                                     height="18"
@@ -1051,8 +1051,8 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
 
       <div className={`${resMenu ? "res-ctgy-menu-backdrop d-none" : "res-ctgy-menu-backdrop d-none res-ctgy-menu-backdrop-hide"} position-fixed w-100 h-100`} onClick={() => setResMenu(false)}></div>
 
-      <div className={`${resMenu ? "res-ctgy-menu-modal d-none" : "res-ctgy-menu-modal d-none res-ctgy-menu-modal-hide"} bg-white position-fixed h-100 p-3`}>
-        <div className="dwehjrw mb-4">
+      <div className={`${resMenu ? "res-ctgy-menu-modal d-none" : "res-ctgy-menu-modal d-none res-ctgy-menu-modal-hide"} bg-white position-fixed p-3`}>
+        <div className="dwehjrw bdfgbdederer mb-4">
           <div className="custom-currency-dropdown wlojdfiwejrower col-4 d-none position-relative">
             <button
               className="currency-toggle-btn d-flex align-items-center"
@@ -1126,6 +1126,10 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
               </div>
             )}
           </div>
+
+          <div className="dnekwrwerwer">
+            <Link to={`/contact-us`}><i class="bi bi-headset"></i> Help</Link>
+          </div>
         </div>
 
         <div className={`${!user ? "d-flex" : "d-block"} align-items-center justify-content-between`}>
@@ -1168,12 +1172,12 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
                 <ul className="d-flex align-items-center mb-0 ps-0">
                   <li onClick={() => {setResSignBottom(!resSignBottom); setResMenu(false)}}><span >SIGN IN / SIGN UP</span></li>
                 </ul>
-                <Link onClick={() => {setResSignBottom(!resSignBottom); setResMenu(false)}}><i class="bi me-1 bi-person"></i> My Account</Link>
+                {/* <Link onClick={() => {setResSignBottom(!resSignBottom); setResMenu(false)}}><i class="bi me-1 bi-person"></i> My Account</Link> */}
               </>
             )}
         </div>
 
-        <div className="cojeojewrer h-100 mt-4">
+        <div className="cojeojewrer mt-4">
           {mainCategory?.map((category) => {
 
             const leftBanners = category.mainCategory_banner?.slice(0, 2);  // first 2 images

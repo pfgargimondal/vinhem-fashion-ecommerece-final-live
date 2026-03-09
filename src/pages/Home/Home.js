@@ -240,7 +240,9 @@ export const Home = () => {
             {homepage?.data?.home_category.map((topCategorie) => (
               <li className="dfhdfg" key={topCategorie.id}>
                 <div className="dbfggfhfh">
-                  <img src={`${homepage.image_url}/${topCategorie.image}`} className="img-fluid" alt={topCategorie.title} />
+                  <Link to={`${topCategorie.url}`}>
+                    <img src={`${homepage.image_url}/${topCategorie.image}`} className="img-fluid" alt={topCategorie.title} />
+                  </Link>
                 </div>
 
                 <div className="fbsdsdf">

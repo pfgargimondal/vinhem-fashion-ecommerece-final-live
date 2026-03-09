@@ -349,6 +349,7 @@ export const ProductDetail = () => {
   const [selectedPrice, setSelectedPrice] = useState(0);
   const [finalPrice, setFinalPrice] = useState(0);
   const [sizeAccordingPrice, setSizeAccordingPrice] = useState(0);
+  const [sizeAccordingMRPPrice, setSizeAccordingMRPPrice] = useState(0);
 
   const [selectedStitchOption, setSelectedStitchOption] = useState("");
   const [isTurbanChecked, setIsTurbanChecked] = useState(false);
@@ -434,6 +435,12 @@ export const ProductDetail = () => {
         setSelectedPrice(sellingPrice);
         setSizeAccordingPrice(sellingPrice);
 
+        const discountPercent = Number(base?.discount) || 0;
+
+        const mrpPrice = sellingPrice / (1 - discountPercent / 100);
+
+        setSizeAccordingMRPPrice(mrpPrice);
+
         return;
       }
 
@@ -475,6 +482,14 @@ export const ProductDetail = () => {
 
       setSelectedPrice(final);
       setSizeAccordingPrice(final);
+
+      const discountPercent = Number(base?.discount) || 0;
+      const mrpPrice =
+        discountPercent > 0
+        ? Math.round(final / (1 - discountPercent / 100))
+        : final;
+
+      setSizeAccordingMRPPrice(mrpPrice);
     },
     [productDetails]
   );
@@ -1289,7 +1304,10 @@ export const ProductDetail = () => {
 
                             <span className="gdfg55 d-flex align-items-center ms-2">
                               {/* <i class="bi bi-currency-rupee"></i> */}
-                              {formatPrice(productDetails?.data?.mrp_price)}
+                              {/* {formatPrice(productDetails?.data?.mrp_price)} */}
+                              {sizeAccordingMRPPrice === 0 ? (formatPrice(productDetails?.data?.mrp_price))
+                              :(formatPrice(sizeAccordingMRPPrice))}
+                              
                             </span>
 
                             <span className="fghfgg114 d-flex align-items-center ms-2">
@@ -2466,84 +2484,85 @@ export const ProductDetail = () => {
 
                         <div
                           className="coisdefisdhifhsdjifjhosd doiwejrjwejr"
-                          style={{ height: "100vh" }}
-                        >
-                          <Swiper
-                            modules={[
-                              Autoplay,
-                              Pagination,
-                              Navigation,
-                              Mousewheel,
-                            ]}
-                            direction="vertical"
-                            slidesPerView={4}
-                            spaceBetween={15}
-                            loop={true}
-                            mousewheel={true}
-                            pagination={{ clickable: true }}
-                            navigation={true}
-                            autoplay={{
-                              delay: 1000,
-                              disableOnInteraction: false,
-                            }}
-                            className="mySwiper"
-                            style={{ height: "100%" }}
-                          >
-                            {productDetails?.data?.matching_product.map(
-                              (matchingProduct) => (
-                                <SwiperSlide key={matchingProduct.id}>
-                                  <div className="dfgjhbdfg matching-products adsfsfcsfasdfaef sdfvdscsddfgdfg p-2 mb-3">
-                                    <Link
-                                      to={`/products/${matchingProduct.slug}-${matchingProduct.PID}`}
-                                    >
-                                      <div className="images">
-                                        <div className="image d-flex position-relative">
-                                          <div className="doiewjkrniuwewer position-relative col-lg-4 overflow-hidden">
-                                            {/* <img src={matchingProduct?.encoded_image_url_2} alt={matchingProduct.product_name}/> */}
-                                            <img
-                                              className=""
-                                              src={
-                                                matchingProduct?.encoded_image_url_1 ||
-                                                "/images/no-preview.jpg"
-                                              }
-                                              alt={
-                                                matchingProduct?.product_name ||
-                                                "Product image"
-                                              }
-                                            />
-                                          </div>
-
-                                          <div className="fdbdfgdfgdf col-lg-8">
-                                            <h4 className="doiwejrojweorj mb-2">
-                                              {matchingProduct.product_name}
-                                            </h4>
-
-                                            <h5>
-                                              {/* {formatPrice(
-                                                matchingProduct.selling_price
-                                              )} */}
-                                            </h5>                                            
-
-                                            <div className="macthng-prdcts d-flex align-items-center">
-                                              <h5 className="mb-0">{formatPrice(matchingProduct.selling_price)}</h5>
-
-                                              <span class="gdfg55 ms-2">
-                                                {formatPrice(matchingProduct.mrp_price)}
-                                              </span>
-
-                                              <span class="fghfgg114 ms-2">{matchingProduct?.discount}%OFF</span>
+                          style={{ height: "100vh" }}>
+                          {productDetails?.data?.matching_product?.length > 0 && (
+                            <Swiper
+                              modules={[
+                                Autoplay,
+                                Pagination,
+                                Navigation,
+                                Mousewheel,
+                              ]}
+                              direction="vertical"
+                              slidesPerView={3}
+                              spaceBetween={15}
+                              loop={true}
+                              mousewheel={true}
+                              pagination={{ clickable: true }}
+                              navigation={true}
+                              autoplay={{
+                                delay: 1000,
+                                disableOnInteraction: false,
+                              }}
+                              className="mySwiper"
+                              style={{ height: "100%" }}
+                            >
+                              {productDetails?.data?.matching_product.map(
+                                (matchingProduct) => (
+                                  <SwiperSlide key={matchingProduct.id}>
+                                    <div className="dfgjhbdfg matching-products adsfsfcsfasdfaef sdfvdscsddfgdfg p-2 mb-3">
+                                      <Link
+                                        to={`/products/${matchingProduct.slug}-${matchingProduct.PID}`}
+                                      >
+                                        <div className="images">
+                                          <div className="image d-flex position-relative">
+                                            <div className="doiewjkrniuwewer position-relative col-lg-4 overflow-hidden">
+                                              {/* <img src={matchingProduct?.encoded_image_url_2} alt={matchingProduct.product_name}/> */}
+                                              <img
+                                                className=""
+                                                src={
+                                                  matchingProduct?.encoded_image_url_1 ||
+                                                  "/images/no-preview.jpg"
+                                                }
+                                                alt={
+                                                  matchingProduct?.product_name ||
+                                                  "Product image"
+                                                }
+                                              />
                                             </div>
 
-                                            
+                                            <div className="fdbdfgdfgdf col-lg-8">
+                                              <h4 className="doiwejrojweorj mb-2">
+                                                {matchingProduct.product_name}
+                                              </h4>
+
+                                              <h5>
+                                                {/* {formatPrice(
+                                                  matchingProduct.selling_price
+                                                )} */}
+                                              </h5>                                            
+
+                                              <div className="macthng-prdcts d-flex align-items-center">
+                                                <h5 className="mb-0">{formatPrice(matchingProduct.selling_price)}</h5>
+
+                                                <span class="gdfg55 ms-2">
+                                                  {formatPrice(matchingProduct.mrp_price)}
+                                                </span>
+
+                                                <span class="fghfgg114 ms-2">{matchingProduct?.discount}%OFF</span>
+                                              </div>
+
+                                              
+                                            </div>
                                           </div>
                                         </div>
-                                      </div>
-                                    </Link>
-                                  </div>
-                                </SwiperSlide>
-                              )
-                            )}
-                          </Swiper>
+                                      </Link>
+                                    </div>
+                                  </SwiperSlide>
+                                )
+                              )}
+                            </Swiper>
+                          )}                          
                         </div>
 
                         <div className="coisdefisdhifhsdjifjhosd derwerwrrr d-none">

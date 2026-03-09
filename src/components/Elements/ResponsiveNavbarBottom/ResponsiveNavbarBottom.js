@@ -9,7 +9,7 @@ export const ResponsiveNavbarBottom = ({ setResSearchToggle, setResSignBottom })
 
   return (
     <div className="res-navbar-bttm d-none align-items-center justify-content-between bg-white fixed-bottom w-100">
-        <div className="dwsfwwer ahudjkhudfher mx-4 py-2 text-center">
+        <div className="dwsfwwer ahudjkhudfher mx-4 text-center">
             <Link to="/">
                 <i class="bi mb-1 bi-house-door-fill"></i>
 
@@ -17,26 +17,26 @@ export const ResponsiveNavbarBottom = ({ setResSearchToggle, setResSignBottom })
             </Link>
         </div>
 
-        <div className="dwsfwwer mx-4 py-2 text-center" onClick={() => setResSearchToggle(prev => !prev)}>
+        <div className="dwsfwwer mx-4 text-center" onClick={() => setResSearchToggle(prev => !prev)}>
             <i class="bi mb-1 bi-search"></i>
 
             <p className="mb-0">Search</p>
         </div>
          {user ? (
-            <Link to="/profile" className="dwsfwwer mx-4 py-2 text-center text-decoration-none">
+            <Link to="/profile" className="dwsfwwer mx-4 text-center text-decoration-none">
                 <i class="bi bi-person"></i>
 
                 <p className="mb-0">Profile</p>
             </Link>
          ):(
-            <div onClick={() => setResSignBottom(true)} className="dwsfwwer mx-4 py-2 text-center">
+            <div onClick={() => setResSignBottom(true)} className="dwsfwwer mx-4 text-center">
                 <i class="bi bi-person"></i>
 
                 <p className="mb-0">Login</p>
             </div>
          )}
 
-        <div className="dwsfwwer mx-4 py-2 text-center">
+        <div className="dwsfwwer mx-4 text-center">
             <i class="bi mb-1 bi-whatsapp"></i>
 
             <p className="mb-0">Whatsapp</p>
