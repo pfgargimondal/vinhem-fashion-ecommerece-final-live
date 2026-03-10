@@ -17,6 +17,23 @@ export const MeasurementForm = ({
   //   setSelectedSize(newSize);
   // };
 
+  const defaultFormData = {
+    measurment_name: "",
+    measurement_fit: "",
+    unit: "inch",
+    with_petticoat_lahenga: "",
+    fall_edging_work_lahenga: false,
+    matching_tassles_lahenga: false,
+    additional_customization_lahenga: "",
+    include_petticoat_saree: "",
+    saree_fall_edging: false,
+    saree_matching_tassles: false,
+    additional_customize_saree: "",
+    additional_customize_dress: "",
+    additional_customization: "",
+    selected_size: ""
+  };
+
   const handleGuideClick = (item, feildName) => {
     if (activeGuide === item) {
       setActiveGuide(null);
@@ -28,11 +45,17 @@ export const MeasurementForm = ({
   };
 
   const handleSizeModalClose = () => {
+
     showTabs && setShowTabs(false);
-
     activeGuide && setActiveGuide(null);
+    setFeildNameGuide(null);
 
+    setSelectedSize("");
+    setUnit("inch");
+    setShowPetticoat(false);
+    setFormData(defaultFormData);
     setShowSizeModal(false);
+
   };
 
   const [unit, setUnit] = useState("inch");
@@ -836,7 +859,7 @@ export const MeasurementForm = ({
                                         onChange={handleChangeLahenga}
                                         value={formData[field.key] || ""}
                                       >
-                                        <option disabled selected>
+                                        <option value={""} selected>
                                           --Select Here--
                                         </option>
                                         {options.map((val, i) => (
@@ -905,7 +928,7 @@ export const MeasurementForm = ({
                                             onChange={handleChangeLahenga}
                                             value={formData[field.key] || ""}
                                           >
-                                            <option disabled selected>
+                                            <option value={""} selected>
                                               --Select Here--
                                             </option>
                                             {getOptions(field.key).map(
@@ -954,7 +977,7 @@ export const MeasurementForm = ({
                                       onChange={handleChangeLahenga}
                                       value={formData[field.key] || ""}
                                     >
-                                      <option disabled selected>
+                                      <option value={""} selected>
                                         --Select Here--
                                       </option>
                                       {getOptions(field.key).map((val, i) => (
@@ -1070,7 +1093,7 @@ export const MeasurementForm = ({
                                             onChange={handleChangeSaree}
                                             value={formData[field.key] || ""}
                                           >
-                                            <option disabled value="">
+                                            <option value="" selected>
                                               --Select Here--
                                             </option>
                                             {getOptions(field.key).map(
@@ -1119,7 +1142,7 @@ export const MeasurementForm = ({
                                       onChange={handleChangeSaree}
                                       value={formData[field.key] || ""}
                                     >
-                                      <option disabled value="">
+                                      <option selected value="">
                                         --Select Here--
                                       </option>
                                       {getOptions(field.key).map((val, i) => (
@@ -1238,7 +1261,7 @@ export const MeasurementForm = ({
                                         onChange={handleChange}
                                         value={formData[field.key] || ""}
                                       >
-                                        <option disabled value="">
+                                        <option selected value="">
                                           --Select Here--
                                         </option>
                                         {options.map((val, i) => (
@@ -1304,7 +1327,7 @@ export const MeasurementForm = ({
                                         onChange={handleChange}
                                         value={formData[field.key] || ""}
                                       >
-                                        <option disabled value="">
+                                        <option selected value="">
                                           --Select Here--
                                         </option>
                                         {options.map((val, i) => (
@@ -1372,7 +1395,7 @@ export const MeasurementForm = ({
                                         onChange={handleChangeGeneric}
                                         value={formData[field.key] || ""}
                                       >
-                                        <option disabled value="">
+                                        <option selected value="">
                                           --Select Here--
                                         </option>
                                         {getOptionsGeneric(field.key).map((val, i) => (

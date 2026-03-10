@@ -417,82 +417,92 @@ export const ProductDetail = () => {
     setFinalPrice(total);
   };
 
-  const updateQtyAndPriceBySize = useCallback(
-    (normalizedSize) => {
-      const base = productDetails?.data || {};
-      const stitchingType = base?.stitching_option?.toLowerCase();
+  const updateQtyAndPriceBySize = useCallback((normalizedSize) => {
+    const base = productDetails?.data || {};
+    const stitchingType = base?.stitching_option?.toLowerCase();
 
-      // ✅ If product is Unstitched or Semi-Stitched
-      if (
-        stitchingType === "unstiched-fabric" || stitchingType === "unstitched-fabric" ||
-        stitchingType === "semi-stitched"
-      ) {
-        const qty = Number(base?.mto_quantity || 0);
-        setAvailableQty(qty);
-        setSelectedQuantity(1);
+    const discountPercent = Number(base?.discount) || 0;
 
-        const sellingPrice = parseFloat(base?.selling_price || 0);
-        setSelectedPrice(sellingPrice);
-        setSizeAccordingPrice(sellingPrice);
+    const calculateMRP = (price) =>
+      discountPercent > 0
+        ? Math.round(price / (1 - discountPercent / 100))
+        : price;
 
-        const discountPercent = Number(base?.discount) || 0;
+    // ✅ Unstitched / Semi-Stitched
+    if (
+      stitchingType === "unstiched-fabric" ||
+      stitchingType === "unstitched-fabric" ||
+      stitchingType === "semi-stitched"
+    ) {
 
-        const mrpPrice = sellingPrice / (1 - discountPercent / 100);
+      let qty = 0; 
 
-        setSizeAccordingMRPPrice(mrpPrice);
+      const rtsQty = Number(base?.rts_quantity || 0);
+      const mtoQty = Number(base?.mto_quantity || 0);
+      qty = rtsQty > 0 ? rtsQty : mtoQty;
 
-        return;
-      }
-
-      // ✅ Ready To Wear logic (your existing code)
-      const allSizes = base?.product_allSize || [];
-
-      const inventory = allSizes.find(
-        (item) =>
-          normalizeSize(item.filter_size) === normalizedSize ||
-          normalizeSize(item.plus_sizes) === normalizedSize
-      );
-
-      let qty = 0;
-
-      if (inventory) {
-        if (normalizeSize(inventory.filter_size) === normalizedSize) {
-          qty = Number(inventory.mto_quantity || 0);
-        }
-
-        if (normalizeSize(inventory.plus_sizes) === normalizedSize) {
-          qty = Number(inventory.plus_size_quantity || 0);
-        }
-      }
+      const sellingPrice = parseFloat(base?.selling_price || 0);
 
       setAvailableQty(qty);
       setSelectedQuantity(1);
+      setSelectedPrice(sellingPrice);
+      setSizeAccordingPrice(sellingPrice);
+      setSizeAccordingMRPPrice(calculateMRP(sellingPrice));
 
-      const sellingPrice = parseFloat(
-        inventory?.selling_price || base.selling_price || 0
-      );
+      return;
+    }
 
-      const plusCharge = parseFloat(inventory?.plus_sizes_charges || 0);
+    // ✅ Ready To Wear
+    const allSizes = base?.product_allSize || [];
 
-      const final =
-        normalizeSize(inventory?.plus_sizes) === normalizedSize &&
-        plusCharge > 0
-          ? plusCharge
-          : sellingPrice;
+    const inventory = allSizes.find(
+      (item) =>
+        normalizeSize(item.filter_size) === normalizedSize ||
+        normalizeSize(item.plus_sizes) === normalizedSize
+    );
 
-      setSelectedPrice(final);
-      setSizeAccordingPrice(final);
+    let qty = 0;
 
-      const discountPercent = Number(base?.discount) || 0;
-      const mrpPrice =
-        discountPercent > 0
-        ? Math.round(final / (1 - discountPercent / 100))
-        : final;
+    if (inventory) {
+      const isNormalSize =
+        normalizeSize(inventory.filter_size) === normalizedSize;
 
-      setSizeAccordingMRPPrice(mrpPrice);
-    },
-    [productDetails]
-  );
+      const isPlusSize =
+        normalizeSize(inventory.plus_sizes) === normalizedSize;
+
+      if (isNormalSize) {
+        const rtsQty = Number(inventory.rts_quantity || 0);
+        const mtoQty = Number(inventory.mto_quantity || 0);
+        qty = rtsQty > 0 ? rtsQty : mtoQty;
+      }
+
+      if (isPlusSize) {
+        const rtsQty = Number(inventory.plus_size_quantity || 0);
+        const mtoQty = Number(inventory.plus_size_quantity || 0);
+        qty = rtsQty > 0 ? rtsQty : mtoQty;
+      }
+    }
+
+    setAvailableQty(qty);
+    setSelectedQuantity(1);
+
+    // ✅ Price logic
+    const sellingPrice = parseFloat(
+      inventory?.selling_price || base?.selling_price || 0
+    );
+
+    const plusCharge = parseFloat(inventory?.plus_sizes_charges || 0);
+
+    const finalPrice =
+      normalizeSize(inventory?.plus_sizes) === normalizedSize && plusCharge > 0
+        ? plusCharge
+        : sellingPrice;
+
+    setSelectedPrice(finalPrice);
+    setSizeAccordingPrice(finalPrice);
+    setSizeAccordingMRPPrice(calculateMRP(finalPrice));
+
+  }, [productDetails]);
 
 
   useEffect(() => {
