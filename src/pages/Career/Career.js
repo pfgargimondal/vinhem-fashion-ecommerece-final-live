@@ -89,7 +89,7 @@ export const Career = () => {
                 <div className="col-lg-7"></div>
                 <div className="col-lg-5">
                   <div className="dfbhdf">
-                    <h2>{CareerDetails.data?.banner_title || "Career"}</h2>
+                    {/* <h2>{CareerDetails.data?.banner_title || "Career"}</h2> */}
                     {/* <p>
                     {CareerDetails.data?.banner_description ||
                       "Celebrating style with every stitch – where trends meet timeless elegance."}
@@ -106,9 +106,9 @@ export const Career = () => {
         <div className="wrapper">
           <div className="dfghdfgd">
             <div className="container-fluid px-5">
-              <h4>
+              {/* <h4>
                 {CareerDetails.data?.second_section_title}
-              </h4>
+              </h4> */}
               <div className="bgdf55ff"
                 dangerouslySetInnerHTML={{
                   __html:
