@@ -8,7 +8,8 @@
 }
 
 .dwsfwwer i{
-    font-size: 2rem;
+    font-size: 1.5rem;
+    line-height: 1;
 }
 
 .res-navbar-bttm .dwsfwwer p{
@@ -16,8 +17,7 @@
 }
 
 .res-navbar-bttm .dwsfwwer:nth-child(3) i{
-    font-size: 2.5rem;
-    line-height: 1.2;
+    font-size: 2rem;
 }
 
 .res-navbar-bttm .dwsfwwer:last-child i{

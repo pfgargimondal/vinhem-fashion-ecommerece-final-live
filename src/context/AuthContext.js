@@ -53,15 +53,15 @@ export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   /* 🔐 Auto logout if expired (extra safety) */
-  // useEffect(() => {
-  //   const expiry = localStorage.getItem("tokenExpiry");
+  useEffect(() => {
+    const expiry = localStorage.getItem("tokenExpiry");
 
-  //   if (expiry && new Date().getTime() > parseInt(expiry)) {
-  //     localStorage.clear();
-  //     dispatch({ type: "LOGOUT" });
-  //     // navigate("/login");//////////
-  //   }
-  // }, [navigate]);
+    if (expiry && new Date().getTime() > parseInt(expiry)) {
+      localStorage.clear();
+      dispatch({ type: "LOGOUT" });
+      // navigate("/login");//////////
+    }
+  }, [navigate]);
 
   /* ✅ Fetch profile if token exists but user not loaded */
   useEffect(() => {
@@ -69,15 +69,7 @@ export const AuthProvider = ({ children }) => {
       fetch("/api/user/profile", {
         headers: { Authorization: `Bearer ${state.token}` },
       })
-        .then((res) => {
-          if (res.status === 401) {
-            localStorage.clear();
-            dispatch({ type: "LOGOUT" });
-            // navigate("/login");
-            return;
-          }
-          return res.json();
-        })
+        .then((res) => res.json())
         .then((data) => {
           if (data.success) {
             dispatch({ type: "UPDATE_PROFILE", payload: data.user });
@@ -99,11 +91,11 @@ export const AuthProvider = ({ children }) => {
   const customDispatch = (action) => {
     switch (action.type) {
       case "LOGIN":
-        // const expiryTime = new Date().getTime() + 24 * 60 * 60 * 1000; // 24 hours
+        const expiryTime = new Date().getTime() + 24 * 60 * 60 * 1000; // 24 hours
 
         localStorage.setItem("jwtToken", action.payload.token);
         localStorage.setItem("user", JSON.stringify(action.payload.user));
-        // localStorage.setItem("tokenExpiry", expiryTime);
+        localStorage.setItem("tokenExpiry", expiryTime);
 
         dispatch(action);
         navigate("/");

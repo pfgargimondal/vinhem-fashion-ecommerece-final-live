@@ -1187,7 +1187,10 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
             
             <div className="diuewhuirwere" key={category.id}>
               <div className="mnctgy d-flex align-items-center justify-content-between py-2 px-1">
-                <Link to={`/${category.mainCategory_slug}`}>{category.mainCategory_name}</Link>
+                <Link onClick={() =>
+                  category.head_categories.length > 0 &&
+                  setResCtgyDrpdwn(resCtgyDrpdwn === category.id ? null : category.id)
+                } to={(category.head_categories.length > 0) ? pathName : `/${category.mainCategory_slug}`}>{category.mainCategory_name}</Link>
                 {category.head_categories.length > 0 && (
                   <i
                     className={`bi ${resCtgyDrpdwn === category.id ? "bi-dash" : "bi-plus"}`}

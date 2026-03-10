@@ -8,7 +8,7 @@ export const ResponsiveNavbarBottom = ({ setResSearchToggle, setResSignBottom })
     const { user } = useAuth();
 
   return (
-    <div className="res-navbar-bttm d-none align-items-center justify-content-between bg-white fixed-bottom w-100">
+    <div className="res-navbar-bttm d-none align-items-center justify-content-between bg-white fixed-bottom w-100 py-2">
         <div className="dwsfwwer ahudjkhudfher mx-4 text-center">
             <Link to="/">
                 <i class="bi mb-1 bi-house-door-fill"></i>

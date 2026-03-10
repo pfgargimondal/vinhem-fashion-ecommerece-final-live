@@ -16,7 +16,7 @@
     }
 
     .res-filtr-nav-hide{
-        right: -50rem !important;
+        right: -57rem !important;
         transition: 0.2s ease-in-out;
     }
 
@@ -84,12 +84,23 @@
     }
 
     .filter-bottom-fixed{
-        bottom: 12%;
+        bottom: 10%;
         left: 0;
         position: fixed;
         z-index: 99999999;
         border-top: 2px solid var(--light-background-color);
         border-bottom: 2px solid var(--light-background-color);
+    }
+
+    .filter-bottom-fixed:before{
+        position: absolute;
+        content: "";
+        width: 1px;
+        height: 70%;
+        background: var(--text-gray-color);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 
     .oidenjwihrwer.d-flex,
@@ -178,10 +189,11 @@
     .srt-by{
         width: 100%;
         left: 0;
-        bottom: 0;
+        bottom: 20%;
+        padding-bottom: 2.5rem;
         height: auto;
         text-align: center;
-        z-index: 999999999;
+        z-index: 999999;
         visibility: visible;
         transform: initial;
         transition: 0.1s ease-in-out;        
@@ -292,21 +304,10 @@
 
 
 
-@media only screen and (max-width: 420px){
-    .fdbdfgdfgdf h6 {
-        font-size: 3.5vw !important;
-    }
-}
 
-
-
-
-
-
-
-@media only screen and (max-width: 419px){
-    .smdflcsdlpfkselkrpr.col-6 {
-        width: 100%;
+@media only screen and (max-width: 428px){
+    .srt-by {
+        bottom: 18%;
     }
 }
 

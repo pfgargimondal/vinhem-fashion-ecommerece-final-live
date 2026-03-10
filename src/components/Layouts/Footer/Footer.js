@@ -364,20 +364,20 @@ export const Footer = ({ shouldHideFullHeaderFooterRoutes }) => {
 
           <div className="footer-bottom mt-3">
             <div className="container-fluid">
-              <ul className="mb-3 d-flex justify-content-center align-items-center ps-0 imprtnt-list">
-                <li><i class="bi me-1 bi-truck"></i> <span>Worldwide Shipping</span></li>
+              <ul className="xcoiekoiewopekrr mb-3 d-flex justify-content-center align-items-center ps-0 imprtnt-list">
+                <li className="dojelkwmriower"><i className="bi me-1 bi-truck"></i> <span>Worldwide Shipping</span></li>
 
-                <li>|</li>
+                <li className="fttr-info-divider">|</li>
 
-                <li><i class="bi me-1 bi-vignette"></i> <span>Customized Tailoring</span></li>
+                <li className="dojelkwmriower"><i className="bi me-1 bi-vignette"></i> <span>Customized Tailoring</span></li>
 
-                <li>|</li>
+                <li className="fttr-info-divider">|</li>
 
-                <li><i class="bi me-1 bi-telephone"></i> <span>+91 8981750096</span></li>
+                <li className="dojelkwmriower"><i className="bi me-1 bi-telephone"></i> <span>+91 8981750096</span></li>
 
-                <li>|</li>
+                <li className="fttr-info-divider">|</li>
 
-                <li><i class="bi me-1 bi-whatsapp"></i> <span>+91 8981750096</span></li>
+                <li className="dojelkwmriower"><i className="bi me-1 bi-whatsapp"></i> <span>+91 8981750096</span></li>
               </ul>
 
               <p className="doejwojrowejower" style={{ textAlign: "center" }}>Secure shopping from India for Sarees, Salwar Kameez, Lehenga Cholis, Mens Wear, Kids Wears, Jewellery & Accessories for delivery in USA,UK and Worldwide.</p>
