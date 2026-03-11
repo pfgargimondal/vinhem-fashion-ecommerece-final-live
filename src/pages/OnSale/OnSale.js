@@ -935,7 +935,7 @@ const pathName = useLocation().pathname;
         </div>
       </div>
 
-      <hr />
+      <hr className="doewjirhweiewrer" />
       {/* <FooterTopComponent /> */}
       <div class="yudfdfgdfbgdfgdffgfg">
         <div class="container-fluid">

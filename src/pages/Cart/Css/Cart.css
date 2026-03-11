@@ -305,7 +305,7 @@
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.6);
-  z-index: 999999;
+  z-index: 9999999;
   opacity: 1;
   visibility: visible;
 }
@@ -520,7 +520,7 @@ h6.sadcadaededee,
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.6);
-  z-index: 999999;
+  z-index: 9999999;
   opacity: 1;
   visibility: visible;
 }
@@ -750,6 +750,14 @@ h6.sadcadaededee,
 
   .diejwijrwer i:first-child{
     margin-right: 0.5rem;
+  }
+
+  .coupon-modal {
+    width: 100%;
+  }
+
+  .doeiwjorjweorwer.ps-4{
+    padding-inline: 1.5rem !important;
   }
 }
 

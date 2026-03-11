@@ -990,7 +990,7 @@ export const Wedding = () => {
           </div>
         </div>
       </div>
-      <hr />
+      <hr className="doewjirhweiewrer" />
       {/* <FooterTopComponent /> */}
       <div class="yudfdfgdfbgdfgdffgfg">
         <div class="container-fluid">

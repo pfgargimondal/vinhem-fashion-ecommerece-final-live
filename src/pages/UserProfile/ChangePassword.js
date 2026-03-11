@@ -137,7 +137,7 @@ export const ChangePassword = () => {
 
                     <div className="col-5">
                       <div className={`${styles.doiwehijrwerwer} text-center`}>
-                        <img src="./images/zadawda.jpg" style={{ width: "60%" }} alt="" />
+                        <img src="./images/zadawda.jpg" style={{ width: "60%", height: "167px", objectFit: "contain" }} alt="" />
 
                         <p className="mb-0">You have no vouchers</p>
                       </div>

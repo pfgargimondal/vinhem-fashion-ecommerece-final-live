@@ -7,18 +7,18 @@ const AuthContext = createContext();
    1️⃣ CHECK TOKEN EXPIRY ON LOAD
 ================================ */
 const token = localStorage.getItem("jwtToken");
-const expiry = localStorage.getItem("tokenExpiry");
+// const expiry = localStorage.getItem("tokenExpiry");
 
 let validToken = null;
 let validUser = null;
 
-if (token && expiry && new Date().getTime() < parseInt(expiry)) {
+if (token) {
   validToken = token;
   validUser = JSON.parse(localStorage.getItem("user"));
 } else {
   localStorage.removeItem("jwtToken");
   localStorage.removeItem("user");
-  localStorage.removeItem("tokenExpiry");
+  // localStorage.removeItem("tokenExpiry");
 }
 
 const initialState = {
@@ -53,15 +53,15 @@ export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   /* 🔐 Auto logout if expired (extra safety) */
-  useEffect(() => {
-    const expiry = localStorage.getItem("tokenExpiry");
+  // useEffect(() => {
+  //   const expiry = localStorage.getItem("tokenExpiry");
 
-    if (expiry && new Date().getTime() > parseInt(expiry)) {
-      localStorage.clear();
-      dispatch({ type: "LOGOUT" });
-      // navigate("/login");//////////
-    }
-  }, [navigate]);
+  //   if (expiry && new Date().getTime() > parseInt(expiry)) {
+  //     localStorage.clear();
+  //     dispatch({ type: "LOGOUT" });
+  //     // navigate("/login");//////////
+  //   }
+  // }, [navigate]);
 
   /* ✅ Fetch profile if token exists but user not loaded */
   useEffect(() => {
@@ -91,11 +91,11 @@ export const AuthProvider = ({ children }) => {
   const customDispatch = (action) => {
     switch (action.type) {
       case "LOGIN":
-        const expiryTime = new Date().getTime() + 24 * 60 * 60 * 1000; // 24 hours
+        // const expiryTime = new Date().getTime() + 24 * 60 * 60 * 1000; // 24 hours
 
         localStorage.setItem("jwtToken", action.payload.token);
         localStorage.setItem("user", JSON.stringify(action.payload.user));
-        localStorage.setItem("tokenExpiry", expiryTime);
+        // localStorage.setItem("tokenExpiry", expiryTime);
 
         dispatch(action);
         navigate("/");

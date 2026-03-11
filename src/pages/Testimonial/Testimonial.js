@@ -788,7 +788,7 @@ export const Testimonial = () => {
                 </div>
             </div>
 
-            <hr />
+            <hr className="doewjirhweiewrer"/>
             <FooterTopComponent />
         </div>
     )

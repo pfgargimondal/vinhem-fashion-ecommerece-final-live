@@ -55,7 +55,7 @@ export const PrivacyPolicy = () => {
   return (
     <div>
         <PolicyComponent PolicyDetails={PrivacyPolicyDetails}/>
-        <hr />
+        <hr className="doewjirhweiewrer"/>
 
       <FooterTopComponent />
       {/* <FooterTopComponentPolicy PolicyDetails={PrivacyPolicyDetails}/> */}

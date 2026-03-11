@@ -53,7 +53,7 @@ export const ShippingPolicy = () =>{
   return (
     <div>
         <PolicyComponent PolicyDetails={ShippingPolicyDetails}/>
-            <hr />
+            <hr className="doewjirhweiewrer"/>
       
         <FooterTopComponent />
     </div>

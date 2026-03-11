@@ -44,7 +44,7 @@ export const ThankYou = () => {
         </div>
       </div>
     </div>
-    <hr />
+    <hr className="doewjirhweiewrer"/>
     
     <FooterTopComponent />
     </>

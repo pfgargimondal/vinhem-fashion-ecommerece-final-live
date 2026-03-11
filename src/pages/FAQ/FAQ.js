@@ -94,7 +94,7 @@ export const FAQ = () => {
         </div>
       </div>
 
-      <hr />
+      <hr className="doewjirhweiewrer"/>
       <FooterTopComponent />
     </div>
   );

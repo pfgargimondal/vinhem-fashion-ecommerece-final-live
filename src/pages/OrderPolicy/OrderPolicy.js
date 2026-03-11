@@ -32,7 +32,7 @@ export const OrderPolicy = () => {
   return (
     <div>
         <PolicyComponent PolicyDetails={OrderPolicyDetails}/>
-      <hr />
+      <hr className="doewjirhweiewrer"/>
 
       <FooterTopComponent/>
     </div>

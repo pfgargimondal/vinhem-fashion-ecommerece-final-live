@@ -54,7 +54,7 @@ export const ReturnPolicy = () => {
     <div>
        <PolicyComponent PolicyDetails={ReturnPolicyDetails}/>
 
-      <hr />
+      <hr className="doewjirhweiewrer"/>
 
       <FooterTopComponent/>
       

@@ -631,3 +631,8 @@ button.odjaejiuiewr-nav{
   font-weight: 500;
   display: inline-block;
 }
+
+.bi-chevron-up,
+.bi-chevron-down{
+  cursor: pointer;
+}

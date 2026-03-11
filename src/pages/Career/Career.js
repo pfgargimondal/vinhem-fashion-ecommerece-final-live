@@ -168,7 +168,7 @@ export const Career = () => {
       </div>
 
       <div className="dfhfjhdfdf">
-        <hr />
+        <hr className="doewjirhweiewrer"/>
         <FooterTopComponent />
       </div>
     </div>

@@ -31,6 +31,7 @@ export function CartProvider({ children }) {
 
   // ✅ Fetch cart count from API
   const fetchCartCount = useCallback(async () => {
+
     if (!token || !selectedCurrency) {
       setCartCount(0); // clear if not logged in
       return;

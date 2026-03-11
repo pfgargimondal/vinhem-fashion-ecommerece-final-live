@@ -59,6 +59,8 @@ export const ProductDetail = () => {
   const [showLaterModal, setShowLaterModal] = useState(false);
   // const [activeKey, setActiveKey] = useState("first");
   const [activeKey, setActiveKey] = useState("img-1");
+  const [pd, setPd] = useState(true);
+  const [sr, setSr] = useState(true);
    // eslint-disable-next-line
   // const [chatProfileDetailsShow, setChatProfileDetailsShow] = useState(false);
   const [videoMute, setVideoMute] = useState(true);
@@ -2158,328 +2160,336 @@ export const ProductDetail = () => {
                         <div className="podmkwejrwer d-flex justify-content-between align-items-center">
                           <h4 className="mb-0">Product Descriptions</h4>
 
-                          <i class="bi bi-chevron-down"></i>
+                          <i onClick={() => setPd(prev => !prev)} class={`bi ${pd ? "bi-chevron-up" : "bi-chevron-down"}`}></i>
                         </div>
 
                         <hr />
 
-                        <p className="mb-4">
-                          {productDetails?.data?.product_description}
-                        </p>
+                        {pd && (
+                          <>
+                            <p className="mb-4">
+                              {productDetails?.data?.product_description}
+                            </p>
 
-                        <div className="dikewnirhwerjwer">
-                          <Tabs
-                            defaultActiveKey="specification"
-                            id="uncontrolled-tab-example"
-                            className="sticky-top mb-3"
-                          >
-                            <Tab eventKey="specification" title="Specification">
-                              <div className="row">
-                                <div className="col-lg-6 col-md-6 col-sm-6 col-6 mb-4">
-                                  <div className="idnewihrwer_inner">
-                                    {productDetails?.data?.no_of_component !==
-                                      null &&
-                                      productDetails?.data?.no_of_component !==
-                                        "0" && (
-                                        <div className="odjjkwehrihwerewr mb-4">
-                                          <p>
-                                            No of Component <br />{" "}
+                            <div className="dikewnirhwerjwer">
+                              <Tabs
+                                defaultActiveKey="specification"
+                                id="uncontrolled-tab-example"
+                                className="sticky-top mb-3"
+                              >
+                                <Tab eventKey="specification" title="Specification">
+                                  <div className="row">
+                                    <div className="col-lg-6 col-md-6 col-sm-6 col-6 mb-4">
+                                      <div className="idnewihrwer_inner">
+                                        {productDetails?.data?.no_of_component !==
+                                          null &&
+                                          productDetails?.data?.no_of_component !==
+                                            "0" && (
+                                            <div className="odjjkwehrihwerewr mb-4">
+                                              <p>
+                                                No of Component <br />{" "}
+                                                <span>
+                                                  {
+                                                    productDetails?.data
+                                                      ?.no_of_component
+                                                  }
+                                                </span>
+                                              </p>
+                                            </div>
+                                          )}
+                                        {productDetails?.data?.type_of_work !==
+                                          null &&
+                                          productDetails?.data?.type_of_work !==
+                                            "0" && (
+                                            <div className="odjjkwehrihwerewr mb-4">
+                                              <p>
+                                                Type of Work <br />{" "}
+                                                <span>
+                                                  {
+                                                    productDetails?.data
+                                                      ?.type_of_work
+                                                  }
+                                                </span>
+                                              </p>
+                                            </div>
+                                          )}
+
+                                        {productDetails?.data?.color !== null &&
+                                          productDetails?.data?.color !== "0" && (
+                                            <div className="odjjkwehrihwerewr mb-4">
+                                              <p>
+                                                Color <br />{" "}
+                                                <span>
+                                                  {productDetails?.data?.color}
+                                                </span>
+                                              </p>
+                                            </div>
+                                          )}
+
+                                        {productDetails?.data?.dupatta_color !==
+                                          null &&
+                                          productDetails?.data?.dupatta_color !==
+                                            "0" && ( // optional: also check empty string
+                                            <div className="odjjkwehrihwerewr mb-4">
+                                              <p>
+                                                Dupatta Color <br />
+                                                <span>
+                                                  {
+                                                    productDetails?.data
+                                                      ?.dupatta_color
+                                                  }
+                                                </span>
+                                              </p>
+                                            </div>
+                                          )}
+
+                                        {productDetails?.data?.jacket_color !==
+                                          null &&
+                                          productDetails?.data?.jacket_color !==
+                                            "0" && (
+                                            <div className="odjjkwehrihwerewr mb-4">
+                                              <p>
+                                                Jacket Color <br />
+                                                <span>
+                                                  {
+                                                    productDetails?.data
+                                                      ?.jacket_color
+                                                  }
+                                                </span>
+                                              </p>
+                                            </div>
+                                          )}
+
+                                        {productDetails?.data?.bottom_closure !==
+                                          null &&
+                                          productDetails?.data?.bottom_closure !==
+                                            "0" && (
+                                            <div className="odjjkwehrihwerewr mb-4">
+                                              <p>
+                                                Bottom Closure <br />
+                                                <span>
+                                                  {
+                                                    productDetails?.data
+                                                      ?.bottom_closure
+                                                  }
+                                                </span>
+                                              </p>
+                                            </div>
+                                          )}
+
+                                        {productDetails?.data?.inner_lining !==
+                                          null &&
+                                          productDetails?.data?.inner_lining !==
+                                            "0" && (
+                                            <div className="odjjkwehrihwerewr mb-4">
+                                              <p>
+                                                Inner Lining <br />
+                                                <span>
+                                                  {
+                                                    productDetails?.data
+                                                      ?.inner_lining
+                                                  }
+                                                </span>
+                                              </p>
+                                            </div>
+                                          )}
+
+                                        {productDetails?.data?.weight !== null &&
+                                          productDetails?.data?.weight !== "0" && (
+                                            <div className="odjjkwehrihwerewr mb-4">
+                                              <p>
+                                                Weight Details <br />
+                                                <span>
+                                                  {/* Approximate Product Weight:{" "} */}
+                                                  {productDetails?.data?.weight}
+                                                </span>
+                                              </p>
+                                            </div>
+                                          )}
+                                      </div>
+                                    </div>
+
+                                    <div className="col-lg-6 col-md-6 col-sm-6 col-6 mb-4">
+                                      <div className="idnewihrwer_inner">
+                                        {productDetails?.data?.component !== null &&
+                                          productDetails?.data?.component !==
+                                            "0" && (
+                                            <div className="odjjkwehrihwerewr mb-4">
+                                              <p>
+                                                Components <br />{" "}
+                                                <span>
+                                                  {productDetails?.data?.component}
+                                                </span>
+                                              </p>
+                                            </div>
+                                          )}
+
+                                        {productDetails?.data?.occasion !== null &&
+                                          productDetails?.data?.occasion !==
+                                            "0" && (
+                                            <div className="odjjkwehrihwerewr mb-4">
+                                              <p>
+                                                Occasions <br />{" "}
+                                                <span>
+                                                  {/* Suitable for{" "} */}
+                                                  {productDetails?.data?.occasion}
+                                                </span>
+                                              </p>
+                                            </div>
+                                          )}
+
+                                        {productDetails?.data?.celebrity !== null &&
+                                          productDetails?.data?.celebrity !==
+                                            "0" && (
+                                            <div className="odjjkwehrihwerewr mb-4">
+                                              <p>
+                                                Celebrity <br />{" "}
+                                                <span>
+                                                  {productDetails?.data?.celebrity}
+                                                </span>
+                                              </p>
+                                            </div>
+                                          )}
+
+                                        {productDetails?.data?.pattern !== null &&
+                                          productDetails?.data?.pattern !== "0" && (
+                                            <div className="odjjkwehrihwerewr mb-4">
+                                              <p>
+                                                Pattern <br />{" "}
+                                                <span>
+                                                  {productDetails?.data?.pattern}
+                                                </span>
+                                              </p>
+                                            </div>
+                                          )}
+
+                                        {productDetails?.data?.fabric !== null &&
+                                          productDetails?.data?.fabric !== "0" && (
+                                            <div className="odjjkwehrihwerewr mb-4">
+                                              <p>
+                                                Material <br />{" "}
+                                                <span>
+                                                  {productDetails?.data?.fabric}
+                                                </span>
+                                              </p>
+                                            </div>
+                                          )}
+
+                                        {productDetails?.data?.fit_type !== null &&
+                                          productDetails?.data?.fit_type !==
+                                            "0" && (
+                                            <div className="odjjkwehrihwerewr mb-4">
+                                              <p>
+                                                Fit <br />{" "}
+                                                <span>
+                                                  {productDetails?.data?.fit_type}
+                                                </span>
+                                              </p>
+                                            </div>
+                                          )}
+
+                                        {productDetails?.data?.care_instruction !==
+                                          null &&
+                                          productDetails?.data?.care_instruction !==
+                                            "0" && (
+                                            <div className="odjjkwehrihwerewr mb-4">
+                                              <p>
+                                                Care Instruction <br />{" "}
+                                                <span>
+                                                  {" "}
+                                                  {
+                                                    productDetails?.data
+                                                      ?.care_instruction
+                                                  }
+                                                </span>
+                                              </p>
+                                            </div>
+                                          )}
+                                      </div>
+                                    </div>
+
+                                    <div className="col-lg-12">
+                                      <div className="idnewihrwer_inner dsclmer p-3">
+                                        <div className="odjjkwehrihwerewr">
+                                          <p className="mb-0">
+                                            Disclaimer <br />{" "}
                                             <span>
-                                              {
-                                                productDetails?.data
-                                                  ?.no_of_component
-                                              }
+                                              This product will be exclusively
+                                              handcrafted for you, making the color,
+                                              texture, and pattern slightly vary
+                                              from the image shown, due to the high
+                                              resolution of photography and
+                                              processes involved. Accessories shown
+                                              in the image are not a part of the
+                                              product; they are for presentation
+                                              purposes only.
                                             </span>
                                           </p>
                                         </div>
-                                      )}
-                                    {productDetails?.data?.type_of_work !==
-                                      null &&
-                                      productDetails?.data?.type_of_work !==
-                                        "0" && (
-                                        <div className="odjjkwehrihwerewr mb-4">
-                                          <p>
-                                            Type of Work <br />{" "}
-                                            <span>
-                                              {
-                                                productDetails?.data
-                                                  ?.type_of_work
-                                              }
-                                            </span>
-                                          </p>
-                                        </div>
-                                      )}
-
-                                    {productDetails?.data?.color !== null &&
-                                      productDetails?.data?.color !== "0" && (
-                                        <div className="odjjkwehrihwerewr mb-4">
-                                          <p>
-                                            Color <br />{" "}
-                                            <span>
-                                              {productDetails?.data?.color}
-                                            </span>
-                                          </p>
-                                        </div>
-                                      )}
-
-                                    {productDetails?.data?.dupatta_color !==
-                                      null &&
-                                      productDetails?.data?.dupatta_color !==
-                                        "0" && ( // optional: also check empty string
-                                        <div className="odjjkwehrihwerewr mb-4">
-                                          <p>
-                                            Dupatta Color <br />
-                                            <span>
-                                              {
-                                                productDetails?.data
-                                                  ?.dupatta_color
-                                              }
-                                            </span>
-                                          </p>
-                                        </div>
-                                      )}
-
-                                    {productDetails?.data?.jacket_color !==
-                                      null &&
-                                      productDetails?.data?.jacket_color !==
-                                        "0" && (
-                                        <div className="odjjkwehrihwerewr mb-4">
-                                          <p>
-                                            Jacket Color <br />
-                                            <span>
-                                              {
-                                                productDetails?.data
-                                                  ?.jacket_color
-                                              }
-                                            </span>
-                                          </p>
-                                        </div>
-                                      )}
-
-                                    {productDetails?.data?.bottom_closure !==
-                                      null &&
-                                      productDetails?.data?.bottom_closure !==
-                                        "0" && (
-                                        <div className="odjjkwehrihwerewr mb-4">
-                                          <p>
-                                            Bottom Closure <br />
-                                            <span>
-                                              {
-                                                productDetails?.data
-                                                  ?.bottom_closure
-                                              }
-                                            </span>
-                                          </p>
-                                        </div>
-                                      )}
-
-                                    {productDetails?.data?.inner_lining !==
-                                      null &&
-                                      productDetails?.data?.inner_lining !==
-                                        "0" && (
-                                        <div className="odjjkwehrihwerewr mb-4">
-                                          <p>
-                                            Inner Lining <br />
-                                            <span>
-                                              {
-                                                productDetails?.data
-                                                  ?.inner_lining
-                                              }
-                                            </span>
-                                          </p>
-                                        </div>
-                                      )}
-
-                                    {productDetails?.data?.weight !== null &&
-                                      productDetails?.data?.weight !== "0" && (
-                                        <div className="odjjkwehrihwerewr mb-4">
-                                          <p>
-                                            Weight Details <br />
-                                            <span>
-                                              {/* Approximate Product Weight:{" "} */}
-                                              {productDetails?.data?.weight}
-                                            </span>
-                                          </p>
-                                        </div>
-                                      )}
-                                  </div>
-                                </div>
-
-                                <div className="col-lg-6 col-md-6 col-sm-6 col-6 mb-4">
-                                  <div className="idnewihrwer_inner">
-                                    {productDetails?.data?.component !== null &&
-                                      productDetails?.data?.component !==
-                                        "0" && (
-                                        <div className="odjjkwehrihwerewr mb-4">
-                                          <p>
-                                            Components <br />{" "}
-                                            <span>
-                                              {productDetails?.data?.component}
-                                            </span>
-                                          </p>
-                                        </div>
-                                      )}
-
-                                    {productDetails?.data?.occasion !== null &&
-                                      productDetails?.data?.occasion !==
-                                        "0" && (
-                                        <div className="odjjkwehrihwerewr mb-4">
-                                          <p>
-                                            Occasions <br />{" "}
-                                            <span>
-                                              {/* Suitable for{" "} */}
-                                              {productDetails?.data?.occasion}
-                                            </span>
-                                          </p>
-                                        </div>
-                                      )}
-
-                                    {productDetails?.data?.celebrity !== null &&
-                                      productDetails?.data?.celebrity !==
-                                        "0" && (
-                                        <div className="odjjkwehrihwerewr mb-4">
-                                          <p>
-                                            Celebrity <br />{" "}
-                                            <span>
-                                              {productDetails?.data?.celebrity}
-                                            </span>
-                                          </p>
-                                        </div>
-                                      )}
-
-                                    {productDetails?.data?.pattern !== null &&
-                                      productDetails?.data?.pattern !== "0" && (
-                                        <div className="odjjkwehrihwerewr mb-4">
-                                          <p>
-                                            Pattern <br />{" "}
-                                            <span>
-                                              {productDetails?.data?.pattern}
-                                            </span>
-                                          </p>
-                                        </div>
-                                      )}
-
-                                    {productDetails?.data?.fabric !== null &&
-                                      productDetails?.data?.fabric !== "0" && (
-                                        <div className="odjjkwehrihwerewr mb-4">
-                                          <p>
-                                            Material <br />{" "}
-                                            <span>
-                                              {productDetails?.data?.fabric}
-                                            </span>
-                                          </p>
-                                        </div>
-                                      )}
-
-                                    {productDetails?.data?.fit_type !== null &&
-                                      productDetails?.data?.fit_type !==
-                                        "0" && (
-                                        <div className="odjjkwehrihwerewr mb-4">
-                                          <p>
-                                            Fit <br />{" "}
-                                            <span>
-                                              {productDetails?.data?.fit_type}
-                                            </span>
-                                          </p>
-                                        </div>
-                                      )}
-
-                                    {productDetails?.data?.care_instruction !==
-                                      null &&
-                                      productDetails?.data?.care_instruction !==
-                                        "0" && (
-                                        <div className="odjjkwehrihwerewr mb-4">
-                                          <p>
-                                            Care Instruction <br />{" "}
-                                            <span>
-                                              {" "}
-                                              {
-                                                productDetails?.data
-                                                  ?.care_instruction
-                                              }
-                                            </span>
-                                          </p>
-                                        </div>
-                                      )}
-                                  </div>
-                                </div>
-
-                                <div className="col-lg-12">
-                                  <div className="idnewihrwer_inner dsclmer p-3">
-                                    <div className="odjjkwehrihwerewr">
-                                      <p className="mb-0">
-                                        Disclaimer <br />{" "}
-                                        <span>
-                                          This product will be exclusively
-                                          handcrafted for you, making the color,
-                                          texture, and pattern slightly vary
-                                          from the image shown, due to the high
-                                          resolution of photography and
-                                          processes involved. Accessories shown
-                                          in the image are not a part of the
-                                          product; they are for presentation
-                                          purposes only.
-                                        </span>
-                                      </p>
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                              </div>
-                            </Tab>
-                          </Tabs>
-                        </div>
+                                </Tab>
+                              </Tabs>
+                            </div>
+                          </>
+                        )}                        
                       </div>
 
                       <div className="dowehjkrhweirwer mlkdfgmlkmlkmlk">
                         <div className="podmkwejrwer d-flex justify-content-between align-items-center">
                           <h4 className="mb-0">Shipping & Returns</h4>
 
-                          <i class="bi bi-chevron-down"></i>
+                          <i onClick={() => setSr(prev => !prev)} class={`bi ${sr ? "bi-chevron-up" : "bi-chevron-down"}`}></i>
                         </div>
 
                         <hr className="mb-4" />
 
-                        <p className="mb-1">
-                          Product will be shipped by,{" "}
-                          {getEstimatedShippingDate(
-                            productDetails?.data?.shipping_time
-                          )}
-                        </p>
+                        {sr && (
+                          <>
+                            <p className="mb-1">
+                              Product will be shipped by,{" "}
+                              {getEstimatedShippingDate(
+                                productDetails?.data?.shipping_time
+                              )}
+                            </p>
 
-                        <p className="mb-3">
-                          For customizations & early delivery, chat with us on
-                          WhatsApp at{" "}
-                          <a
-                            href="https://wa.me/917003672926"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            +91 7003672926
-                          </a>{" "}
-                          or call us at
-                          <a href="tel:7003672926"> 7003672926</a>
-                        </p>
+                            <p className="mb-3">
+                              For customizations & early delivery, chat with us on
+                              WhatsApp at{" "}
+                              <a
+                                href="https://wa.me/917003672926"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                +91 7003672926
+                              </a>{" "}
+                              or call us at
+                              <a href="tel:7003672926"> 7003672926</a>
+                            </p>
 
-                        <p className="mb-2">Return Policy</p>
+                            <p className="mb-2">Return Policy</p>
 
-                        <p>
-                          Returnable within 2 days of delivery (3 days for Gold
-                          members). Custom-made orders are not returnable.
-                          Product's original tags, if attached, must be intact
-                          for a successful return. If the original tags are
-                          missing, VinHem Fashion may decline the return request
-                          and send the product back to the customer & return
-                          handling charges would be applicable. For more details
-                          click on
-                          <Link to="/return-policy"> More Details</Link>
-                        </p>
-                      </div>
+                            <p>
+                              Returnable within 2 days of delivery (3 days for Gold
+                              members). Custom-made orders are not returnable.
+                              Product's original tags, if attached, must be intact
+                              for a successful return. If the original tags are
+                              missing, VinHem Fashion may decline the return request
+                              and send the product back to the customer & return
+                              handling charges would be applicable. For more details
+                              click on
+                              <Link to="/return-policy"> More Details</Link>
+                            </p>
 
-                      <p className="mb-1">Manufactured/Packed & Marketed By-</p>
+                            <p className="mb-1">Manufactured/Packed & Marketed By-</p>
 
-                      <p className="mb-0">
-                        <b>VinHem Fashion Pvt Ltd, Assembled in india</b>
-                      </p>
+                            <p className="mb-0">
+                              <b>VinHem Fashion Pvt Ltd, Assembled in india</b>
+                            </p>
+                          </>
+                        )}
+                      </div>                      
                     </div>
                     </div>
 

@@ -353,7 +353,7 @@ export const AboutUs = () => {
           </div>
         </div>
       </div>
-      <hr />
+      <hr className="doewjirhweiewrer" />
 
       <FooterTopComponent />
     </div>

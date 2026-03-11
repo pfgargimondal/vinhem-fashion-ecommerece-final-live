@@ -32,7 +32,7 @@ export const PaymentOptions = () => {
   return (
     <div>
         <PolicyComponent PolicyDetails={paymentOptionDetails}/>
-        <hr />
+        <hr className="doewjirhweiewrer"/>
        <FooterTopComponent/>
     </div>
   );

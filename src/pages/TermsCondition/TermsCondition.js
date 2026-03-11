@@ -57,7 +57,7 @@ export const TermsCondition = () => {
     <div>
         <PolicyComponent PolicyDetails={TermsConditionDetails}/>
 
-      <hr />
+      <hr className="doewjirhweiewrer"/>
 
       <FooterTopComponent />
     </div>
