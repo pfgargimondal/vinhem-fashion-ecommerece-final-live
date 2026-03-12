@@ -1069,8 +1069,8 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
             >
               <span className="me-2">
                 <img
-                  // src={selectedCurrency?.flag_icon || "https://flagcdn.com/24x18/in.png"}
-                  src={selectedCurrency?.flag_icon}
+                  src={selectedCurrency?.flag_icon || "https://flagcdn.com/24x18/in.png"}
+                  // src={selectedCurrency?.flag_icon}
                   alt={selectedCurrency?.currency_code || "INR"}
                   width="24"
                   height="18"
