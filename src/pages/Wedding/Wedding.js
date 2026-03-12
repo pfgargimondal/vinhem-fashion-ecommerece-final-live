@@ -27,7 +27,7 @@ export const Wedding = () => {
         const getresponse = await http.get("/fetch-wedding-page");
         const getMetaDataResponse = await http.get("/get-all-page-meta-title");
         setWeddingDetails(getresponse.data);
-        setPageMetaData(getMetaDataResponse.data.data.get_all_meta_title);
+        setPageMetaData(getMetaDataResponse.data.data.get_category_meta_title);
       } catch (error) {
         console.error("Error fetching users:", error);
       } finally {
@@ -39,7 +39,7 @@ export const Wedding = () => {
   }, []);
 
   const matchedMeta = pageMetaData.find((item) => {
-      const slug = item.page_name
+      const slug = item.category_name
           ?.toLowerCase()
           .trim()
           .replace(/\s+/g, "-");

@@ -28,7 +28,7 @@ const pathName = useLocation().pathname;
                 const getresponse = await http.get("/fetch-onsale-page");
                 const getMetaDataResponse = await http.get("/get-all-page-meta-title");
                 setOnSaleDetails(getresponse.data);
-                setPageMetaData(getMetaDataResponse.data.data.get_all_meta_title);
+                setPageMetaData(getMetaDataResponse.data.data.get_category_meta_title);
             } catch (error) {
                 console.error("Error fetching users:", error);
             } finally{
@@ -40,7 +40,7 @@ const pathName = useLocation().pathname;
     }, []);
 
     const matchedMeta = pageMetaData.find((item) => {
-        const slug = item.page_name
+        const slug = item.category_name
             ?.toLowerCase()
             .trim()
             .replace(/\s+/g, "-");

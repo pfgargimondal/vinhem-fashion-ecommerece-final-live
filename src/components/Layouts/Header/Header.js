@@ -175,8 +175,8 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
       });
 
       setIsNewUser(res.data.action === "register");
-      handleLoginClose();
-      setOtpModal(true);
+        handleLoginClose();
+        setOtpModal(true);
       // setLoginModal(false);
       setOtp(["", "", "", "", "", ""]);
     } catch (err) {
@@ -419,6 +419,7 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
     setUserDropdown(false);
   }, [pathName]);
 
+        // eslint-disable-next-line
   const openPhoneEmailOtp = () => {
 
     const containerId = emailToggle ? "emailLogin" : "phoneLogin";
@@ -1361,8 +1362,8 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
             </div>
 
             <div className="diehhweirwer mt-3">
-              <button onClick={openPhoneEmailOtp} className="btn btn-main w-100">Get OTP</button>
-              {/* <button onClick={sendOtp} className="btn btn-main w-100">Get OTP</button> */}
+              {/* <button onClick={openPhoneEmailOtp} className="btn btn-main w-100">Get OTP</button> */}
+              <button onClick={sendOtp} className="btn btn-main w-100">Get OTP</button>
 
               <p className="my-2 text-center">or</p>
 
