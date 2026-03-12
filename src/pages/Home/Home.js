@@ -17,6 +17,7 @@ export const Home = () => {
   const [loading, setLoading] = useState(true);
   const [pageMetaData, setPageMetaData] = useState([]);
   
+  // eslint-disable-next-line
   const pathName = useLocation().pathname;
 
   useEffect(() => {
@@ -37,13 +38,14 @@ export const Home = () => {
       fetchOnSale();
   }, []);
 
+
   const matchedMeta = pageMetaData.find((item) => {
       const slug = item.page_name
           ?.toLowerCase()
           .trim()
           .replace(/\s+/g, "-");
 
-      return `/${slug}` === pathName;
+      return `/${slug}` === '/home';
   });
 
   useMetaData({

@@ -257,7 +257,7 @@
     }
 
     .soifjoejopeor.d-flex{
-        display: block !important;
+        display: none !important;
     }
 
     .doewhruiwerwer_right img.d-none{
@@ -671,8 +671,9 @@
         display: none;
     }
 
-    .duiewhewijrrqq{
-        width: 33.33%;
+    .duiewhewijrrqq.d-none{
+        width: 100%;
+        display: block !important;
     }  
     
     span.res-currncy-radio{

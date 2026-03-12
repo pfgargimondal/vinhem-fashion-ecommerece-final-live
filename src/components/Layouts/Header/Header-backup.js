@@ -765,7 +765,7 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
                     </div>
 
                     <div className="col-lg-4">
-                      <div className="doewhruiwerwer_right fhhgsdgfggfsdfg sfeadeeerrrrr">
+                      <div className="doewhruiwerwer_right sfeadeeerrrrr">
                         <Link to="/"><img src={Logo} className="img-fluid d-none" alt="" /></Link>
 
                         <ul className="mb-0 ps-0 d-flex justify-content-between align-items-center">
@@ -851,7 +851,7 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
 
                   <div className="doiwejirhwer">
                     <div className="row align-items-center">
-                      <div className="col-4">
+                      <div className="col-8">
                         <div onClick={() => setResSearchToggle(false)} className={`doiejrowr-backdrop ${resSearchToggle ? "" : "d-none"} position-fixed w-100 h-100`}></div>
 
                         <form className={`dwejoijrwer ${resSearchToggle ? "dfghedfaewrwer" : "d-none"}`} onSubmit={handleResSearch}>
@@ -863,10 +863,6 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
                         </form>
 
                         <i className="fa-solid fa-bars d-none" id="res-toggle-btn" onClick={() => setResMenu(!resMenu)}></i>
-                      </div>
-
-                      <div className="col-4">
-                        <Link to="/" className="duiewhewijrrqq d-none"><img src={Logo} className="img-fluid" alt="" /></Link>
                       </div>
 
                       <div className="col-4">
