@@ -3107,11 +3107,11 @@ export const ProductDetail = () => {
         </button>
       </Modal>
 
-      {/* <ToastContainer
+      <ToastContainer
         position="top-right"
         autoClose={3000}
         style={{ zIndex: 9999999999 }}
-      /> */}
+      />
     </>
   );
 };

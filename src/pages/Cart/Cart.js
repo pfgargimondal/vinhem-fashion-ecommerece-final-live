@@ -2475,13 +2475,9 @@ export const Cart = () => {
                             </tr>
                           ):null}
 
-                          <tr>
+                          {/* <tr>
                             <td>After Discount :</td>
                               <td style={{display: "flex", alignItems: "center", justifyContent: "end"}}>
-                                  {/* <span style={{ textDecoration: "line-through", color: "#999" }}>
-                                    {formatPrice(totalPrice.total_mrp_price, { showDecimals: true })}
-                                  </span>&nbsp; */}
-
                                   {formatPrice(
                                   freeShipping
                                     ? (
@@ -2501,7 +2497,77 @@ export const Cart = () => {
                                   { showDecimals: true }
                                 )}
                               </td>
+                          </tr> */}
+                          {appliedDiscount > 0 && !freeShipping ? (
+                              <tr>
+                                {/* <td>Total Payable :</td> */}
+                                <td>After Discount :</td>
+                                  <td style={{display: "flex", alignItems: "center", justifyContent: "end"}}>
+                                      {/* <span style={{ textDecoration: "line-through", color: "#999" }}>
+                                        {formatPrice(totalPrice.total_mrp_price, { showDecimals: true })}
+                                      </span>&nbsp; */}
+                                      {formatPrice(
+                                      freeShipping
+                                        ? (
+                                            Number(totalPrice.total_selling_price) +
+                                            Number(totalPrice.total_add_on_charges) +
+                                            Number(totalPrice.custom_fit_charges) +
+                                            Number(totalPrice.stiching_charges)
+                                          )
+                                        : (
+                                            Number(totalPrice.total_selling_price) -
+                                            appliedDiscount +
+                                            Number(totalPrice.total_add_on_charges) +
+                                            Number(totalPrice.custom_fit_charges) +
+                                            Number(totalPrice.stiching_charges) +
+                                            Number(shippingCharge)
+                                          ),
+                                      { showDecimals: true }
+                                    )}
+                                  </td>
+                              </tr>
+                          ) : appliedDiscount > 0 && freeShipping ? (
+                            <tr>
+                              {/* <td>Total Payable :</td> */}
+                              <td>After Discount :</td>
+                                <td style={{display: "flex", alignItems: "center", justifyContent: "end"}}>
+                                    {/* <span style={{ textDecoration: "line-through", color: "#999" }}>
+                                      {formatPrice(totalPrice.total_mrp_price, { showDecimals: true })}
+                                    </span>&nbsp; */}
+                                    {formatPrice(
+                                    freeShipping
+                                      ? (
+                                          Number(totalPrice.total_selling_price) +
+                                          Number(totalPrice.total_add_on_charges) +
+                                          Number(totalPrice.custom_fit_charges) +
+                                          Number(totalPrice.stiching_charges)
+                                        )
+                                      : (
+                                          Number(totalPrice.total_selling_price) -
+                                          appliedDiscount +
+                                          Number(totalPrice.total_add_on_charges) +
+                                          Number(totalPrice.custom_fit_charges) +
+                                          Number(totalPrice.stiching_charges) +
+                                          Number(shippingCharge)
+                                        ),
+                                    { showDecimals: true }
+                                  )}
+                                </td>
+                            </tr>
+                          ): 
+
+                          <tr>
+                            <td>Total Payable :</td>
+                            <td>{formatPrice(Number(totalPrice.total_selling_price) + 
+                                  Number(totalPrice.total_add_on_charges) + 
+                                  Number(totalPrice.custom_fit_charges) + 
+                                  Number(totalPrice.stiching_charges) + 
+                                  Number(shippingCharge), { showDecimals: true })}
+                            </td>
                           </tr>
+                          }
+                          
+
                         </tbody>
                       </Table>                    
                     </div>
