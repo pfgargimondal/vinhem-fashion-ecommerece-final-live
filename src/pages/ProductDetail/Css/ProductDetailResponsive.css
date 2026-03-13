@@ -878,6 +878,10 @@
     }
 
     .small-image-tabs-res .nav-item img{
+        filter: brightness(0) invert(1);
+    }
+
+    .small-image-tabs-res .nav-item .nav-link.active img{
         display: none;
     }
 

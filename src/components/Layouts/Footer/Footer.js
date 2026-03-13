@@ -6,6 +6,8 @@ import http from "../../../http";
 import { useAuth } from "../../../context/AuthContext";
 
 import "./Footer.css";
+import { useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 
 
 export const Footer = ({ shouldHideFullHeaderFooterRoutes }) => {
@@ -224,6 +226,61 @@ export const Footer = ({ shouldHideFullHeaderFooterRoutes }) => {
   };
 
 
+  const googleLogin = useGoogleLogin({
+    flow: "implicit",
+    onSuccess: async (tokenResponse) => {
+      try {
+        setLoading(true);
+        
+        const userInfo = await axios.get(
+          "https://www.googleapis.com/oauth2/v1/userinfo",
+          {
+            headers: {
+              Authorization: `Bearer ${tokenResponse.access_token}`,
+            },
+          }
+        );
+        handleLoginClose();
+        const googleUser = userInfo.data;
+        const response = await http.post("/user/google-login", {
+          name: googleUser.name,
+          email: googleUser.email,
+          google_id: googleUser.id,
+          avatar: googleUser.picture,
+        });
+
+        if (response.data.success === true) {
+            setLoading(false);
+            dispatch({
+              type: "LOGIN",
+              payload: {
+                token: response.data.data.jwtToken,
+                user: response.data.data.user,
+              }
+            });
+
+            handleLoginClose();
+            navigate("/");
+        }else{
+          // alert(response.data.message);
+          handleLoginClose();
+          toast.error(response.data.message);
+        }
+
+      } catch (error) {
+        console.log(error);
+        alert("Google login failed");
+      }finally {
+        setLoading(false);
+      }
+    },
+
+    onError: () => {
+      alert("Google login failed");
+    },
+  });
+
+
 
   return (
     <>
@@ -373,11 +430,23 @@ export const Footer = ({ shouldHideFullHeaderFooterRoutes }) => {
 
                 <li className="fttr-info-divider">|</li>
 
-                <li className="dojelkwmriower"><i className="bi me-1 bi-telephone"></i> <span>+91 8981750096</span></li>
+                <li className="dojelkwmriower"><i className="bi me-1 bi-telephone"></i> 
+                    <a href="tel:8981750096">
+                      <span>+91 8981750096</span>
+                    </a>
+                </li>
 
                 <li className="fttr-info-divider">|</li>
 
-                <li className="dojelkwmriower"><i className="bi me-1 bi-whatsapp"></i> <span>+91 8981750096</span></li>
+                <li className="dojelkwmriower"><i className="bi me-1 bi-whatsapp"></i> 
+                    <a
+                      href="https://wa.me/918981750096"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span>+91 8981750096</span>
+                    </a>
+                </li>
               </ul>
 
               <p className="doejwojrowejower" style={{ textAlign: "center" }}>Secure shopping from India for Sarees, Salwar Kameez, Lehenga Cholis, Mens Wear, Kids Wears, Jewellery & Accessories for delivery in USA,UK and Worldwide.</p>
@@ -493,7 +562,7 @@ export const Footer = ({ shouldHideFullHeaderFooterRoutes }) => {
 
               <p className="my-2 text-center">or</p>
 
-              <button className="btn btn-main bg-white text-dark w-100"><img src="./images/search.png" className="me-2" alt="" /> Sign in with Google</button>
+              <button className="btn btn-main bg-white text-dark w-100" onClick={() => googleLogin()}><img src="./images/search.png" className="me-2" alt="" /> Sign in with Google</button>
             </div>
 
             <h6 className="dfweoijtweer mt-3">By continuing, I agree to <Link>Vinhem Fashion policies</Link> and <Link>T&Cs</Link></h6>

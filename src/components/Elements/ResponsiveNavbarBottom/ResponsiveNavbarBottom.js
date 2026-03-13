@@ -37,9 +37,15 @@ export const ResponsiveNavbarBottom = ({ setResSearchToggle, setResSignBottom })
          )}
 
         <div className="dwsfwwer mx-4 text-center">
+            <a
+                href="https://wa.me/918981750096"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
             <i class="bi mb-1 bi-whatsapp"></i>
 
             <p className="mb-0">Whatsapp</p>
+            </a>
         </div>
     </div>
   )

@@ -260,6 +260,15 @@
         display: none !important;
     }
 
+    .search-field .form-control{
+        padding: 1.4rem 3rem 1.4rem 1rem !important;
+        font-size: 1rem;
+    }
+    
+    .search-field .form-control::placeholder{
+        font-size: 1rem;
+    }
+
     .doewhruiwerwer_right img.d-none{
         display: block !important;
         width: 10rem;
