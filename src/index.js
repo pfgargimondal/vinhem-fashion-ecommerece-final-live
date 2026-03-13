@@ -25,7 +25,7 @@ root.render(
             <CartProvider>
               <WishlistProvider>
                 <PayPalScriptProvider options={{ "client-id": "Ac3LBYSEf-1c0Y37LZOTUEZgOdN_k05H_tU50qLlU2lfrHGK0w4VV6FuJYY5jBb3faC3O5FwZsgExAVp" }}>
-                  <GoogleOAuthProvider clientId="979908862202-qcs1ft90v0fkbigt3ec44atq3alt1m38.apps.googleusercontent.com">
+                  <GoogleOAuthProvider clientId="138316164481-fhioe59nih4eqgul1rc2f1ml11mbfo6e.apps.googleusercontent.com">
                     <AuthModalProvider>
                       <ChatProvider>
                         <App />

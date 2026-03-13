@@ -17,6 +17,9 @@ import { ResponsiveNavbarBottom } from "../../../components";
   // eslint-disable-next-line
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+import Loader from "../../Loader/Loader";
 
 export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, shouldHideHeaderCategoryRoutes }) => {
   const [resMenu, setResMenu] = useState(false);
@@ -288,6 +291,61 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
   };
 
 
+  const googleLogin = useGoogleLogin({
+    flow: "implicit",
+    onSuccess: async (tokenResponse) => {
+      try {
+        setLoading(true);
+        
+        const userInfo = await axios.get(
+          "https://www.googleapis.com/oauth2/v1/userinfo",
+          {
+            headers: {
+              Authorization: `Bearer ${tokenResponse.access_token}`,
+            },
+          }
+        );
+        
+        const googleUser = userInfo.data;
+        const response = await http.post("/user/google-login", {
+          name: googleUser.name,
+          email: googleUser.email,
+          google_id: googleUser.id,
+          avatar: googleUser.picture,
+        });
+
+        if (response.data.success === true) {
+            setLoading(false);
+            dispatch({
+              type: "LOGIN",
+              payload: {
+                token: response.data.data.jwtToken,
+                user: response.data.data.user,
+              }
+            });
+
+            handleLoginClose();
+            navigate("/");
+        }else{
+          // alert(response.data.message);
+          toast.error(response.data.message);
+        }
+
+      } catch (error) {
+        console.log(error);
+        alert("Google login failed");
+      }finally {
+        setLoading(false);
+      }
+    },
+
+    onError: () => {
+      alert("Google login failed");
+    },
+  });
+
+
+
   useEffect(() => {
     const body = document.querySelector("body");
 
@@ -530,6 +588,7 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
 
   return (
     <>
+    {(loading) && <Loader />}
       { !shouldHideFullHeaderFooterRoutes && (
         <header>
           <div className="advertisement-slider position-relative" style={{background: "url('/images/csadad.jpg') no-repeat", backgroundPosition: "top", backgroundSize: "cover"}}>
@@ -837,7 +896,8 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
                                       <div className="diwejikrwer">
                                         <button className="btn mb-3 btn-main w-100" onClick={handleLoginModal}>Sign in with Mobile/Email</button>
 
-                                        <button className="btn btn-main bg-white text-dark w-100"><img src="./images/search.png" className="me-2" alt="" /> Sign in with Google</button>
+                                        <button className="btn btn-main bg-white text-dark w-100" onClick={() => googleLogin()}>
+                                          <img src="./images/search.png" className="me-2" alt="" /> Sign in with Google</button>
                                       </div>
                                     </div>
                                   </>
@@ -1371,7 +1431,7 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
 
               <p className="my-2 text-center">or</p>
 
-              <button className="btn btn-main bg-white text-dark w-100"><img src="./images/search.png" className="me-2" alt="" /> Sign in with Google</button>
+              <button className="btn btn-main bg-white text-dark w-100" onClick={() => googleLogin()}><img src="./images/search.png" className="me-2" alt="" /> Sign in with Google</button>
             </div>
 
             <h6 className="dfweoijtweer mt-3">By continuing, I agree to <Link>Vinhem Fashion policies</Link> and <Link>T&Cs</Link></h6>
@@ -1557,16 +1617,16 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
           <div className="diwejikrwer">
             <button className="btn mb-3 btn-main w-100" onClick={() => {handleLoginModal(); setResSignBottom(false)}}>Sign in with Mobile/Email</button>
 
-            <button className="btn btn-main bg-white text-dark w-100"><img src="./images/search.png" className="me-2" alt="" /> Sign in with Google</button>
+            <button className="btn btn-main bg-white text-dark w-100" onClick={() => googleLogin()}><img src="./images/search.png" className="me-2" alt="" /> Sign in with Google</button>
           </div>
         </div>
       </div>
 
-      {/* <ToastContainer
+      <ToastContainer
           position="top-right"
           autoClose={3000}
           style={{ zIndex: 9999999999 }}
-        /> */}
+        />
 
     </>
   )
