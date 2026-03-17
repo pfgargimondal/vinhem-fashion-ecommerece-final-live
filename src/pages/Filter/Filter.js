@@ -1084,7 +1084,7 @@ export const Filter = () => {
         </div>
       </div>
 
-      <div className="filter-bottom-fixed d-none py-3 bg-white w-100">
+      <div className="filter-bottom-fixed d-none pt-3 bg-white w-100">
         <div className="d-flex justify-content-around">
           <div className="asdaedweewrr" onClick={handleResSortByToggle}>
             <div className="dowhijhwerr d-flex align-items-center">

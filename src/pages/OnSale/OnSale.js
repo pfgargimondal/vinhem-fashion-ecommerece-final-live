@@ -600,7 +600,7 @@ const pathName = useLocation().pathname;
             <h2>{OnSaleDetails?.data?.section6_title}</h2>
           </div>
 
-          <div className="dfngjhfdgdf sdcvewfaasd overflow-hidden">
+          <div className="dfngjhfdgdf sdcvewfaasd">
             <div className="row">
               <div className="col-lg-4">
                 <Link to={OnSaleDetails?.data?.section6_url1}>
@@ -641,7 +641,7 @@ const pathName = useLocation().pathname;
           <div className="dfgbdfjhgdf">
             <h2>{OnSaleDetails?.data?.section8_title}</h2>
           </div>
-          <div className="fhfgdfgfdg">
+          <div className="fhfgdfgfdg fsdeqqeqwerr">
             <div className="row">
 
               <div className="col-lg-3 col-md-6 col-sm-6 col-6">

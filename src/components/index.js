@@ -15,3 +15,4 @@ export {UserProfileNavMenu} from "./Elements/UserProfileNavMenu/UserProfileNavMe
 
 
 export {ResponsiveNavbarBottom} from "./Elements/ResponsiveNavbarBottom/ResponsiveNavbarBottom";
+export {ScrollToTopButton} from "./Elements/ScrollToTopButton/ScrollToTopButton";

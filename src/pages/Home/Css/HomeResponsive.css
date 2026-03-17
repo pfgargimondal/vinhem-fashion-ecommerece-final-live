@@ -770,6 +770,21 @@
 
 
 
+@media only screen and (max-width: 350px){
+    .fgjdfgf3298.d-inline-flex{
+        display: grid !important;
+    }
+
+    .dbfggfhfh {
+        width: 145px;
+        height: 145px;
+    }
+}
+
+
+
+
+
 @media only screen and (max-width: 337px){
     footer .footer-bottom > div.container-fluid > ul li:nth-child(4){
         color: var(--bs-body-color);
@@ -789,6 +804,11 @@
     li.dojelkwmriower {
         width: 47%;
         font-size: 13px;
+    }
+
+    .dbfggfhfh {
+        width: 135px;
+        height: 135px;
     }
 }
 
@@ -812,5 +832,18 @@
     footer .footer-bottom > div.container-fluid > ul li:nth-child(4),
     footer .footer-bottom > div.container-fluid > ul li:nth-child(6){
         display: none;
+    }
+
+    .fgjdfgf3298.d-inline-flex{
+        display: grid !important;
+    }
+
+    .fgjdfgf3298 {
+        grid-template-columns: auto !important;
+    }
+
+    .dbfggfhfh {
+        width: auto;
+        height: auto;
     }
 }

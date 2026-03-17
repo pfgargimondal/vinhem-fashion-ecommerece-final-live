@@ -1,4 +1,4 @@
-import { Header, Footer, ScrollToTop } from "./components";
+import { Header, Footer, ScrollToTop, ScrollToTopButton } from "./components";
 import { AllRoutes } from "./routes/AllRoutes.js";
 import { useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -43,6 +43,8 @@ function App() {
       <Footer shouldHideFullHeaderFooterRoutes={shouldHideFullHeaderFooterRoutes} /> 
 
       <ScrollToTop />
+
+      <ScrollToTopButton />
     </div>
   );
 }

@@ -78,6 +78,7 @@
   height: 359px;
   border-radius: 25px;
   border: 4px solid var(--pink-main-color);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .dfgfdg7853 img {
@@ -150,6 +151,7 @@
   border-radius: 25px;
   margin-bottom: 1rem;
   border: 4px solid var(--pink-main-color);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 .dfbdff img {
   width: 100%;
@@ -216,11 +218,11 @@
   height: auto !important;
 }
 
-
 .donhweirwer_inner img{
   border-radius: 0;
   height: 300px;
   object-fit: cover;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 
@@ -264,6 +266,10 @@
   background-size: cover;
   background-position: center;
   border-radius: 25px;
+}
+
+.fsdeqqeqwerr .dfbhhfgdf55 {
+  border: 4px solid var(--pink-main-color);
 }
 
 .dfbhhfgdf55 {

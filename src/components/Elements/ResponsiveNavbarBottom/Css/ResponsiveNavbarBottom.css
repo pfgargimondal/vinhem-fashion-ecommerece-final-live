@@ -40,6 +40,15 @@
     .res-navbar-bttm.d-none{
         display: flex !important;
     }    
+
+    .filter-bottom-fixed.py-3{
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.5rem !important;
+    }
+
+    .doiwejiwejr h4{
+        font-size: 1.2rem;
+    }
 }
 
 
