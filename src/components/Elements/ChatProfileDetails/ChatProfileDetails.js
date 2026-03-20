@@ -1,13 +1,24 @@
 import { useState } from "react";
 import "./Css/ChatProfileDetails.css";
-import http from "../../../http";
+
+// ✅ GLOBAL FLAG (IMPORTANT)
+let zohoInitialized = false;
+
+// ✅ INIT FUNCTION (RUN ONLY ONCE)
+const initZohoUser = () => {
+  if (window.$zoho && window.$zoho.salesiq && !zohoInitialized) {
+    window.$zoho.salesiq.visitor.name("Customer");
+    window.$zoho.salesiq.visitor.email("customer@email.com");
+
+    zohoInitialized = true;
+  }
+};
 
 export const ChatProfileDetails = ({ setChatProfileDetailsShow }) => {
 
   const [messages, setMessages] = useState([
     {
       sender: "bot",
-      // name: "VF",
       avatar: "/Fevicon.png",
       text: "Welcome to VinHem Fashion! How can I help you?",
     },
@@ -15,50 +26,40 @@ export const ChatProfileDetails = ({ setChatProfileDetailsShow }) => {
 
   const [input, setInput] = useState("");
 
-  // Send user message
-  const handleSend = async () => {
+  const handleSend = () => {
     if (!input.trim()) return;
 
-    const newUserMsg = {
-      sender: "user",
-      avatar: "/Fevicon.png",
-      text: input,
-    };
-
-    setMessages(prev => [...prev, newUserMsg]);
-
     const userMessage = input;
+
+    // ✅ Add user message in UI
+    setMessages(prev => [
+      ...prev,
+      { sender: "user", avatar: "/Fevicon.png", text: userMessage }
+    ]);
+
     setInput("");
 
-    // ---- API CALL TO BACKEND OR CHATGPT ----
-    try {
-      const response = await http.post(
-        "/chat",
-        { message: userMessage } // ✅ data goes here
-      );
+    // ✅ Initialize Zoho (only once)
+    initZohoUser();
 
-      const data = response.data; // ✅ Axios auto parses JSON
+    // ✅ Open Zoho chat safely
+    if (window.$zoho && window.$zoho.salesiq) {
+      try {
+        window.$zoho.salesiq.floatwindow.visible("show");
+      } catch (e) {
+        console.log("Zoho not ready yet");
+      }
+    }
 
-      const botReply = {
+    // ✅ Show system message
+    setMessages(prev => [
+      ...prev,
+      {
         sender: "bot",
         avatar: "/Fevicon.png",
-        text: data.reply,
-      };
-
-      setMessages(prev => [...prev, botReply]);
-
-    } catch (error) {
-      // console.log("Chat error:", error);
-
-      setMessages(prev => [
-        ...prev,
-        {
-          sender: "bot",
-          avatar: "/Fevicon.png",
-          text: "Sorry, something went wrong!",
-        },
-      ]);
-    }
+        text: "We’ve opened live support. Please continue there →",
+      },
+    ]);
   };
 
   return (
@@ -73,7 +74,7 @@ export const ChatProfileDetails = ({ setChatProfileDetailsShow }) => {
           <div className="text-center">
             <img src="/images/logo.png" className="bg-white p-2 rounded-2 mb-3" alt="" />
           </div>
-          
+
           <h6 className="mb-1 text-white">VinHem Fashion CRM Support</h6>
           <p className="mb-0 text-white">Typically replies within 7 minutes</p>
         </div>
@@ -84,19 +85,19 @@ export const ChatProfileDetails = ({ setChatProfileDetailsShow }) => {
             {messages.map((msg, i) => (
               <div
                 key={i}
-                className={`doewkmjrewr d-flex align-items-center mb-4 ${
-                  msg.sender === "user" ? "flex-row-reverse user-msge" : "admn-msge"
+                className={`d-flex align-items-center mb-4 ${
+                  msg.sender === "user"
+                    ? "flex-row-reverse user-msge"
+                    : "admn-msge"
                 }`}
               >
-                {/* <div className="imjdeqr text-center text-white rounded-pill mx-1"> */}
-                <div className="text-center text-white rounded-pill mx-1">
-                  {/* <p className="mb-0">{msg.avatar}</p> */}
-                  <img className="mb-0" src={msg.avatar} alt="Bot" />
+                <div className="text-center rounded-pill mx-1">
+                  <img src={msg.avatar} alt="avatar" />
                 </div>
 
-                <div className="doejwrkmwer">
+                <div>
                   <div
-                    className={`dowerwerr p-3 ${
+                    className={`p-3 ${
                       msg.sender === "user"
                         ? "rounded-end-1 rounded-bottom-4 rounded-start-4"
                         : "rounded-end-4 rounded-bottom-4 rounded-top-1"
@@ -108,15 +109,6 @@ export const ChatProfileDetails = ({ setChatProfileDetailsShow }) => {
               </div>
             ))}
 
-            <div className="diekjroijwerwe rounded-end-1 rounded-bottom-4 rounded-start-4 p-3">
-              <label htmlFor="" className="form-label">Email <span style={{ color: "var(--pink-main-color)" }}>*</span></label>
-
-              <div className="dsfewfrettee position-relative">
-                <input type="email" className="form-control" placeholder="your@email.com" />
-
-                <button className="btn position-absolute px-3 btn-main"><i class="fa-solid fa-angle-right"></i></button>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -127,13 +119,7 @@ export const ChatProfileDetails = ({ setChatProfileDetailsShow }) => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
-            name="message"
           ></textarea>
-
-          <div className="doiewjrmwerwer position-absolute d-flex align-items-center top-50 end-0 translate-middle-y">
-            <i className="bi p-2 h-100 bi-paperclip"></i>
-            <i className="bi p-2 h-100 bi-emoji-smile"></i>
-          </div>
         </div>
       </div>
     </div>
