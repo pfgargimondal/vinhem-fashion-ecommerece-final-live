@@ -1245,8 +1245,23 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
         <div className="cojeojewrer mt-4">
           {mainCategory?.map((category) => {
 
-            const leftBanners = category.mainCategory_banner?.slice(0, 2);  // first 2 images
-            const rightBanners = category.mainCategory_banner?.slice(2, 4); // next 2 images
+            // const leftBanners = category.mainCategory_banner?.slice(0, 2);  // first 2 images
+            // const rightBanners = category.mainCategory_banner?.slice(2, 4); // next 2 images
+            const mainBanner = category.mainCategory_banner?.[0];
+            const leftBanners = [1, 2].map((i) => ({
+              image: mainBanner?.[`category_bannerImage${i}`],
+              title: mainBanner?.[`category_bannerTitle${i}`],
+              url: mainBanner?.[`category_bannerURL${i}`],
+            }));
+
+            const rightBanners = [3, 4].map((i) => ({
+              image: mainBanner?.[`category_bannerImage${i}`],
+              title: mainBanner?.[`category_bannerTitle${i}`],
+              url: mainBanner?.[`category_bannerURL${i}`],
+            }));
+
+            console.log(leftBanners, 'leftBanners');
+            console.log(rightBanners, 'rightBanners');
 
           return (
             
@@ -1318,16 +1333,17 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
                               <div className="row">
                                 <div className="col-lg-7">
                                   <div className="row">
-                                    {leftBanners?.map((b) => (
-                                      <div className="col-lg-6" key={b.id}>
+                                    {leftBanners?.map((b, index) => (
+                                      <div className="col-lg-6" key={index}>
                                         <div className="pkopkerrwer text-center">
                                           <img
-                                            src={`${b.category_bannerImage_url}/${b.category_bannerImage}`}
+                                            src={`${mainBanner?.category_bannerImage_url}/${b.image}`}
                                             className="w-100"
-                                            alt=""
+                                            alt={b.title || "banner"}
                                           />
+                                          
                                           <div className="dkewbjnrkwejrwer mt-2">
-                                            <a href={b.category_bannerURL}>SHOP NOW</a>
+                                            <a href={b.url}>SHOP NOW</a>
                                           </div>
                                         </div>
                                       </div>
@@ -1338,11 +1354,11 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
                                 <div className="col-lg-5">
                                   {rightBanners?.map((b, index) => (
                                     <div className="pkopkerrwer safsrfwee text-center mb-4" key={index}>
-                                      <Link to={b.category_bannerURL}>
+                                      <Link to={b.url}>
                                         <img
-                                          src={`${b.category_bannerImage_url}/${b.category_bannerImage}`}
+                                          src={`${mainBanner?.category_bannerImage_url}/${b.image}`}
                                           className="w-100"
-                                          alt=""
+                                          alt={b.title || "banner"}
                                         />
                                       </Link>
                                     </div>

@@ -241,7 +241,17 @@
 
     .mnctgy a{
         color: var(--pink-main-color);
+        font-weight: 500;
     }
+    
+    .h-m-m-inner .oieniuiewr_inner h5{
+        color: var(--pink-main-color);
+    }
+
+    .aedqeqweqqee p,
+    .doejwojrowejower{
+        text-align: justify;
+    }    
 
     .header-main-wrapper::-webkit-scrollbar{
         height: 0;

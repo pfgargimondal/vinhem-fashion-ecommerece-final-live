@@ -14,6 +14,9 @@ header .advertisement-slider:before {
   bottom: 0;
   background: rgba(133, 13, 85, 0.6);
 }
+.vertical-image{
+  cursor: pointer;
+}
 header .advertisement-slider .marquee-container {
   display: flex;
   flex-direction: column;
