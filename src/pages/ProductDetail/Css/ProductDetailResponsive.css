@@ -963,7 +963,7 @@
     }
 
     .oijdkejwjewr.p-4{
-        padding-inline: 0 !important;
+        padding: 10px !important;
     }
 
     .turbon-chart-modal,
@@ -1461,11 +1461,6 @@
 
 
 @media only screen and (max-width: 350px){
-    .oijdmkmeiwrew.d-flex{
-        flex-direction: column;
-        justify-content: center;
-    }
-
     .oijdmkmeiwrew .copn-cde{
         width: 100%;
     }

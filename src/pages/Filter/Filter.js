@@ -996,20 +996,23 @@ export const Filter = () => {
             </div>
           </div>
         </div>
-
-        <div className="idwejrhewres pb-5 mt-5">
-          <div
-            className="pt-4"
-            dangerouslySetInnerHTML={{
-              __html: allFilterData?.filter_content?.description && (allFilterData?.filter_content.description),
-            }}
-          />
-        </div>
+        
         <ToastContainer
           position="top-right"
           autoClose={3000}
           style={{ zIndex: 9999999999 }}
         />
+      </div>
+
+      <hr className="doewjirhweiewrer mt-5" />
+
+      <div className="idwejrhewres pb-5 mt-5">
+        <div className="container-fluid">
+          <div className="pt-4" dangerouslySetInnerHTML={{
+              __html: allFilterData?.filter_content?.description && (allFilterData?.filter_content.description),
+            }}
+          />
+        </div>
       </div>
 
       <div className="odjweoijrwer">

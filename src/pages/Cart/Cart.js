@@ -2068,7 +2068,7 @@ export const Cart = () => {
                                     </div>
                                   </div>
 
-                                  <div className="esrwerwrgtwwrwre ps-1">
+                                  <div className="esrwerwrgtwwrwre ps-1" style={{ flex: 1 }}>
                                     <div className="dowehriwerwer sdvwdewrwerwere">
                                       <div className="dknwekhwe">
                                         <div className="dokwejlkpewr d-flex flex-wrap align-items-center justify-content-between">
