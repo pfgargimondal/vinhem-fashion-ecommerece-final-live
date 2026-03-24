@@ -5,8 +5,7 @@
     }
 
     .hdkgdfg.sticky-top{
-        top: 2% !important;
-        z-index: 999999;
+        z-index: 9999999;
     }
 
     .hdkgdfg{
@@ -49,7 +48,7 @@
         left: 0;
         bottom: 0;
         right: 0;
-        z-index: 999999;
+        z-index: 9999999;
         opacity: 1;
         visibility: visible;
     }

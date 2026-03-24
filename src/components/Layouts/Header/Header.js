@@ -103,6 +103,18 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
     countryCode: ""
   });
 
+  const handleLogout = () => {
+
+    localStorage.removeItem("jwtToken");
+    localStorage.removeItem("user");
+
+    dispatch({ type: "LOGOUT" });
+    // navigate("/login");
+    
+    // logout();           
+    // navigate("/login"); 
+  };
+
 
   useEffect(() => {
       const fetchCountryCode = async () => {
@@ -325,6 +337,7 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
             });
 
             handleLoginClose();
+            setResSignBottom(false);
             navigate("/");
         }else{
           // alert(response.data.message);
@@ -1202,7 +1215,11 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
               <>
                 {/* <Link to="/profile"><i class="bi me-1 bi-person"></i> {user.name}</Link> */}
 
-                <h4 className="mb-4">Hi, {user.name}</h4>
+                <div className="d-flex align-items-center justify-content-between mb-4">
+                  <h4 className="mb-0">Hi, {user.name}</h4>
+
+                  <p onClick={handleLogout} className="mb-0" style={{ color: "var(--pink-main-color)", fontWeight: 500, textTransform: "uppercase" }}><i class="fa-solid me-1 fa-right-from-bracket"></i> Logout</p>
+                </div>
 
                 <div className="dwoejoidwemjr col-lg-4">
                   <ol className="steps">
@@ -1234,7 +1251,9 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
               </>
             ) : (
               <>
-                <ul className="d-flex align-items-center mb-0 ps-0">
+                <ul className="d-flex align-items-center justify-content-between w-100 mb-0 ps-0">
+                  <li><h4 className="mb-0">Hi, User</h4></li>
+
                   <li onClick={() => {setResSignBottom(!resSignBottom); setResMenu(false)}}><span >SIGN IN / SIGN UP</span></li>
                 </ul>
                 {/* <Link onClick={() => {setResSignBottom(!resSignBottom); setResMenu(false)}}><i class="bi me-1 bi-person"></i> My Account</Link> */}

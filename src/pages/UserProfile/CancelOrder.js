@@ -16,6 +16,7 @@ export const CancelOrder = () => {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
+  const [resUsernavToggle, setResUsernavToggle] = useState(false);
 
   const searchRef = useRef(null);
 
@@ -146,7 +147,7 @@ export const CancelOrder = () => {
         <div className={styles.fbghdfg}>
           <div className="row">
             <div className="col-lg-3">
-              <UserProfileNavMenu />
+              <UserProfileNavMenu resUsernavToggle={resUsernavToggle} setResUsernavToggle={setResUsernavToggle} />
             </div>
 
             <div className="col-lg-9">

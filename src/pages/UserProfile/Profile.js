@@ -12,6 +12,7 @@ export const Profile = () => {
 
   const [previewImage, setPreviewImage] = useState(null);
   const [isEditable, setIsEditable] = useState(false);
+  const [resUsernavToggle, setResUsernavToggle] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -151,7 +152,7 @@ export const Profile = () => {
         <div className={styles.fbghdfg}>
           <div className="row">
             <div className="col-lg-3">
-              <UserProfileNavMenu />
+              <UserProfileNavMenu resUsernavToggle={resUsernavToggle} setResUsernavToggle={setResUsernavToggle} />
             </div>
 
             <div className="col-lg-9">
@@ -168,6 +169,8 @@ export const Profile = () => {
 
                 <div className={`${styles.fbhdfs} row justify-content-between align-items-center mb-4`}>
                   <div className={`${styles.dfghdfgdf} col-4 mb-4`}>
+                    <i onClick={() => setResUsernavToggle(true)} className={`fa-solid ${styles.bgdfbsseeew} me-2 fa-angles-right`}></i>
+                     
                     <div className={`${styles.sdfjhsdfs} position-relative`}>
                       <img
                         src={previewImage || "./images/pfle.jpg"}

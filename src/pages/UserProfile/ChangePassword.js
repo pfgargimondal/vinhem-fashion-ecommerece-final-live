@@ -11,6 +11,7 @@ import http from "../../http";
 export const ChangePassword = () => {
   const navigate = useNavigate();
   const { token, dispatch } = useAuth();
+  const [resUsernavToggle, setResUsernavToggle] = useState(false);
 
   const [inputs, setInputs] = useState({
     new_password: "",
@@ -77,7 +78,7 @@ export const ChangePassword = () => {
         <div className={styles.fbghdfg}>
           <div className="row">
             <div className="col-lg-3">
-              <UserProfileNavMenu />
+              <UserProfileNavMenu resUsernavToggle={resUsernavToggle} setResUsernavToggle={setResUsernavToggle} />
             </div>
 
             <div className="col-lg-9">

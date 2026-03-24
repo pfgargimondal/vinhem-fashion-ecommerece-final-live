@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 import "./Css/UserProfileNavMenu.css";
 import "./Css/UserProfileNavMenuResponsive.css";
 import { useAuth } from "../../../context/AuthContext";
 
-export const UserProfileNavMenu = () => {
+export const UserProfileNavMenu = ({ resUsernavToggle, setResUsernavToggle }) => {
+    const { user } = useAuth();       
 
-    const { user } = useAuth();
-    const [resUsernavToggle, setResUsernavToggle] = useState(false);
+    const pathName = useLocation().pathname;
 
     useEffect(() => {
         const html = document.querySelector("html");
@@ -39,17 +39,19 @@ export const UserProfileNavMenu = () => {
     return (
         <>
             <div className="nmkewjirwerr">
-                <div className="user-res-nav-menu-btn d-none my-4" onClick={() => setResUsernavToggle(true)} id="user-prfile-res-btn">
-                    <div className="dowerkwerwer d-flex align-items-center">
-                        <div className="sdfjhsdfs">
-                            <img src="./images/pfle.jpg" alt="" />
+                {pathName !== "/profile" && (
+                    <div className="user-res-nav-menu-btn d-none my-4" onClick={() => setResUsernavToggle(true)} id="user-prfile-res-btn">
+                        <div className="dowerkwerwer d-flex align-items-center">
+                            <div className="sdfjhsdfs">
+                                <img src="./images/pfle.jpg" alt="" />
+                            </div>
+
+                            <h4 className="mb-0 ms-2">{user.name}</h4>
                         </div>
 
-                        <h4 className="mb-0 ms-2">{user.name}</h4>
+                        <i class="fa-solid ms-2 fa-angles-right"></i>
                     </div>
-
-                    <i class="fa-solid ms-2 fa-angles-right"></i>
-                </div>
+                )}
 
                 {/* <p className="dokejrlwerwer d-none mb-0">
                     <Link to="/"><i className="fa-solid me-1 fa-arrow-left"></i> Back To Home <i className="fa-solid ms-1 fa-house"></i></Link>
@@ -96,13 +98,13 @@ export const UserProfileNavMenu = () => {
                         </button>
                     </Link>
 
-                    <Link to="/chat">
+                    {/* <Link to="/chat">
                         <button className="btn d-flex align-items-center sodmfjlskpflser akdhjkashriwerwer">
                             <i class="fa-regular me-1 fa-comments"></i>
                             
                             <p className="position-relative mb-0">Chat <span></span></p>
                         </button>
-                    </Link>
+                    </Link> */}
 
                     <Link onClick={handleLogout}>
                         <button className="btn akdhjkashriwerwer">

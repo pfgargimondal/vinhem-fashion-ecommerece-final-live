@@ -1062,7 +1062,7 @@ export const ProductDetail = () => {
                           </Col>
 
                           <Col xs={9} className="large-image-tab">
-                            <div className="doerfkwerewrewr position-relative">
+                            <div className="doerfkwerewrewr fsdgaeegydesere position-relative">
                               {/* <Tab.Content>
                               {productDetails?.data?.product_image?.encoded_image_url_1 && (
                                 <Tab.Pane eventKey="first">
@@ -2521,7 +2521,7 @@ export const ProductDetail = () => {
                               pagination={{ clickable: true }}
                               navigation={true}
                               autoplay={{
-                                delay: 1000,
+                                delay: 3000,
                                 disableOnInteraction: false,
                               }}
                               className="mySwiper"
@@ -2881,10 +2881,10 @@ export const ProductDetail = () => {
           showLaterModal ? "later-modal" : "later-modal later-modal-hide"
         } position-fixed bg-white`}
       >
-        <div className="s-s-m-header d-flex align-items-center justify-content-between p-3 border-bottom-0">
+        <div className="s-s-m-header d-flex align-items-center justify-content-end p-3 border-bottom-0">
           {/* <h4 className="mb-0"></h4> */}
 
-          <i class="bi bi-x-lg" onClick={handleLaterClose}></i>
+          <i class="bi bi-x" onClick={handleLaterClose}></i>
         </div>
 
         <div className="later-modal-body text-center p-4 pt-0">

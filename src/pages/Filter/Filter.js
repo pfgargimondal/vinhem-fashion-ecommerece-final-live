@@ -331,6 +331,7 @@ export const Filter = () => {
       try {
         const getresponse = await http.get("/product-category");
         const allresponse = getresponse.data;
+
         setMainCatgry(allresponse.data);
       } catch (error) {
         console.error("Error fetching main category:", error);
@@ -398,6 +399,7 @@ export const Filter = () => {
     const fetchAllProduct = async () => {
       try {
         const response = await http.post("/fetch-product", { category, subcategory });
+
         const getPageMetaData = await http.get("/get-all-page-meta-title");
 
         const allData = response.data?.data;
@@ -1004,7 +1006,9 @@ export const Filter = () => {
         />
       </div>
 
-      <hr className="doewjirhweiewrer mt-5" />
+      {allFilterData?.filter_content.description && (
+        <hr className="doewjirhweiewrer mt-5" />
+      )}      
 
       <div className="idwejrhewres pb-5 mt-5">
         <div className="container-fluid">

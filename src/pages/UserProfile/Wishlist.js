@@ -15,6 +15,7 @@ export const Wishlist = () => {
   const [wishlistItems, setWishlistItems] = useState([]);
   const { formatPrice } = useCurrency();
   const [loading, setLoading] = useState(true);
+  const [resUsernavToggle, setResUsernavToggle] = useState(false);
     
 
   useEffect(() => {
@@ -48,7 +49,7 @@ export const Wishlist = () => {
                 <div className={styles.fbghdfg}>
                     <div className="row">
                         <div className="col-lg-3">
-                            <UserProfileNavMenu />
+                            <UserProfileNavMenu resUsernavToggle={resUsernavToggle} setResUsernavToggle={setResUsernavToggle} />
                         </div>
 
                         <div className="col-lg-9">

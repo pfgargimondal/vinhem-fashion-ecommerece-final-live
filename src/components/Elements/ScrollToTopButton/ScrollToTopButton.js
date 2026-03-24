@@ -1,7 +1,17 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
+import http from "../../../http";
+
+
 
 export const ScrollToTopButton = () => {
   const [visible, setVisible] = useState(false);
+  const [mainCatgry, setMainCatgry] = useState([]);
+
+  const pathName = useLocation().pathname;
+
+  console.log(pathName);
 
   // Show button when page is scrolled down
   const toggleVisibility = () => {
@@ -11,6 +21,21 @@ export const ScrollToTopButton = () => {
       setVisible(false);
     }
   };
+
+  useEffect(() => {
+    const fetchMainCategory = async () => {
+      try {
+        const getresponse = await http.get("/product-category");
+        const allresponse = getresponse?.data?.data;
+
+        setMainCatgry(allresponse);
+      } catch (error) {
+        console.error("Error fetching main category:", error);
+      }
+    };
+
+    fetchMainCategory();
+  }, []);
 
   // Scroll to top smoothly
   const scrollToTop = () => {
@@ -29,7 +54,7 @@ export const ScrollToTopButton = () => {
   return (
     <>
       {visible && (
-        <button onClick={scrollToTop} style={styles.button}>↑</button>
+        <button onClick={scrollToTop} style={{...styles.button, bottom: mainCatgry?.some(item => pathName.startsWith(`/${item.mainCategory_slug}`)) ? "12rem" : "8rem"}}>↑</button>
       )}
     </>
   );
@@ -38,7 +63,6 @@ export const ScrollToTopButton = () => {
 const styles = {
   button: {
     position: "fixed",
-    bottom: "11rem",
     right: "1rem",
     width: "3rem",
     height: "3rem",
