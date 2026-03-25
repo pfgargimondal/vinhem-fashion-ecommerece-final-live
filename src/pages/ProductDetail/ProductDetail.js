@@ -2343,7 +2343,7 @@ export const ProductDetail = () => {
                                             "0" && (
                                             <div className="odjjkwehrihwerewr mb-4">
                                               <p>
-                                                Celebrity <br />{" "}
+                                                Style <br />{" "}
                                                 <span>
                                                   {productDetails?.data?.celebrity}
                                                 </span>
