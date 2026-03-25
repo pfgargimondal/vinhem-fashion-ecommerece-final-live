@@ -4,39 +4,64 @@ import { UserProfileNavMenu } from "../../components";
 import { useAuth } from "../../context/AuthContext";
 import http from "../../http";
 import styles from "./Css/Wishlist.module.css";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useCurrency } from "../../context/CurrencyContext";
 import Loader from "../../components/Loader/Loader";
-
+import { useWishlist } from "../../context/WishlistContext";
 
 export const Wishlist = () => {
 
   const { token } = useAuth();
   const [wishlistItems, setWishlistItems] = useState([]);
   const { formatPrice } = useCurrency();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [resUsernavToggle, setResUsernavToggle] = useState(false);
-    
+  const { setWishlistCount } = useWishlist();
 
-  useEffect(() => {
-    if (!token) return;
+    const fetchWishlist = useCallback(async () => {
+        if (!token) return;
 
-    const fetchWishlist = async () => {
+        setLoading(true);
+        try {
+            const res = await http.get("/user/get-wishlist", {
+            headers: { Authorization: `Bearer ${token}` },
+            });
+            setWishlistItems(res.data || []);
+        } catch (error) {
+            console.error("Failed to fetch wishlist", error);
+        } finally {
+            setLoading(false);
+        }
+    }, [token]);
+
+    useEffect(() => {
+        fetchWishlist();
+    }, [fetchWishlist]);
+
+    const handleRemoveItem = async (wishlistItemId) => {
+      if (!token) return;
         setLoading(true);
       try {
-        const res = await http.get("/user/get-wishlist", {
-          headers: { Authorization: `Bearer ${token}` },
+        await http.post(
+          "/user/user-remove-wishlist",
+          { wishlist_item_id: wishlistItemId },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        // Remove locally from state
+        setWishlistItems((prev) => {
+          const updated = prev.filter((item) => item.id !== wishlistItemId);
+          setWishlistCount(updated.length);   // update count correctly
+          return updated;
         });
-        setWishlistItems(res.data || []);
+        fetchWishlist();
       } catch (error) {
-        console.error("Failed to fetch wishlist", error);
+        console.error("Failed to remove item", error);
       } finally {
         setLoading(false);
-      }
+    }
     };
-
-    fetchWishlist();
-  }, [token]);
 
   
     if (loading) {
@@ -82,7 +107,7 @@ export const Wishlist = () => {
                                                         </div>
                                                     )}
                                                     <div className={`${styles.image} position-relative`}>
-                                                        <div className={`${styles.ddfhfgsedegjfree} position-absolute end-0`}>
+                                                        <div className={`${styles.ddfhfgsedegjfree} position-absolute end-0`} onClick={() => handleRemoveItem(wishlistProduct.id)}>
                                                             <i class="bi me-2 bi-x-circle-fill"></i>
                                                         </div>
 
