@@ -165,11 +165,17 @@ export const Profile = () => {
                       Home <i className="fa-solid ms-1 fa-house"></i>
                     </Link>
                   </p> */}
+
+                  <div className={`${styles.fbhdfs} ${styles.fdndfjh} ${styles.iehirjwoerwer} d-none col-4 align-items-center justify-content-end`}>
+                    <button className="btn" onClick={handleEdit}>
+                      <i className="fa-solid fa-pen"></i> Edit
+                    </button>
+                  </div>
                 </div>
 
                 <div className={`${styles.fbhdfs} row justify-content-between align-items-center mb-4`}>
                   <div className={`${styles.dfghdfgdf} col-4 mb-4`}>
-                    <i onClick={() => setResUsernavToggle(true)} className={`fa-solid ${styles.bgdfbsseeew} me-2 fa-angles-right`}></i>
+                    <i onClick={() => setResUsernavToggle(true)} className={`fa-solid ${styles.bgdfbsseeew} d-none me-2 fa-angles-right`}></i>
                      
                     <div className={`${styles.sdfjhsdfs} position-relative`}>
                       <img
@@ -196,13 +202,7 @@ export const Profile = () => {
                     <div className={styles.dfbghdfg}>
                       <h5 className="mb-0">{formData.name}</h5>
                     </div>
-                  </div>
-
-                  <div className={`mb-3 ${styles.fbhdfs} ${styles.fdndfjh} ${styles.iehirjwoerwer} d-none col-4 align-items-center justify-content-end`}>
-                    <button className="btn" onClick={handleEdit}>
-                      <i className="fa-solid fa-pen"></i> Edit
-                    </button>
-                  </div>
+                  </div>                  
                   
                   <div className={`${styles.dwoejoidwemjr} col-lg-4`}>
                     <ol className={styles.steps}>
@@ -219,7 +219,7 @@ export const Profile = () => {
 
                         <img src="./images/sae.png" alt="" />
 
-                        <span className={styles.oajeorjer}>Gold <br /> <span>Shop 25,000 To upgrade</span></span>
+                        <span className={styles.oajeorjer}>Gold <br /> <span>Shop 25,000 <br /> To upgrade</span></span>
                       </li>
 
                       <li className={`${styles.step}`} data-step={3}>
@@ -473,11 +473,11 @@ export const Profile = () => {
                     </div>
 
                     <div className={`${styles.dienwrhwerwer}`}>
-                      <div className={styles.dnjhsddsfsd}>
+                      <div className={`${styles.dnjhsddsfsd} text-center`}>
                         {!isEditable ? (
-                          <button disabled>Submit</button>
+                          <button disabled>Save</button>
                         ) : (
-                          <button onClick={handleSave}>Submit</button>
+                          <button onClick={handleSave}>Save</button>
                         )}
                       </div>
                     </div>

@@ -282,6 +282,22 @@ form input:global(.form-control){
   font-size: 1.2rem !important;
 }
 
+.ddfhfgsedegjfree{
+  top: 4%;
+}
+
+.ddfhfgsedegjfree i{
+  color: var(--pink-main-color);
+  font-size: 2rem;
+  transition: 0.2s ease-in-out;
+}
+
+.ddfhfgsedegjfree p{
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+
 
 @media only screen and (max-width: 991px){
   .images img {

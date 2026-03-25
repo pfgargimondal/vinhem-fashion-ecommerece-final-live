@@ -600,16 +600,12 @@ export const Wedding = () => {
       <div className="fgndfjhgfgds pt-5">
         <div className="container-fluid">
           <Link to={WeddingDetails?.data?.section5to9?.section6_url}>
-            <div
-              className="dfgdfgfd"
-              style={{
-                backgroundImage: `url(${WeddingDetails?.image_url}/${WeddingDetails?.data?.section5to9?.section6_image})`,
-              }}
-            >
-              <div className="sdjhds">
-                <h4>{WeddingDetails?.data?.section5to9?.section6_text}</h4>
+            <div className="dfgdfgfd">
+              <img src={`${WeddingDetails?.image_url}/${WeddingDetails?.data?.section5to9?.section6_image}`} alt=""/>
+              {/* <div className="sdjhds"> */}
+                {/* <h4>{WeddingDetails?.data?.section5to9?.section6_text}</h4> */}
                 {/* <h3>Perfect Present for any occasion</h3> */}
-              </div>
+              {/* </div> */}
             </div>
           </Link>
         </div>

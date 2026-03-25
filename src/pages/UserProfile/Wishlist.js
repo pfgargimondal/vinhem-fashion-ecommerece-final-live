@@ -82,6 +82,10 @@ export const Wishlist = () => {
                                                         </div>
                                                     )}
                                                     <div className={`${styles.image} position-relative`}>
+                                                        <div className={`${styles.ddfhfgsedegjfree} position-absolute end-0`}>
+                                                            <i class="bi me-2 bi-x-circle-fill"></i>
+                                                        </div>
+
                                                         <Link to={`/products/${wishlistProduct.slug}-${wishlistProduct.PID}`}>
                                                             <img src={wishlistProduct.encoded_image_url_1} alt="not found" />
                                                         </Link>

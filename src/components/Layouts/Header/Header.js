@@ -21,6 +21,8 @@ import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import Loader from "../../Loader/Loader";
 
+import {BASE_URL} from "../../../http";
+
 export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, shouldHideHeaderCategoryRoutes }) => {
   const [resMenu, setResMenu] = useState(false);
     // eslint-disable-next-line
@@ -1236,7 +1238,7 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
 
                       <img src="./images/sae.png" alt="" />
 
-                      <span className="oajeorjer">Gold <br /> <span>Shop 25,000 To upgrade</span></span>
+                      <span className="oajeorjer">Gold <br /> <span>Shop 25,000 <br /> To upgrade</span></span>
                     </li>
 
                     <li className="step" data-step={3}>
@@ -1252,9 +1254,9 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
             ) : (
               <>
                 <ul className="d-flex align-items-center justify-content-between w-100 mb-0 ps-0">
-                  <li><h4 className="mb-0">Hi, User</h4></li>
-
                   <li onClick={() => {setResSignBottom(!resSignBottom); setResMenu(false)}}><span >SIGN IN / SIGN UP</span></li>
+
+                  <li><h4 className="mb-0">Hi, User</h4></li>
                 </ul>
                 {/* <Link onClick={() => {setResSignBottom(!resSignBottom); setResMenu(false)}}><i class="bi me-1 bi-person"></i> My Account</Link> */}
               </>
@@ -1408,7 +1410,7 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
         </div>
 
         <div className="difwehwerwer">
-          {emailToggle ? (<img src="./images/dw.jpg" alt="" />) : (<img src="./images/dw.jpg" alt="" />)}
+          {emailToggle ? (<img src={`${BASE_URL}/public/FTP-&-Excels/Main-Frame/All-Banners/Pop-Ups/dw.jpg`}  alt="" />) : (<img src={`${BASE_URL}/public/FTP-&-Excels/Main-Frame/All-Banners/Pop-Ups/dw.jpg`} alt="" />)}
 
           <div className="diwekmrwerwe px-4 pb-2 pt-4">
             <h5 className="text-center mb-1">Log in or Sign up</h5>

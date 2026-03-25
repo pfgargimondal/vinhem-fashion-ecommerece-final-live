@@ -4,7 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import Loader from "../../Loader/Loader";
 import http from "../../../http";
 import { useAuth } from "../../../context/AuthContext";
-
+import {BASE_URL} from "../../../http";
 import "./Footer.css";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
@@ -505,7 +505,7 @@ export const Footer = ({ shouldHideFullHeaderFooterRoutes }) => {
         </div>
 
         <div className="difwehwerwer">
-          {emailToggle ? (<img src="./images/dw.jpg" alt="" />) : (<img src="./images/dw.jpg" alt="" />)}
+          {emailToggle ? (<img src={`${BASE_URL}/public/FTP-&-Excels/Main-Frame/All-Banners/Pop-Ups/dw.jpg`}  alt="" />) : (<img src={`${BASE_URL}/public/FTP-&-Excels/Main-Frame/All-Banners/Pop-Ups/dw.jpg`} alt="" />)}
 
           <div className="diwekmrwerwe px-4 pb-2 pt-4">
             <h5 className="text-center mb-1">Log in or Sign up</h5>

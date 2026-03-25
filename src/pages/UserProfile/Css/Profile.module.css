@@ -164,7 +164,6 @@ i.bgdfbsseeew{
   padding: 5px 10px;
   font-size: 1.1rem;
   border-radius: 3px;
-  background: rgba(133, 13, 85, 0.15);
   display: inline-block;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
 }
@@ -174,7 +173,7 @@ i.bgdfbsseeew{
 }
 
 .dnjhsddsfsd button {
-  padding: 12px 30px;
+  padding: 8px 22px;
   background-color: var(--pink-main-color);
   border: none;
   border-radius: 6px;
@@ -341,6 +340,10 @@ i.bgdfbsseeew{
     width: 100%;
   }
 
+  .dfghdfgdf:global(.col-4){
+    width: 100%;
+  }
+
   .oidheuiwhroijwer:global(.d-flex) .fodnikfmskmjfreee{
     display: none !important;
   }
@@ -355,6 +358,10 @@ i.bgdfbsseeew{
 
   .dfgdfg6526{
     text-align: center;
+  }
+
+  .bgdfbsseeew:global(.d-none){
+    display: block !important;
   }
 }
 

@@ -254,6 +254,10 @@ form input:global(.form-control){
   :global(.table-responsive){
     min-width: 800px;
   }
+
+  .customSearchWrapper {
+    margin-right: 20px;
+  }
 }
 
 

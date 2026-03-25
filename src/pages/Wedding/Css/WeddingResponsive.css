@@ -3,7 +3,8 @@
   .dfgdfg255,
   .jdfkdf,
   .dfbhhfgdf55,
-  .ffdgf548 {
+  .ffdgf548,
+  .dfgdfgfd {
     height: auto;
   }
 }
@@ -17,7 +18,8 @@
   .dfgdfg255,
   .jdfkdf,
   .dfbhhfgdf55,
-  .ffdgf548 {
+  .ffdgf548,
+  .dfgdfgfd {
     height: auto;
   }
 }
@@ -47,6 +49,10 @@
   .ffdgf548 {
     height: 259px;
   }
+
+  .dfgdfgfd{
+    height: 220px;
+  }
 }
 
 
@@ -60,7 +66,8 @@
     .dfgjhdfgdf img,
     .jdfkdf,
     .dfbhhfgdf,
-    .dfbhhfgdf55{
+    .dfbhhfgdf55,
+    .dfgdfgfd{
         height: auto;
     }
 
@@ -76,9 +83,8 @@
         background-position: center;
     }
 
-    .dfgdfgfd {
-      height: 100%;
-      background-position: center;
+    .dfgdfgfd,
+    .dfgdfgfd img {
       border-radius: 7px;
     }
 
@@ -120,22 +126,30 @@
 
 
 
+
+@media only screen and (max-width: 500px){
+  .dfbghf h4,
+  .dfbghf1 h4,
+  .dfbghf2 h4,
+  .dfbghf3 h4{
+    font-size: 12px;
+  }
+
+  .dfbghf button,
+  .dfbghf1 button,
+  .dfbghf2 button,
+  .dfbghf3 button{
+    font-size: 10px;
+  }
+}
+
+
+
+
+
+
 @media only screen and (max-width: 456px){
     .fgjhdfgf{
         grid-template-columns: 100%;
-    }
-
-    .dfbghf h4,
-    .dfbghf1 h4,
-    .dfbghf2 h4,
-    .dfbghf3 h4 {
-      font-size: 16px;
-    }
-
-    .dfbghf button,
-    .dfbghf1 button,
-    .dfbghf2 button,
-    .dfbghf3 button {
-      font-size: 12px;
     }
 }

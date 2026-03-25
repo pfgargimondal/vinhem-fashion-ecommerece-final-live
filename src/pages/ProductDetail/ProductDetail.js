@@ -67,6 +67,64 @@ export const ProductDetail = () => {
   const { handleLoginModal } = useAuthModal();
   const { setChatProfileDetailsShow } = useChat();
 
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+  const [isMobileView, setIsMobileView] = useState(window.innerWidth < 992);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileView(window.innerWidth < 992);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+
+  const handleTouchStart = (e) => {
+    if (!isMobileView) return;
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isMobileView) return;
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!isMobileView) return;
+
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+
+    const images = [
+      "encoded_image_url_1",
+      "encoded_image_url_2",
+      "encoded_image_url_3",
+      "encoded_image_url_4",
+      "encoded_image_url_5",
+      "encoded_image_url_6",
+      "encoded_image_url_7",
+      "encoded_image_url_8",
+      "encoded_image_url_9",
+    ].filter(
+      (key) => productDetails?.data?.product_image?.[key]
+    );
+
+    const currentIndex = images.findIndex(
+      (_, i) => `img-${i + 1}` === activeKey
+    );
+
+    if (distance > 50 && currentIndex < images.length - 1) {
+      setActiveKey(`img-${currentIndex + 2}`);
+    }
+
+    if (distance < -50 && currentIndex > 0) {
+      setActiveKey(`img-${currentIndex}`);
+    }
+  };
+
   const scrollRef = useRef(null);
   const scrollLargeRef = useRef(null);
   const scrollAmount = 120;
@@ -1062,7 +1120,7 @@ export const ProductDetail = () => {
                           </Col>
 
                           <Col xs={9} className="large-image-tab">
-                            <div className="doerfkwerewrewr fsdgaeegydesere position-relative">
+                            <div className="doerfkwerewrewr fsdgaeegydesere position-relative" onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
                               {/* <Tab.Content>
                               {productDetails?.data?.product_image?.encoded_image_url_1 && (
                                 <Tab.Pane eventKey="first">
