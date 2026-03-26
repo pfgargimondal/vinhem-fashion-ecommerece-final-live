@@ -16,7 +16,8 @@ export const Wishlist = () => {
   const { formatPrice } = useCurrency();
   const [loading, setLoading] = useState(false);
   const [resUsernavToggle, setResUsernavToggle] = useState(false);
-  const { setWishlistCount } = useWishlist();
+  const { loading: wishlistLoading, removeFromWishlist } = useWishlist();
+
 
     const fetchWishlist = useCallback(async () => {
         if (!token) return;
@@ -26,7 +27,7 @@ export const Wishlist = () => {
             const res = await http.get("/user/get-wishlist", {
             headers: { Authorization: `Bearer ${token}` },
             });
-            setWishlistItems(res.data || []);
+            setWishlistItems(res.data.data || []);
         } catch (error) {
             console.error("Failed to fetch wishlist", error);
         } finally {
@@ -38,35 +39,25 @@ export const Wishlist = () => {
         fetchWishlist();
     }, [fetchWishlist]);
 
-    const handleRemoveItem = async (wishlistItemId) => {
-      if (!token) return;
-        setLoading(true);
-      try {
-        await http.post(
-          "/user/user-remove-wishlist",
-          { wishlist_item_id: wishlistItemId },
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
+
+    const handleRemoveItem = (productId) => {
+        const oldItems = wishlistItems;
+        setWishlistItems((prev) =>
+            prev.filter((item) => item.product_id !== productId)
         );
-        // Remove locally from state
-        setWishlistItems((prev) => {
-          const updated = prev.filter((item) => item.id !== wishlistItemId);
-          setWishlistCount(updated.length);   // update count correctly
-          return updated;
-        });
-        fetchWishlist();
-      } catch (error) {
-        console.error("Failed to remove item", error);
-      } finally {
-        setLoading(false);
-    }
+        try {
+            removeFromWishlist(productId);
+        } catch (err) {
+            // rollback if failed
+            setWishlistItems(oldItems);
+        }
     };
 
   
-    if (loading) {
+    if (loading || wishlistLoading) {
         return <Loader />;
     }
+
 
     return (
         <div className={styles.ffhfdf}>
@@ -83,7 +74,7 @@ export const Wishlist = () => {
                                     <div className={`${styles.doiewhrwerr} d-flex align-items-center`}>
                                         <p className="mb-0 d-flex align-items-center"><i class="bi me-1 bi-chevron-left"></i> Profile <span className="mx-2">/</span> </p>
     
-                                        <h4 className="mb-0">Your Wishlist({wishlistItems?.data?.length ?? 0})</h4>
+                                        <h4 className="mb-0">Your Wishlist({wishlistItems?.length ?? 0})</h4>
                                     </div>                                    
 
                                     <div className="dowehrkjwerwer d-flex align-items-center">
@@ -97,7 +88,7 @@ export const Wishlist = () => {
 
                                 <div className={styles.fbgdfhgdfgdg}>
                                     <div className="row">
-                                        {wishlistItems?.data?.map((wishlistProduct) => (
+                                        {wishlistItems?.map((wishlistProduct) => (
                                         <div className="col-lg-4 col-md-4 col-sm-6 col-6 mb-4">
                                             <div className={styles.dfgjhbdfg}>
                                                 <div className={styles.images}>
@@ -107,7 +98,7 @@ export const Wishlist = () => {
                                                         </div>
                                                     )}
                                                     <div className={`${styles.image} position-relative`}>
-                                                        <div className={`${styles.ddfhfgsedegjfree} position-absolute end-0`} onClick={() => handleRemoveItem(wishlistProduct.id)}>
+                                                        <div className={`${styles.ddfhfgsedegjfree} position-absolute end-0`} onClick={() => handleRemoveItem(wishlistProduct.product_id)}>
                                                             <i class="bi me-2 bi-x-circle-fill"></i>
                                                         </div>
 

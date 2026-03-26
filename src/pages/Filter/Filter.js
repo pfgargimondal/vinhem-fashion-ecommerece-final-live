@@ -34,6 +34,7 @@ export const Filter = () => {
   const [allFilterMappingdata, SetallFilterMappingdata] = useState([]);
   const [filterCategories, setFilterCategories] = useState([]);
 
+  const { loading: wishlistLoading, wishlistIds, addToWishlist, removeFromWishlist } = useWishlist();
   const [loading, setLoading] = useState(true);
   const [productsLoaded, setProductsLoaded] = useState(false);
   const [filtersLoaded, setFiltersLoaded] = useState(false);
@@ -389,11 +390,12 @@ export const Filter = () => {
 
   if (segments.length === 1) {
     category = segments[0];
+
   } else if (segments.length >= 2) {
     category = segments[0];
     subcategory = segments[1];
-  }
 
+  }
 
   useEffect(() => {
     const fetchAllProduct = async () => {
@@ -403,7 +405,21 @@ export const Filter = () => {
         const getPageMetaData = await http.get("/get-all-page-meta-title");
 
         const allData = response.data?.data;
-        const allProducts = response.data?.data?.all_product ?? [];
+
+        // ✅ use let
+        let allProducts = response.data?.data?.all_product ?? [];
+
+        // ✅ apply condition
+        if (category === "new-in") {
+          allProducts = allProducts.filter(
+            (product) =>
+              product.new_arrival === "1" || product.new_arrival === true
+          );
+        }
+        if (category === "ready-to-ship") {
+          allProducts = allProducts.filter(p => p.rts_quantity > 0);
+        }
+
         const allfilterDetails = response.data?.data?.filter_banner ?? "";
 
         SetallFilterData(allData);
@@ -413,29 +429,54 @@ export const Filter = () => {
         const normalizedSearch = searchTerm.toLowerCase();
 
         const filteredProducts = searchTerm
-          ? allProducts.filter(product => {
-            const name = product.product_name?.toLowerCase() || "";
+          ? allProducts.filter((product) => {
+              const name = product.product_name?.toLowerCase() || "";
 
-            return normalizedSearch.split(/\s+/).every(term => name.includes(term));
-          })
+              return normalizedSearch
+                .split(/\s+/)
+                .every((term) => name.includes(term));
+            })
           : allProducts;
 
         initialProductList(filteredProducts);
+
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
-        setProductsLoaded(true); // important
+        setProductsLoaded(true);
       }
     };
+
     fetchAllProduct();
-    // eslint-disable-next-line
+      // eslint-disable-next-line
   }, [location.pathname, category, subcategory, searchTerm]);
 
-  const matchedMeta = pageMetaData.find(
-    (item) =>
-      item.category_name?.toLowerCase() === category?.toLowerCase() &&
-      item.sub_category_name?.toLowerCase() === subcategory?.toLowerCase()
-  );
+  // const matchedMeta = pageMetaData.find(
+  //   (item) =>
+  //     item.category_name?.toLowerCase() === category?.toLowerCase() &&
+  //     item.sub_category_name?.toLowerCase() === subcategory?.toLowerCase()
+  // );
+
+  const normalize = (str) =>
+  (str || "")
+    .toString()
+    .toLowerCase()
+    .replace(/[\s_]+/g, "-")
+    .trim();
+
+  const matchedMeta = pageMetaData?.find((item) => {
+    const itemCategory = normalize(item.category_name);
+    const itemSubCategory = normalize(item.sub_category_name);
+
+    const currentCategory = normalize(category);
+    const currentSubCategory = normalize(subcategory);
+
+    return (
+      itemCategory === currentCategory &&
+      itemSubCategory === currentSubCategory
+    );
+  });
+
 
   useMetaData({
     meta_title: matchedMeta?.meta_title || `${category} - Vinhem Fashion`,
@@ -444,10 +485,12 @@ export const Filter = () => {
   });
 
 
-  const { wishlistIds, addToWishlist, removeFromWishlist } = useWishlist(); // ✅ from context
+   // ✅ from context
 
   const toggleWishlist = (productId) => {
-    if (wishlistIds.includes(productId)) {
+    const id = Number(productId);
+
+    if (wishlistIds.includes(id)) {
       removeFromWishlist(productId);
     } else {
       addToWishlist(productId);
@@ -501,9 +544,6 @@ export const Filter = () => {
     }
   }, [productsLoaded, filtersLoaded]);
 
-  if (loading) {
-    return <Loader />;
-  }
 
   if (!loading && filterCategories.length === 0) {
     return <PageNotFound />;
@@ -517,6 +557,10 @@ export const Filter = () => {
       .replace(/-/g, " ")
       .replace(/\b\w/g, (char) => char.toUpperCase());
   };
+
+  if (loading || wishlistLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="filter-wrapper pt-2">
@@ -1006,18 +1050,22 @@ export const Filter = () => {
         />
       </div>
 
-      {allFilterData?.filter_content.description && (
-        <hr className="doewjirhweiewrer mt-5" />
-      )}      
+      {allFilterData?.filter_content?.description && (
+        <>
+          <hr className="doewjirhweiewrer mt-5" />
 
-      <div className="idwejrhewres pb-5 mt-5">
-        <div className="container-fluid">
-          <div className="pt-4" dangerouslySetInnerHTML={{
-              __html: allFilterData?.filter_content?.description && (allFilterData?.filter_content.description),
-            }}
-          />
-        </div>
-      </div>
+          <div className="idwejrhewres pb-5 mt-5">
+            <div className="container-fluid">
+              <div
+                className="pt-4"
+                dangerouslySetInnerHTML={{
+                  __html: allFilterData.filter_content.description,
+                }}
+              />
+            </div>
+          </div>
+        </>
+      )}
 
       <div className="odjweoijrwer">
         <div onClick={handleResSortByClose} className={`${resSrtByOptions ? "srt-by-backdrop" : "srt-by-backdrop srt-by-backdrop-hidden"} position-fixed w-100 h-100`}></div>

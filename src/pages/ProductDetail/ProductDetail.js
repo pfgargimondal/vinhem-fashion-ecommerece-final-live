@@ -281,7 +281,7 @@ export const ProductDetail = () => {
     };
   }, [showSizeModal]);
 
-  const { wishlistIds, addToWishlist, removeFromWishlist } = useWishlist();
+  const { loading: wishlistLoading, wishlistIds, addToWishlist, removeFromWishlist } = useWishlist();
 
   const toggleWishlist = (productId) => {
     if (wishlistIds.includes(productId)) {
@@ -977,10 +977,9 @@ export const ProductDetail = () => {
   };
 
 
-
   return (
     <>
-    {(loading || cartLoading) && <Loader />}
+    {(loading || cartLoading || wishlistLoading) && <Loader />}
       <div className="fvjhfbdf">
         <div className="derthnjmfghu">
           <div className="fgnbdfgdf">

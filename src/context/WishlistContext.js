@@ -9,6 +9,7 @@ export function WishlistProvider({ children }) {
   const { token } = useAuth();
   const [wishlistCount, setWishlistCount] = useState(0);
   const [wishlistIds, setWishlistIds] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   // ✅ Fetch wishlist from API
   const fetchWishlist = useCallback(async () => {
@@ -17,6 +18,7 @@ export function WishlistProvider({ children }) {
       setWishlistIds([]);
       return;
     }
+    setLoading(true);
 
     try {
       const res = await http.get("/user/get-wishlist", {
@@ -30,6 +32,8 @@ export function WishlistProvider({ children }) {
       console.error("Error fetching wishlist", err);
       setWishlistIds([]);
       setWishlistCount(0);
+    } finally{
+      setLoading(false);
     }
     
   }, [token]);
@@ -46,6 +50,7 @@ export function WishlistProvider({ children }) {
       toast.error("Please login to add to wishlist");
       return;
     }
+    setLoading(true);
 
     try {
       const res = await http.post(
@@ -63,6 +68,8 @@ export function WishlistProvider({ children }) {
     } catch (err) {
       console.error(err);
       toast.error(err.response?.data?.message || "Failed to add to wishlist");
+    } finally{
+      setLoading(false);
     }
   };
 
@@ -72,7 +79,7 @@ export function WishlistProvider({ children }) {
       toast.error("Please login to remove from wishlist");
       return;
     }
-
+    setLoading(true);
     try {
       const res = await http.post(
         "/user/user-remove-wishlist",
@@ -80,13 +87,20 @@ export function WishlistProvider({ children }) {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      setWishlistIds((prev) => prev.filter((id) => id !== productId));
-      setWishlistCount((prev) => Math.max(0, prev - 1));
+      // setWishlistIds((prev) => prev.filter((id) => id !== productId));
+      setWishlistIds((prev) => {
+        // console.log("prev wishlistIds:", prev); // 👈 here
+        return prev.filter((id) => id !== productId);
+      });
 
+      setWishlistCount((prev) => Math.max(0, prev - 1));
       toast.success(res.data.message || "Product removed from wishlist");
+
     } catch (err) {
       console.error(err);
       toast.error(err.response?.data?.message || "Failed to remove from wishlist");
+    } finally{
+      setLoading(false);
     }
   };
 
@@ -102,7 +116,7 @@ export function WishlistProvider({ children }) {
 
   return (
     <WishlistContext.Provider
-      value={{ wishlistIds, wishlistCount, addToWishlist, removeFromWishlist, fetchWishlist }}
+      value={{ loading, wishlistIds, wishlistCount, addToWishlist, removeFromWishlist, fetchWishlist }}
     >
       {children}
     </WishlistContext.Provider>
