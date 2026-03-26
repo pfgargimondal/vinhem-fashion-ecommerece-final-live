@@ -2073,7 +2073,7 @@ export const Cart = () => {
                                       <div className="dknwekhwe">
                                         <div className="dokwejlkpewr d-flex flex-wrap align-items-center justify-content-between">
                                           <div className="d-flex align-items-center justify-content-between w-100 mb-1">
-                                            <h6 className="mb-0">{cartItemsVal.designer}</h6>
+                                            <h6 className="mb-0">{cartItemsVal.product_name}</h6>
 
                                             <div className="diejwijrwer">
                                               <i
@@ -2094,37 +2094,67 @@ export const Cart = () => {
                                               <i class="bi bi-trash3" onClick={() => handleRemoveItem(cartItemsVal.id)}></i>
                                             </div>
                                           </div>
-
-                                          <p className="mb-0">
-                                            {cartItemsVal.product_name}
-                                          </p>
                                         </div>
                                       </div>
+                                      <div className="dnweghbjewrwer">
+                                        <p className="mb-1">ITEM ID: {cartItemsVal.item_id}</p>
+                                        <p className="mb-1">Colour: {cartItemsVal.color}</p>
+                                        {cartItemsVal.actual_stitch_option !== 'Ready To Wear' && (
+                                          <p className="mb-1">
+                                            Stitching Option : {cartItemsVal.actual_stitch_option}
+                                            {cartItemsVal.size === '' && ` | Qty : ${cartItemsVal.quantity}`}
+                                          </p>
+                                        )} 
+                                        {cartItemsVal.size !== '' && (
+                                          <p className="mb-1">Size : {cartItemsVal.size} | Qty : {cartItemsVal.quantity}</p>
+                                        )}
+                                        {(
+                                          cartItemsVal.turban_selected === "1" ||
+                                          cartItemsVal.mojri_selected === "1" ||
+                                          cartItemsVal.stole_selected === "1"
+                                        ) && (
+                                          <div className="">
 
-                                      <div className="dnweghbjewrwer">                                      
-                                        <p className="mb-0">Colour: {cartItemsVal.color} | {cartItemsVal.stitch_option === 'customFit' ? (
-                                              <>
-                                                Size: Custom Fit
-                                              </>
-                                            ) : cartItemsVal.size === '' ? (
-                                              <>
-                                                Stitching Option : {cartItemsVal.actual_stitch_option}
-                                              </>
-                                            ) : (
-                                              <>
-                                                {cartItemsVal.size}
-                                              </>
-                                            )}</p>
+                                            {/* FIRST LINE */}
+                                            <p className="mb-1">
+                                              Add On :
+                                              {cartItemsVal.turban_selected === "1" && ` Matching Turban | Qty : 1`}
+                                              {cartItemsVal.mojri_selected === "1" && cartItemsVal.turban_selected !== "1" && 
+                                                ` Matching Mojri | Qty : 1`}
+                                              {cartItemsVal.stole_selected === "1" && 
+                                                cartItemsVal.turban_selected !== "1" &&
+                                                cartItemsVal.mojri_selected !== "1" &&
+                                                ` Matching Stole | Qty : 1`}
+                                            </p>
 
-                                        <p className="mb-1">Price: 
+                                            {cartItemsVal.mojri_selected === "1" && cartItemsVal.turban_selected === "1" && (
+                                              <p className="mb-1">Matching Mojri | Qty : 1</p>
+                                            )}
+
+                                            {cartItemsVal.stole_selected === "1" && 
+                                              (cartItemsVal.turban_selected === "1" || cartItemsVal.mojri_selected === "1") && (
+                                              <p className="mb-1">Matching Stole | Qty : 1</p>
+                                            )}
+
+                                          </div>
+                                        )}
+                          
+                                        <div className="djkwehrwerwer d-flex align-items-center justify-content-between">
+                                          <h6 className="mb-0 drthsftjh">
+                                            <i class="bi me-1 bi-calendar-week"></i>
+                                            Standard Delivery by
+                                              {getEstimatedShippingDate(
+                                                cartItemsVal.shipping_time
+                                              )}
+                                          </h6>
+                                        </div>
+                                      </div>
+                                        {/* <p className="mb-1">Price: 
                                           <span>
-                                            {/* <i class="bi bi-currency-rupee"></i> */}
                                             {formatPrice(cartItemsVal.actual_price, { showDecimals: true })}
                                           </span>
-                                        </p>
-
-                                        {/* <h6 className="sadcadaededee mb-0"><i class="bi me-1 bi-truck"></i> {cartItemsVal.non_returnable}</h6> */}
-                                      </div>
+                                        </p> */}
+                              
                                     </div>
                                   </div>
                                 </div>
