@@ -1281,8 +1281,6 @@ export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, sho
               url: mainBanner?.[`category_bannerURL${i}`],
             }));
 
-            console.log(leftBanners, 'leftBanners');
-            console.log(rightBanners, 'rightBanners');
 
           return (
             

@@ -134,7 +134,6 @@ export const OrderDetails = () => {
     setOrderDetailsMessurmntModal(true);
   };
 
-  console.log(orderMeasurementData, 'orderMeasurementData');
 
 
   // ✅ CLOSE MODAL (merged logic)

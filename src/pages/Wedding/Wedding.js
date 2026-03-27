@@ -53,7 +53,6 @@ export const Wedding = () => {
       meta_keyword: matchedMeta?.meta_keyword || ""
   });
 
-  console.log(WeddingDetails, 'WeddingDetails');
 
   if (loading) {
     return <Loader />;

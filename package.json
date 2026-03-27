@@ -2,6 +2,9 @@
   "name": "ecom-react",
   "version": "0.1.0",
   "private": true,
+  "overrides": {
+    "canvg": "3.0.10"
+  },
   "dependencies": {
     "@paypal/react-paypal-js": "^8.9.2",
     "@react-oauth/google": "^0.12.2",
@@ -12,7 +15,6 @@
     "axios": "^1.13.6",
     "bootstrap": "^5.3.7",
     "emoji-picker-react": "^4.17.1",
-    "fast-png": "^4.0.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^3.0.3",
     "react": "^18.3.1",

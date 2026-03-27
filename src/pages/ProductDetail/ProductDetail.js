@@ -738,6 +738,7 @@ export const ProductDetail = () => {
       // ✅ 5. Prepare cart data
       const productData = {
         product_id: productDetails?.data?.id,
+        product_pid: productDetails?.data?.PID,
         size: selectedSize || "Default Size",
         quantity: selectedQuantity,
         price_per_unit: priceToUse,

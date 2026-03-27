@@ -117,6 +117,7 @@ export const Cart = () => {
 
   useEffect(() => {
     if (!token) return;
+    setLoading(true);
 
     const fetchCoupon = async () => {
       try {
@@ -128,6 +129,8 @@ export const Cart = () => {
         setPageMetaData(getMetaDataResponse.data.data.get_all_meta_title);
       } catch (error) {
         console.error("Failed to fetch cart list", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -207,7 +210,7 @@ export const Cart = () => {
 
     return `${formattedDate}`;
   };
-  const { wishlistIds, addToWishlist, removeFromWishlist } = useWishlist(); // ✅ from context
+  const { loading: wishlistLoading, wishlistIds, addToWishlist, removeFromWishlist } = useWishlist(); // ✅ from context
 
   const toggleWishlist = (productId) => {
     if (wishlistIds.includes(productId)) {
@@ -219,7 +222,7 @@ export const Cart = () => {
 
   const handleRemoveItem = async (cartItemId) => {
     if (!token) return;
-
+    setLoading(true);
     try {
       await http.post(
         "/user/remove-product-from-cart",
@@ -238,58 +241,81 @@ export const Cart = () => {
       fetchCartlist();
     } catch (error) {
       console.error("Failed to remove item", error);
+    } finally {
+      setLoading(false);
     }
   };
 
 
-  const handleProceed = () => {
+  const handleProceed = async () => {
     if (!cartItems || cartItems.length === 0) {
       toast.error("Your cart is empty!");
       return;
     }
-    setKey("shipping");
-  }
+    setLoading(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      setKey("shipping");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false); 
+    }
+  };
 
-  const handleCheckoutPayment = () => {
+  const handleCheckoutPayment = async () => {
     if (!cartItems || cartItems.length === 0) {
       toast.error("Your cart is empty!");
       return;
     }
-
-    let shippingData = localStorage.getItem("shipping_address");
-    let billingData = localStorage.getItem("billing_address");
-
-    // --- Parse JSON Safely ---
-    try {
-      shippingData = shippingData ? JSON.parse(shippingData) : null;
-    } catch {
-      shippingData = null;
-    }
+    setLoading(true); 
 
     try {
-      billingData = billingData ? JSON.parse(billingData) : null;
-    } catch {
-      billingData = null;
+      let shippingData = localStorage.getItem("shipping_address");
+      let billingData = localStorage.getItem("billing_address");
+
+      try {
+        shippingData = shippingData ? JSON.parse(shippingData) : null;
+      } catch {
+        shippingData = null;
+      }
+
+      try {
+        billingData = billingData ? JSON.parse(billingData) : null;
+      } catch {
+        billingData = null;
+      }
+
+      if (!shippingData || Object.keys(shippingData).length === 0) {
+        toast.error("Please Add Shipping Address Before Checkout");
+        setLoading(false);
+        return;
+      }
+      if (!billingData || Object.keys(billingData).length === 0) {
+        toast.error("Please Add Billing Address Before Checkout");
+        setLoading(false); 
+        return;
+      }
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      setKey("payment");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    // --- Validation ---
-    if (!shippingData || Object.keys(shippingData).length === 0) {
-      toast.error("Please Add Shipping Address Before Checkout");
-      return;
+  const handleCart = async () => {
+    setLoading(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 300));
+      setKey("cart");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
-
-    if (!billingData || Object.keys(billingData).length === 0) {
-      toast.error("Please Add Billing Address Before Checkout");
-      return;
-    }
-
-
-    setKey("payment");
-  }
-
-  const handleCart = () => {
-    setKey("cart");
-  }
+  };
   const handleCouponToggle = () => {
     const html = document.querySelector("html");
 
@@ -372,7 +398,7 @@ export const Cart = () => {
 
   useEffect(() => {
     if (!token) return;
-
+    setLoading(true); 
     const fetchPreviousAddress = async () => {
       try {
         const res = await http.get("/user/get-previous-address", {
@@ -418,6 +444,8 @@ export const Cart = () => {
         }
       } catch (error) {
         console.error("Failed to fetch address", error);
+      } finally {
+        setLoading(false); 
       }
     };
 
@@ -444,7 +472,6 @@ export const Cart = () => {
 
   useEffect(() => {
     if (sameAsShipping && shippingAddress) {
-      console.log(sameAsShipping, 'sameAsShipping');
       setBillingAddress(shippingAddress);
       localStorage.setItem(
         "billing_address",
@@ -788,8 +815,6 @@ export const Cart = () => {
     Number(totalPrice.custom_fit_charges) +
     Number(totalPrice.stiching_charges);
 
-    console.log(baseTotal, 'baseTotal');
-
     
     const finalTotal = freeShipping
     ? Number(baseTotal || 0) - Number(appliedDiscount || 0)
@@ -1020,7 +1045,7 @@ export const Cart = () => {
     setLoading(false);
   };
 
-  if (loading) {
+  if (loading || wishlistLoading) {
     return <Loader/>;
   }
 
@@ -1061,7 +1086,15 @@ export const Cart = () => {
 
                     <div className="dowejroihwrt_wrapper mt-4">
                       {cartItems?.length === 0 && <p>No items in cart</p>}
-                      {cartItems?.map((cartItemsVal) => (
+                      {cartItems?.map((cartItemsVal) => {
+
+                        const discountPercent = Number(cartItemsVal?.discount) || 0;
+
+                        const calculateMRP = (price) =>
+                          discountPercent > 0
+                            ? Math.round(price / (1 - discountPercent / 100))
+                            : price;
+                        return (
                         <div className="dfgjhbdfg position-relative p-3 mb-4">
                           <div className="row freweerqeweqwe">
                             <div className="col-2">
@@ -1089,6 +1122,9 @@ export const Cart = () => {
                                     </>
                                   ) : cartItemsVal.belongsTo === 'plus_sizes' ? (
                                     <>
+                                      <span className="old-price">
+                                        {formatPrice(calculateMRP(cartItemsVal.plus_sizes_charges), { showDecimals: true })}
+                                      </span>&nbsp;
                                       <span>
                                         {formatPrice(cartItemsVal.plus_sizes_charges, { showDecimals: true })}
                                       </span>
@@ -1107,13 +1143,12 @@ export const Cart = () => {
                                 </h5>
 
                                 <div className="dewhrowerwer d-flex align-items-center">
-                                  <div className="doijerewr d-flex align-items-center pe-2" style={{borderRight:"1px solid #616161"}}>
+                                  <div className="doijerewr d-flex align-items-center pe-2" style={{borderRight:"1px solid #616161"}} onClick={() =>
+                                      toggleWishlist(
+                                        cartItemsVal.products_table_id
+                                      )
+                                    }>
                                     <i
-                                      onClick={() =>
-                                        toggleWishlist(
-                                          cartItemsVal.products_table_id
-                                        )
-                                      }
                                       className={
                                         wishlistIds.includes(
                                           cartItemsVal.products_table_id
@@ -1140,7 +1175,8 @@ export const Cart = () => {
                                 <div className="dknwekhwe py-2">
                                   <div className="d-flex flex-wrap align-items-center justify-content-between">
                                     <h4 className="mb-0">
-                                      {cartItemsVal.product_name}
+                                      {cartItemsVal.belongsTo}
+                                      {cartItemsVal.product_name} 
                                     </h4>
 
                                     <h5 className="mb-0">
@@ -1155,6 +1191,9 @@ export const Cart = () => {
                                         </>
                                       ) : cartItemsVal.belongsTo === 'plus_sizes' ? (
                                         <>
+                                          <span className="old-price">
+                                            {formatPrice(calculateMRP(cartItemsVal.plus_sizes_charges), { showDecimals: true })}
+                                          </span>&nbsp;
                                           <span>
                                             {formatPrice(cartItemsVal.plus_sizes_charges, { showDecimals: true })}
                                           </span>
@@ -1172,13 +1211,10 @@ export const Cart = () => {
                                       
                                     </h5>
                                   </div>
-                                  {cartItemsVal.belongsTo === 'filter_size' && (
-                                    <>
-                                      <span className="dscnt-offr text-white position-absolute py-1 px-2">
-                                        {cartItemsVal.discount}% OFF
-                                      </span>
-                                    </>
-                                  )}
+                                
+                                  <span className="dscnt-offr text-white position-absolute py-1 px-2">
+                                    {cartItemsVal.discount}% OFF
+                                  </span>
                                 </div>
 
                                 <div className="dnweghbjewrwer">
@@ -1280,13 +1316,12 @@ export const Cart = () => {
                                     </h6>
 
                                     <div className="dewhrowerwer ghtrerwrghergedefrf d-flex align-items-center">
-                                      <div className="doijerewr d-flex align-items-center pe-2" style={{borderRight:"1px solid #616161"}}>
-                                        <i
-                                          onClick={() =>
+                                      <div className="doijerewr d-flex align-items-center pe-2" style={{borderRight:"1px solid #616161"}} onClick={() =>
                                             toggleWishlist(
                                               cartItemsVal.products_table_id
                                             )
-                                          }
+                                          }>
+                                        <i
                                           className={
                                             wishlistIds.includes(
                                               cartItemsVal.products_table_id
@@ -1311,7 +1346,8 @@ export const Cart = () => {
                             </div>
                           </div>
                         </div>
-                      ))}
+                        );
+                      })}
                     </div>
 
                     <div className="dewtgtregtehfggefg d-flex justify-content-between">
@@ -2100,7 +2136,7 @@ export const Cart = () => {
                                         <p className="mb-1">ITEM ID: {cartItemsVal.item_id}</p>
                                         <p className="mb-1">Colour: {cartItemsVal.color}</p>
                                         {cartItemsVal.actual_stitch_option !== 'Ready To Wear' && (
-                                          <p className="mb-1">
+                                          <p className="mb-2">
                                             Stitching Option : {cartItemsVal.actual_stitch_option}
                                             {cartItemsVal.size === '' && ` | Qty : ${cartItemsVal.quantity}`}
                                           </p>
@@ -2294,7 +2330,7 @@ export const Cart = () => {
                                   </label>
                                 </div>
 
-                                <div className="radio-wrapper-26 mb-3">
+                                {/* <div className="radio-wrapper-26 mb-3">
                                   <label htmlFor="example-sader">
                                     <div className="inputAndLeftText d-flex">
                                       <input
@@ -2308,12 +2344,11 @@ export const Cart = () => {
 
                                       <div className="ms-2">
                                         <span className="title2">
-                                          {/* Razor Pay  */}
                                           <img className="dienwihejwr ms-1" src="images/razorpay.png" alt="" /></span>
                                       </div>
                                     </div>
                                   </label>
-                                </div>
+                                </div> */}
 
                                 <div className="radio-wrapper-26 mb-3">
                                   <label htmlFor="example-rerr">
