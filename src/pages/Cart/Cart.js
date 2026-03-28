@@ -783,7 +783,7 @@ export const Cart = () => {
     }
   }, []);
 
-  const saveGstNumber = () => {
+  const saveGstNumber = async () => {
     if (!gstNumber.trim()) {
       setGstError("GST number is required");
       return;
@@ -793,10 +793,17 @@ export const Cart = () => {
       setGstError("Invalid GST number");
       return;
     }
-
-    localStorage.setItem("gst_number", gstNumber);
-    setGstError("");
-    setGstSaved(true);
+    setLoading(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      localStorage.setItem("gst_number", gstNumber);
+      setGstError("");
+      setGstSaved(true);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
 
@@ -1101,7 +1108,7 @@ export const Cart = () => {
                               <div className="donweihrwewer">
                                 <Link to={`/products/${cartItemsVal.slug}-${cartItemsVal.PID}`}>
                                   <img
-                                    src={cartItemsVal.encoded_image_url_1}
+                                    src={cartItemsVal?.encoded_image_url_1 || "/images/no-preview.jpg"}
                                     alt={cartItemsVal.product_name}
                                   />
                                 </Link>
@@ -1175,7 +1182,6 @@ export const Cart = () => {
                                 <div className="dknwekhwe py-2">
                                   <div className="d-flex flex-wrap align-items-center justify-content-between">
                                     <h4 className="mb-0">
-                                      {cartItemsVal.belongsTo}
                                       {cartItemsVal.product_name} 
                                     </h4>
 
@@ -1223,10 +1229,10 @@ export const Cart = () => {
                                   {cartItemsVal.actual_stitch_option !== 'Ready To Wear' && (
                                     <p className="mb-1">
                                       Stitching Option : {cartItemsVal.actual_stitch_option}
-                                      {cartItemsVal.size === '' && ` | Qty : ${cartItemsVal.quantity}`}
+                                      {cartItemsVal.size === null && ` | Qty : ${cartItemsVal.quantity}`}
                                     </p>
                                   )} 
-                                  {cartItemsVal.size !== '' && (
+                                  {cartItemsVal.size !== null && (
                                     <p className="mb-1">Size : {cartItemsVal.size} | Qty : {cartItemsVal.quantity}</p>
                                   )}
                                   {(
@@ -2090,14 +2096,22 @@ export const Cart = () => {
                         {pymntSmmryDrpdwn && (
                           <div className="dowejroihwrt_wrapper">
                           {cartItems?.length === 0 && <p>No items in cart</p>}
-                            {cartItems?.map((cartItemsVal) => (
+                            {cartItems?.map((cartItemsVal) => {
+                              const discountPercent = Number(cartItemsVal?.discount) || 0;
+
+                              const calculateMRP = (price) => 
+                                discountPercent > 0
+                                  ? Math.round(price / (1 - discountPercent / 100))
+                                  : price;
+
+                              return(
                               <div className="dfgjhbdfg sdfaedaeeewwqwee position-relative p-3 mb-3">
                                 <div className="d-flex gap-2">
                                   <div className="dasferqrrqqq">
                                     <div className="donweihrwewer">
                                       <Link to={`/products/${cartItemsVal.slug}-${cartItemsVal.PID}`}>
                                         <img
-                                          src={cartItemsVal.encoded_image_url_1}
+                                          src={cartItemsVal?.encoded_image_url_1 || "/images/no-preview.jpg"}
                                           alt={cartItemsVal.product_name}
                                         />
                                       </Link>
@@ -2108,10 +2122,10 @@ export const Cart = () => {
                                     <div className="dowehriwerwer sdvwdewrwerwere">
                                       <div className="dknwekhwe">
                                         <div className="dokwejlkpewr d-flex flex-wrap align-items-center justify-content-between">
-                                          <div className="d-flex align-items-center justify-content-between w-100 mb-1">
-                                            <h6 className="mb-0">{cartItemsVal.product_name}</h6>
+                                          <div className="d-flex justify-content-between w-100 mb-1">
+                                            <h6 className="mb-0 me-3">{cartItemsVal.product_name}</h6>
 
-                                            <div className="diejwijrwer">
+                                            <div className="diejwijrwer" style={{ flex: "none" }}>
                                               <i
                                                 onClick={() =>
                                                   toggleWishlist(
@@ -2122,7 +2136,7 @@ export const Cart = () => {
                                                   wishlistIds.includes(
                                                     cartItemsVal.products_table_id
                                                   )
-                                                    ? "bi bi-heart-fill"
+                                                    ? "bi me-2 bi-heart-fill"
                                                     : "bi me-2 bi-heart"
                                                 }
                                                 style={{ cursor: "pointer" }}
@@ -2132,16 +2146,58 @@ export const Cart = () => {
                                           </div>
                                         </div>
                                       </div>
-                                      <div className="dnweghbjewrwer">
+                                      
+                                      <div className="dnweghbjewrwer mb-2">
+                                        <h5 className="mb-1">
+                                          {cartItemsVal.belongsTo === 'filter_size' ? (
+                                            <>
+                                              <span className="old-price xdvgsfsadfaxcfgsf">
+                                                MRP : {formatPrice(cartItemsVal.selling_price, { showDecimals: true })}
+                                              </span>&nbsp;
+                                              <span className="oikdjioerer">
+                                                 {formatPrice(cartItemsVal.mrp_price, { showDecimals: true })}
+                                              </span>&nbsp;
+                                              <span className="fghfgg114">
+                                                {cartItemsVal.discount}%OFF
+                                              </span>
+                                            </>
+                                          ) : cartItemsVal.belongsTo === 'plus_sizes' ? (
+                                            <>
+                                              <span className="old-price xdvgsfsadfaxcfgsf">
+                                                MRP : {formatPrice(cartItemsVal.plus_sizes_charges, { showDecimals: true })}
+                                              </span>&nbsp;
+                                              <span className="oikdjioerer">
+                                                {formatPrice(calculateMRP(cartItemsVal.plus_sizes_charges), { showDecimals: true })}
+                                              </span>&nbsp;
+                                              <span className="fghfgg114">
+                                                {cartItemsVal.discount}%OFF
+                                              </span>
+                                            </>
+                                          ) : (
+                                            <>
+                                              <span className="old-price xdvgsfsadfaxcfgsf">
+                                                MRP :  {formatPrice(cartItemsVal.selling_price, { showDecimals: true })}
+                                              </span>&nbsp;
+                                              <span className="oikdjioerer">
+                                                {formatPrice(cartItemsVal.mrp_price, { showDecimals: true })}
+                                              </span>&nbsp;
+                                              <span className="fghfgg114">
+                                                {cartItemsVal.discount}%OFF
+                                              </span>
+                                            </>
+                                          )}
+                                          
+                                        </h5>
+
                                         <p className="mb-1">ITEM ID: {cartItemsVal.item_id}</p>
                                         <p className="mb-1">Colour: {cartItemsVal.color}</p>
                                         {cartItemsVal.actual_stitch_option !== 'Ready To Wear' && (
                                           <p className="mb-2">
                                             Stitching Option : {cartItemsVal.actual_stitch_option}
-                                            {cartItemsVal.size === '' && ` | Qty : ${cartItemsVal.quantity}`}
+                                            {cartItemsVal.size === null && ` | Qty : ${cartItemsVal.quantity}`}
                                           </p>
                                         )} 
-                                        {cartItemsVal.size !== '' && (
+                                        {cartItemsVal.size !== null && (
                                           <p className="mb-1">Size : {cartItemsVal.size} | Qty : {cartItemsVal.quantity}</p>
                                         )}
                                         {(
@@ -2185,17 +2241,12 @@ export const Cart = () => {
                                           </h6>
                                         </div>
                                       </div>
-                                        {/* <p className="mb-1">Price: 
-                                          <span>
-                                            {formatPrice(cartItemsVal.actual_price, { showDecimals: true })}
-                                          </span>
-                                        </p> */}
-                              
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            ))}
+                              );
+                            })}
                           </div>
                         )}
                       </div>
@@ -2944,7 +2995,7 @@ export const Cart = () => {
 
             <div className="deoiwjrewrwer">
               {couponItems?.map((couponItemsVal) => (
-                <div className="jidnwenjrwerwer mb-5">
+                <div className="jidnwenjrwerwer mb-2">
                   <input
                     id={couponItemsVal.code}
                     name="coupon"
@@ -3020,7 +3071,7 @@ export const Cart = () => {
                                 }
                               }}
                             >
-                              Tap To Apply
+                              TAP TO APPLY
                             </Link>
                           </div>
                         </div>
@@ -3033,14 +3084,17 @@ export const Cart = () => {
                           <div className="dsekbjnerewr">
                             <h5 className="text-white mb-1">VOUCHER</h5>
 
-                            <img src="./images/cpncde.png" className="img-fluid" alt="" />
+                            <img src="./images/cpncde.png" className="img-fluid" style={{ width: "8rem" }} alt="" />
                           </div>
 
                           <h6 className="text-white mb-0" style={{marginTop: "1rem"}}>*T&C Apply</h6>
                         </div>
                       </div>
                     </div>
-
+                    {(couponItemsVal.is_applicable && couponItemsVal.is_matched)
+                        ? <img src="./images/cissor.png" className="w-100 p-3" alt="" />
+                        : ""
+                    }
                     <i class="bi copn-checked-icon position-absolute bi-check-circle-fill"></i>
                   </label>
 

@@ -992,10 +992,10 @@ p.sidifsdiyhr{
 	 flex-grow: 1;
 	 text-align: center;
    background: #FBF2ED;
-   padding: 1.5rem;
+   padding: 1rem;
 }
  .jidnwenjrwerwer .right {
-	 width: 180px;
+	 min-width: 160px;
    background: var(--pink-main-color);
 }
 
@@ -1055,7 +1055,7 @@ h4.oijiwuihfih-eiuheir{
    border-radius: 5px;
 }
  .jidnwenjrwerwer .center h3 {
-	 font-size: 1.5rem;
+	 font-size: 2.5rem;
    font-family: "Merriweather", serif;
 }
 
