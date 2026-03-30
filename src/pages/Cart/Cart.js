@@ -937,7 +937,7 @@ export const Cart = () => {
 
   const openRazorpayCheckout = (order) => {
     const options = {
-      key: "rzp_test_Rd9lOWetLIyVOt",
+      key: "rzp_test_SXQjhHDXKM4Rgu",
       amount: order.amount,
       currency: order.currency,
       name: user.name,

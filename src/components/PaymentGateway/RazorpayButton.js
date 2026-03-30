@@ -2,34 +2,71 @@ import http from "../../http";
 
 const RazorpayButton = ({ amount, token, onSuccess }) => {
 
-    const loadRazorpay = () => {
+    // Load fresh Razorpay script every time
+    const loadRazorpayScript = () => {
+        return new Promise((resolve) => {
+            const oldScript = document.getElementById("razorpay-script");
+
+            if (oldScript) {
+                oldScript.remove();
+            }
+
+            const script = document.createElement("script");
+            script.id = "razorpay-script";
+            script.src = "https://checkout.razorpay.com/v1/checkout.js";
+
+            script.onload = () => resolve(true);
+            script.onerror = () => resolve(false);
+
+            document.body.appendChild(script);
+        });
+    };
+
+    const loadRazorpay = async (orderId) => {
+        const isLoaded = await loadRazorpayScript();
+
+        if (!isLoaded) {
+            alert("Razorpay failed to load");
+            return;
+        }
+
         const options = {
-            key: "rzp_test_CCsoWTNNqtpWEj",
+            key: "rzp_test_SXQjhHDXKM4Rgu",
             amount: amount * 100,
             currency: "INR",
-            name: "Your Brand Name",
+            name: "Vinham Fashion",
             description: "Order Payment",
-
-            order_id: "", // will be set below
-
-            handler: async function (response) {
-                const verifyRes = await http.post(
-                    "/razorpay/verify",
-                    {
-                        razorpay_order_id: response.razorpay_order_id,
-                        razorpay_payment_id: response.razorpay_payment_id,
-                        razorpay_signature: response.razorpay_signature
-                    },
-                    { headers: { Authorization: `Bearer ${token}` } }
-                );
-
-                if (verifyRes.data.success) {
-                    onSuccess(response.razorpay_payment_id);
-                }
-            },
+            order_id: orderId,
 
             theme: {
-                color: "#F37254"
+                color: "#850D55"
+            },
+
+            handler: async function (response) {
+                try {
+                    const verifyRes = await http.post(
+                        "/razorpay/verify",
+                        {
+                            razorpay_order_id: response.razorpay_order_id,
+                            razorpay_payment_id: response.razorpay_payment_id,
+                            razorpay_signature: response.razorpay_signature
+                        },
+                        {
+                            headers: {
+                                Authorization: `Bearer ${token}`
+                            }
+                        }
+                    );
+
+                    if (verifyRes.data.success) {
+                        onSuccess(response.razorpay_payment_id);
+                    } else {
+                        alert("Payment verification failed");
+                    }
+                } catch (error) {
+                    console.error(error);
+                    alert("Something went wrong");
+                }
             }
         };
 
@@ -38,14 +75,25 @@ const RazorpayButton = ({ amount, token, onSuccess }) => {
     };
 
     const createRazorpayOrder = async () => {
-        const res = await http.post(
-            "/razorpay/create-order",
-            { amount },
-            { headers: { Authorization: `Bearer ${token}` } }
-        );
+        try {
+            const res = await http.post(
+                "/razorpay/create-order",
+                { amount },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
 
-        if (res.data.success) {
-            loadRazorpay(res.data.order_id);
+            if (res.data.success) {
+                loadRazorpay(res.data.order_id);
+            } else {
+                alert("Order creation failed");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Something went wrong");
         }
     };
 
