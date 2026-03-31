@@ -38,10 +38,6 @@ const RazorpayButton = ({ amount, token, onSuccess }) => {
             description: "Order Payment",
             order_id: orderId,
 
-            theme: {
-                color: "#850D55"
-            },
-
             handler: async function (response) {
                 try {
                     const verifyRes = await http.post(

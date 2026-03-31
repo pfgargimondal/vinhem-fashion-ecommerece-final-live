@@ -37,6 +37,13 @@ export default function FilterSection({ setResFltrMenu, allFilterMappingdata, fi
 
   // console.log(category);
 
+  const selectedCategory = filterCategories?.find(
+    item =>
+      item?.mainCategory_slug?.toLowerCase() === category?.toLowerCase()
+  );
+
+  const hasSubCategories = selectedCategory?.sub_categories?.length > 0;
+
 
   const toggleFilterExpand = (filterOption) => {
     setExpandedFilters(prev => ({
@@ -302,228 +309,229 @@ export default function FilterSection({ setResFltrMenu, allFilterMappingdata, fi
               </div>
             )}
           </div>
+          {(category === "all-products" || hasSubCategories) && (
+            <div className="dkewjriwehrnjhweijrwer mb-4">
+              <div className="disenihrenjr mb-3 pt-4 pb-3 d-flex align-items-center justify-content-between">
+                <h5 className="mb-0">
+                  {/* {category === "all-products"
+                  ? "Main Categories"
+                  : category && subcategory
+                  ? `${category.replace(/-/g, " ")} - ${subcategory.replace(/-/g, " ")}`
+                  : category} */}
 
-          <div className="dkewjriwehrnjhweijrwer mb-4">
-            <div className="disenihrenjr mb-3 pt-4 pb-3 d-flex align-items-center justify-content-between">
-              <h5 className="mb-0">
-                {/* {category === "all-products"
-                ? "Main Categories"
-                : category && subcategory
-                ? `${category.replace(/-/g, " ")} - ${subcategory.replace(/-/g, " ")}`
-                : category} */}
+                  {
+                    category === "all-products"
+                      ? "Main Categories"
+                      : subcategory
+                        ? "Sub Categories"
+                        : category
+                          ? "Main Categories"
+                          : ""
+                  }
+                </h5>
 
-                {
-                  category === "all-products"
-                    ? "Main Categories"
-                    : subcategory
-                      ? "Sub Categories"
-                      : category
-                        ? "Main Categories"
-                        : ""
-                }
-              </h5>
+                <i onClick={() => setMainCtgyOptions(prev => !prev)} className={`bi ${mainCtgyOptions ? "bi-chevron-up" : "bi-chevron-down"}`}></i>
+              </div>
 
-              <i onClick={() => setMainCtgyOptions(prev => !prev)} className={`bi ${mainCtgyOptions ? "bi-chevron-up" : "bi-chevron-down"}`}></i>
-            </div>
+              {mainCtgyOptions && (
+                <div className="deowjnkrwere bdfgsdfseewewrr">
+                  {filterCategories.map(filterCategory => {
+                    const currentPath = window.location.pathname.toLowerCase().replace("/", "");
+                    const mainCategorySlug = (filterCategory.mainCategory_slug || "").toLowerCase();
+                    const urlParts = currentPath.split("/");
+                    const urlMain = urlParts[0];
+                    const urlSub = urlParts[1] || null;
 
-            {mainCtgyOptions && (
-              <div className="deowjnkrwere bdfgsdfseewewrr">
-                {filterCategories.map(filterCategory => {
-                  const currentPath = window.location.pathname.toLowerCase().replace("/", "");
-                  const mainCategorySlug = (filterCategory.mainCategory_slug || "").toLowerCase();
-                  const urlParts = currentPath.split("/");
-                  const urlMain = urlParts[0];
-                  const urlSub = urlParts[1] || null;
+                    const isAllProducts = currentPath.includes("all-products");
 
-                  const isAllProducts = currentPath.includes("all-products");
+                    const showMainCategory = isAllProducts || mainCategorySlug === urlMain;
+                    if (!showMainCategory) return null;
 
-                  const showMainCategory = isAllProducts || mainCategorySlug === urlMain;
-                  if (!showMainCategory) return null;
+                    const isSubCategoryURL = !!urlSub;
 
-                  const isSubCategoryURL = !!urlSub;
+                    // Auto-expand correct category
+                    const expandedCategoryId = isAllProducts
+                      ? sbctgry
+                      : filterCategories.find(fc => fc.mainCategory_slug.toLowerCase() === urlMain)?.id;
 
-                  // Auto-expand correct category
-                  const expandedCategoryId = isAllProducts
-                    ? sbctgry
-                    : filterCategories.find(fc => fc.mainCategory_slug.toLowerCase() === urlMain)?.id;
+                    return (
+                      <div key={filterCategory.id} className="doewjkrnhweiurwer mb-2">
+                        {filterCategory.sub_categories.length > 0 && (
+                          <div className="duiwehijnwerwer">
+                            <div className="main-catgry-filter px-2">
+                              <div className="radio-wrapper-5">
+                                <div className="oijdmeiojewrer d-flex justify-content-between w-100 align-items-center">
 
-                  return (
-                    <div key={filterCategory.id} className="doewjkrnhweiurwer mb-2">
-                      {filterCategory.sub_categories.length > 0 && (
-                        <div className="duiwehijnwerwer">
-                          <div className="main-catgry-filter px-2">
-                            <div className="radio-wrapper-5">
-                              <div className="oijdmeiojewrer d-flex justify-content-between w-100 align-items-center">
-
-                                {/* HIDE MAIN CATEGORY LABEL & PLUS/MINUS WHEN URL HAS SUBCATEGORY */}
-                                {!isSubCategoryURL && mainCategorySlug !== currentPath && (
-                                  <>
-                                    <div className="doiwejirwer d-flex align-items-center">
-                                      <div className="cdwehjirnweijrowejrowejr">
-                                        <div className="checkbox-wrapper-33">
-                                          <label htmlFor={`mnctgry-${filterCategory.id}`} className="checkbox">
-                                            <input
-                                              id={`mnctgry-${filterCategory.id}`}
-                                              onChange={() => setMainCategory(filterCategory.mainCategory_name.toLowerCase())}
-                                              // checked={mainCategory.includes(filterCategory.mainCategory_name.toLowerCase())}
-                                              checked={mainCategory === filterCategory.mainCategory_name.toLowerCase()}
-                                              value={filterCategory.mainCategory_name.toLowerCase()}
-                                              className="checkbox__trigger visuallyhidden"
-                                              type="checkbox"
-                                            />
-                                            <span className="checkbox__symbol">
-                                              <svg aria-hidden="true" className="icon-checkbox" width="28px" height="28px" viewBox="0 0 28 28">
-                                                <path d="M4 14l8 7L24 7"></path>
-                                              </svg>
-                                            </span>
-                                            <p className="checkbox__textwrapper">{filterCategory.mainCategory_name}</p>
-                                          </label>
+                                  {/* HIDE MAIN CATEGORY LABEL & PLUS/MINUS WHEN URL HAS SUBCATEGORY */}
+                                  {!isSubCategoryURL && mainCategorySlug !== currentPath && (
+                                    <>
+                                      <div className="doiwejirwer d-flex align-items-center">
+                                        <div className="cdwehjirnweijrowejrowejr">
+                                          <div className="checkbox-wrapper-33">
+                                            <label htmlFor={`mnctgry-${filterCategory.id}`} className="checkbox">
+                                              <input
+                                                id={`mnctgry-${filterCategory.id}`}
+                                                onChange={() => setMainCategory(filterCategory.mainCategory_name.toLowerCase())}
+                                                // checked={mainCategory.includes(filterCategory.mainCategory_name.toLowerCase())}
+                                                checked={mainCategory === filterCategory.mainCategory_name.toLowerCase()}
+                                                value={filterCategory.mainCategory_name.toLowerCase()}
+                                                className="checkbox__trigger visuallyhidden"
+                                                type="checkbox"
+                                              />
+                                              <span className="checkbox__symbol">
+                                                <svg aria-hidden="true" className="icon-checkbox" width="28px" height="28px" viewBox="0 0 28 28">
+                                                  <path d="M4 14l8 7L24 7"></path>
+                                                </svg>
+                                              </span>
+                                              <p className="checkbox__textwrapper">{filterCategory.mainCategory_name}</p>
+                                            </label>
+                                          </div>
                                         </div>
                                       </div>
-                                    </div>
 
-                                    {filterCategory.sub_categories.length > 0 && (
-                                      <i
-                                        onClick={() => handleSbctgry(filterCategory.id)}
-                                        className={`fa-solid ${(sbctgry === filterCategory.id || expandedCategoryId === filterCategory.id) ? "fa-minus" : "fa-plus"}`}
-                                      ></i>
-                                    )}
-                                  </>
-                                )}
+                                      {filterCategory.sub_categories.length > 0 && (
+                                        <i
+                                          onClick={() => handleSbctgry(filterCategory.id)}
+                                          className={`fa-solid ${(sbctgry === filterCategory.id || expandedCategoryId === filterCategory.id) ? "fa-minus" : "fa-plus"}`}
+                                        ></i>
+                                      )}
+                                    </>
+                                  )}
+                                </div>
                               </div>
-                            </div>
 
-                            {/* SUBCATEGORY LIST */}
-                            {(sbctgry === filterCategory.id || expandedCategoryId === filterCategory.id) && (
-                              <div className="sub-catgry-filter indiewjrwerewr">
-                                {filterCategory.sub_categories
-                                  .filter(sub => !isSubCategoryURL || sub?.subCategories_slug?.toLowerCase() === urlSub)
-                                  .map((sub_category, index) => {
-                                    const mainSlug = filterCategory.mainCategory_name
-                                          .toLowerCase()
-                                          .replace(/\s+/g, "-");
+                              {/* SUBCATEGORY LIST */}
+                              {(sbctgry === filterCategory.id || expandedCategoryId === filterCategory.id) && (
+                                <div className="sub-catgry-filter indiewjrwerewr">
+                                  {filterCategory.sub_categories
+                                    .filter(sub => !isSubCategoryURL || sub?.subCategories_slug?.toLowerCase() === urlSub)
+                                    .map((sub_category, index) => {
+                                      const mainSlug = filterCategory.mainCategory_name
+                                            .toLowerCase()
+                                            .replace(/\s+/g, "-");
 
-                                    const subSlug = sub_category.subCategories_name
-                                      .toLowerCase()
-                                      .replace(/\s+/g, "-");
+                                      const subSlug = sub_category.subCategories_name
+                                        .toLowerCase()
+                                        .replace(/\s+/g, "-");
 
-                                    // const exactPath = `${mainSlug}/${subSlug}`;
-                                    const exactPath = `${subSlug}`;
+                                      // const exactPath = `${mainSlug}/${subSlug}`;
+                                      const exactPath = `${subSlug}`;
 
-                                    // const isChecked = subCategory?.includes(exactPath);
-                                    const isChecked = subCategory === exactPath;
+                                      // const isChecked = subCategory?.includes(exactPath);
+                                      const isChecked = subCategory === exactPath;
 
-                                    return (
-                                      <div className="doewjroijwerwer mb-3" key={sub_category?.id || index}>
-                                        <div className={`radio-wrapper-5 ${!isSubCategoryURL && mainCategorySlug !== currentPath ? "ps-3" : ""} justify-content-between align-items-center ${(sub_category?.subCategories_slug === urlSub) ? "d-none" : ""}`}>
+                                      return (
+                                        <div className="doewjroijwerwer mb-3" key={sub_category?.id || index}>
+                                          <div className={`radio-wrapper-5 ${!isSubCategoryURL && mainCategorySlug !== currentPath ? "ps-3" : ""} justify-content-between align-items-center ${(sub_category?.subCategories_slug === urlSub) ? "d-none" : ""}`}>
 
-                                          {/* ✅ SUBCATEGORY CHECKBOX */}
-                                          {sub_category?.subCategories_name && !isSubCategoryURL && (
-                                            <div className="doiwejirwer d-flex align-items-center">
-                                              <div className="cdwehjirnweijrowejrowejr">
-                                                <div className="checkbox-wrapper-33">
-                                                  <label htmlFor={`sbctgry-${sub_category.id}`} className="checkbox">
-                                                    <input
-                                                      id={`sbctgry-${sub_category.id}`}
-                                                      onChange={() => setSubCategory(mainSlug, subSlug)}
-                                                      checked={isChecked}
-                                                      value={subSlug}
-                                                      className="checkbox__trigger visuallyhidden"
-                                                      type="checkbox"
-                                                    />
-                                                    <span className="checkbox__symbol">
-                                                      <svg aria-hidden="true" className="icon-checkbox" width="28" height="28" viewBox="0 0 28 28">
-                                                        <path d="M4 14l8 7L24 7"></path>
-                                                      </svg>
-                                                    </span>
-                                                    <p className="checkbox__textwrapper">
-                                                      {sub_category.subCategories_name.replace(/\s*\(Boys\)|\s*\(Girls\)/gi, "")}
-                                                    </p>
-                                                  </label>
+                                            {/* ✅ SUBCATEGORY CHECKBOX */}
+                                            {sub_category?.subCategories_name && !isSubCategoryURL && (
+                                              <div className="doiwejirwer d-flex align-items-center">
+                                                <div className="cdwehjirnweijrowejrowejr">
+                                                  <div className="checkbox-wrapper-33">
+                                                    <label htmlFor={`sbctgry-${sub_category.id}`} className="checkbox">
+                                                      <input
+                                                        id={`sbctgry-${sub_category.id}`}
+                                                        onChange={() => setSubCategory(mainSlug, subSlug)}
+                                                        checked={isChecked}
+                                                        value={subSlug}
+                                                        className="checkbox__trigger visuallyhidden"
+                                                        type="checkbox"
+                                                      />
+                                                      <span className="checkbox__symbol">
+                                                        <svg aria-hidden="true" className="icon-checkbox" width="28" height="28" viewBox="0 0 28 28">
+                                                          <path d="M4 14l8 7L24 7"></path>
+                                                        </svg>
+                                                      </span>
+                                                      <p className="checkbox__textwrapper">
+                                                        {sub_category.subCategories_name.replace(/\s*\(Boys\)|\s*\(Girls\)/gi, "")}
+                                                      </p>
+                                                    </label>
+                                                  </div>
                                                 </div>
                                               </div>
-                                            </div>
-                                          )}
+                                            )}
 
-                                          {/* ✅ PLUS/MINUS TOGGLE - ALWAYS SHOWS */}
-                                          {!isSubCategoryURL && sub_category?.filter_categories?.length > 0 && (
-                                            <div className="oijdmeiojewrer">
-                                              <i
-                                                onClick={() => handleInSbctgry(sub_category.id)}
-                                                className={`fa-solid ${(insdSbctgry === sub_category.id) ? "fa-minus" : "fa-plus"}`}
-                                              />
-                                            </div>
-                                          )}
-                                        </div>
+                                            {/* ✅ PLUS/MINUS TOGGLE - ALWAYS SHOWS */}
+                                            {!isSubCategoryURL && sub_category?.filter_categories?.length > 0 && (
+                                              <div className="oijdmeiojewrer">
+                                                <i
+                                                  onClick={() => handleInSbctgry(sub_category.id)}
+                                                  className={`fa-solid ${(insdSbctgry === sub_category.id) ? "fa-minus" : "fa-plus"}`}
+                                                />
+                                              </div>
+                                            )}
+                                          </div>
 
-                                        {/* ✅ FILTER CATEGORIES - FIXED CONDITION */}
-                                        {(insdSbctgry === sub_category.id || sub_category?.subCategories_slug === urlSub) && (
-                                          <div className={`inside-sub-catgry-filter ${!isSubCategoryURL && sub_category?.filter_categories?.length > 0 ? "ps-3" : ""}`}>
-                                            {sub_category.filter_categories.map(filter_category => {
-                                              // eslint-disable-next-line
-                                              const mainSlug = filterCategory.mainCategory_name
-                                                  .toLowerCase()
-                                                  .replace(/\s+/g, "-");
-                                              // eslint-disable-next-line
-                                                const subSlug = sub_category.subCategories_name
-                                                  .toLowerCase()
-                                                  .replace(/\s+/g, "-");
+                                          {/* ✅ FILTER CATEGORIES - FIXED CONDITION */}
+                                          {(insdSbctgry === sub_category.id || sub_category?.subCategories_slug === urlSub) && (
+                                            <div className={`inside-sub-catgry-filter ${!isSubCategoryURL && sub_category?.filter_categories?.length > 0 ? "ps-3" : ""}`}>
+                                              {sub_category.filter_categories.map(filter_category => {
+                                                // eslint-disable-next-line
+                                                const mainSlug = filterCategory.mainCategory_name
+                                                    .toLowerCase()
+                                                    .replace(/\s+/g, "-");
+                                                // eslint-disable-next-line
+                                                  const subSlug = sub_category.subCategories_name
+                                                    .toLowerCase()
+                                                    .replace(/\s+/g, "-");
 
-                                                const filterSlug = filter_category.filterCategories_name
-                                                  .toLowerCase()
-                                                  .replace(/\s+/g, "-");
+                                                  const filterSlug = filter_category.filterCategories_name
+                                                    .toLowerCase()
+                                                    .replace(/\s+/g, "-");
 
-                                                // const filterPath = `${mainSlug}/${subSlug}/${filterSlug}`;
-                                                const filterPath = `${filterSlug}`;
+                                                  // const filterPath = `${mainSlug}/${subSlug}/${filterSlug}`;
+                                                  const filterPath = `${filterSlug}`;
 
-                                              return (
-                                                <div key={filter_category.id} className={`radio-wrapper-5 ${!isSubCategoryURL && sub_category.filter_categories.length > 0 ? "ps-3" : ""} mb-3 justify-content-between align-items-center`}>
-                                                  <div className="doiwejirwer d-flex align-items-center">
-                                                    <div className="cdwehjirnweijrowejrowejr">
-                                                      <div className="checkbox-wrapper-33">
-                                                        <label htmlFor={`insd-sb-ctgry-${filter_category.id}`} className="checkbox">
-                                                          <input
-                                                            onChange={() => setFilterCategory(
-                                                              filterCategory.mainCategory_name.toLowerCase(),
-                                                              sub_category.subCategories_name.toLowerCase(),
-                                                              filter_category.filterCategories_name.toLowerCase()
-                                                            )}
-                                                            // checked={filterCategoryCntxt?.includes(filterPath)}
-                                                            checked={filterCategoryCntxt === filterPath}
-                                                            value={filter_category.filterCategories_name.toLowerCase()}
-                                                            id={`insd-sb-ctgry-${filter_category.id}`}
-                                                            className="checkbox__trigger visuallyhidden"
-                                                            type="checkbox"
-                                                          />
-                                                          <span className="checkbox__symbol">
-                                                            <svg aria-hidden="true" className="icon-checkbox" width="28px" height="28px" viewBox="0 0 28 28">
-                                                              <path d="M4 14l8 7L24 7"></path>
-                                                            </svg>
-                                                          </span>
-                                                          <p className="checkbox__textwrapper">{filter_category.filterCategories_name}</p>
-                                                        </label>
+                                                return (
+                                                  <div key={filter_category.id} className={`radio-wrapper-5 ${!isSubCategoryURL && sub_category.filter_categories.length > 0 ? "ps-3" : ""} mb-3 justify-content-between align-items-center`}>
+                                                    <div className="doiwejirwer d-flex align-items-center">
+                                                      <div className="cdwehjirnweijrowejrowejr">
+                                                        <div className="checkbox-wrapper-33">
+                                                          <label htmlFor={`insd-sb-ctgry-${filter_category.id}`} className="checkbox">
+                                                            <input
+                                                              onChange={() => setFilterCategory(
+                                                                filterCategory.mainCategory_name.toLowerCase(),
+                                                                sub_category.subCategories_name.toLowerCase(),
+                                                                filter_category.filterCategories_name.toLowerCase()
+                                                              )}
+                                                              // checked={filterCategoryCntxt?.includes(filterPath)}
+                                                              checked={filterCategoryCntxt === filterPath}
+                                                              value={filter_category.filterCategories_name.toLowerCase()}
+                                                              id={`insd-sb-ctgry-${filter_category.id}`}
+                                                              className="checkbox__trigger visuallyhidden"
+                                                              type="checkbox"
+                                                            />
+                                                            <span className="checkbox__symbol">
+                                                              <svg aria-hidden="true" className="icon-checkbox" width="28px" height="28px" viewBox="0 0 28 28">
+                                                                <path d="M4 14l8 7L24 7"></path>
+                                                              </svg>
+                                                            </span>
+                                                            <p className="checkbox__textwrapper">{filter_category.filterCategories_name}</p>
+                                                          </label>
+                                                        </div>
                                                       </div>
                                                     </div>
                                                   </div>
-                                                </div>
-                                              );
-                                            })}
-                                          </div>
-                                        )}
-                                      </div>
-                                    );
-                                  })}
-                              </div>
-                            )}
+                                                );
+                                              })}
+                                            </div>
+                                          )}
+                                        </div>
+                                      );
+                                    })}
+                                </div>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          )}
 
           {allFilterMappingdata?.filter(item => item.filter_option !== 'filter_category_name').map((FilterMappingdata) => {
             const totalValues = FilterMappingdata.filter_values.split(",").length;
@@ -708,29 +716,31 @@ export default function FilterSection({ setResFltrMenu, allFilterMappingdata, fi
                       </Nav.Link>
                     </Nav.Item>
                     
-                    <Nav.Item>
-                      <Nav.Link eventKey="resfilter-categories">
-                        <div className="disenihrenjr">
-                          <p className="mb-0">
-                            {/* {category === "all-products"
-                              ? "Main Categories"
-                              : category && subcategory
-                              ? `${category.replace(/-/g, " ")} - ${subcategory.replace(/-/g, " ")}`
-                              : category} */}
-
-                            {
-                              category === "all-products"
+                    {(category === "all-products" || hasSubCategories) && (
+                      <Nav.Item>
+                        <Nav.Link eventKey="resfilter-categories">
+                          <div className="disenihrenjr">
+                            <p className="mb-0">
+                              {/* {category === "all-products"
                                 ? "Main Categories"
-                                : subcategory
-                                  ? "Sub Categories"
-                                  : category
-                                    ? "Main Categories"
-                                    : ""
-                            }
-                          </p>
-                        </div>
-                      </Nav.Link>
-                    </Nav.Item>
+                                : category && subcategory
+                                ? `${category.replace(/-/g, " ")} - ${subcategory.replace(/-/g, " ")}`
+                                : category} */}
+
+                              {
+                                category === "all-products"
+                                  ? "Main Categories"
+                                  : subcategory
+                                    ? "Sub Categories"
+                                    : category
+                                      ? "Main Categories"
+                                      : ""
+                              }
+                            </p>
+                          </div>
+                        </Nav.Link>
+                      </Nav.Item>
+                    )}
 
                     {allFilterMappingdata?.filter(item => item.filter_option !== 'filter_category_name').map((FilterMappingdata) => {
                       
