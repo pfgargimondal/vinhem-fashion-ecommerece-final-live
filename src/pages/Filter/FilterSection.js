@@ -42,6 +42,7 @@ export default function FilterSection({ setResFltrMenu, allFilterMappingdata, fi
       item?.mainCategory_slug?.toLowerCase() === category?.toLowerCase()
   );
 
+    // eslint-disable-next-line
   const hasSubCategories = selectedCategory?.sub_categories?.length > 0;
 
 
@@ -309,7 +310,7 @@ export default function FilterSection({ setResFltrMenu, allFilterMappingdata, fi
               </div>
             )}
           </div>
-          {(category === "all-products" || hasSubCategories) && (
+          {/* {(category === "all-products" || hasSubCategories) && ( */}
             <div className="dkewjriwehrnjhweijrwer mb-4">
               <div className="disenihrenjr mb-3 pt-4 pb-3 d-flex align-items-center justify-content-between">
                 <h5 className="mb-0">
@@ -343,8 +344,10 @@ export default function FilterSection({ setResFltrMenu, allFilterMappingdata, fi
                     const urlSub = urlParts[1] || null;
 
                     const isAllProducts = currentPath.includes("all-products");
+                    const isnewIn = currentPath.includes("new-in");
+                    const isreadyToShip = currentPath.includes("ready-to-ship");
 
-                    const showMainCategory = isAllProducts || mainCategorySlug === urlMain;
+                    const showMainCategory = isAllProducts || isnewIn || isreadyToShip || mainCategorySlug === urlMain;
                     if (!showMainCategory) return null;
 
                     const isSubCategoryURL = !!urlSub;
@@ -531,7 +534,7 @@ export default function FilterSection({ setResFltrMenu, allFilterMappingdata, fi
                 </div>
               )}
             </div>
-          )}
+          {/* // )} */}
 
           {allFilterMappingdata?.filter(item => item.filter_option !== 'filter_category_name').map((FilterMappingdata) => {
             const totalValues = FilterMappingdata.filter_values.split(",").length;
@@ -716,7 +719,7 @@ export default function FilterSection({ setResFltrMenu, allFilterMappingdata, fi
                       </Nav.Link>
                     </Nav.Item>
                     
-                    {(category === "all-products" || hasSubCategories) && (
+                    {/* {(category === "all-products" || hasSubCategories) && ( */}
                       <Nav.Item>
                         <Nav.Link eventKey="resfilter-categories">
                           <div className="disenihrenjr">
@@ -740,7 +743,7 @@ export default function FilterSection({ setResFltrMenu, allFilterMappingdata, fi
                           </div>
                         </Nav.Link>
                       </Nav.Item>
-                    )}
+                    {/* )} */}
 
                     {allFilterMappingdata?.filter(item => item.filter_option !== 'filter_category_name').map((FilterMappingdata) => {
                       
