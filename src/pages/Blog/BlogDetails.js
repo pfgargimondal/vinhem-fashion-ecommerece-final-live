@@ -264,8 +264,8 @@ export const BlogDetails = () => {
                       />
                     </div>
 
-                    <div className="d-flex justify-content-end">
-                      <button className="btn px-5 btn-main" type="submit">
+                    <div className="d-flex justify-content-end erhbgsdertbhgsdfg">
+                      <button className="btn px-5 btn-main btn-transparent" type="submit">
                         Submit
                       </button>
                     </div>

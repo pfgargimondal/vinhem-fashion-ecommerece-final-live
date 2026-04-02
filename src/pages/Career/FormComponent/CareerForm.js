@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import http from "../../../http";
 
-export const CareerForm = () => {
+export const CareerForm = ({ jobOpenings }) => {
   const fileInputRef = useRef(null);
   const [inputs, setInputs] = useState({
     first_name: "",
@@ -167,13 +167,19 @@ export const CareerForm = () => {
             <div className="gjsdfgs">
               <div className="xfxf888">
                 <label>Post Applied For</label>
-                <select name="job_position" className="form-select" value={inputs.job_position} onChange={handleChange}>
+                <select
+                  name="job_position"
+                  className="form-select"
+                  value={inputs.job_position}
+                  onChange={handleChange}
+                >
                   <option value="">Choose one</option>
-                  <option value="SEO Executive">SEO Executive</option>
-                  <option value="ASPNET Developer">ASPNET Developer</option>
-                  <option value="Content Writer">Content Writer</option>
-                  <option value="Graphic Designer">Graphic Designer</option>
-                  <option value="Digital Marketer">Digital Marketer</option>
+
+                  {jobOpenings?.map((job, index) => (
+                    <option key={job.id || index} value={job.title}>
+                      {job.title}
+                    </option>
+                  ))}
                 </select>
                 <p style={{ color: "red" }}>{errors.job_position}</p>
               </div>

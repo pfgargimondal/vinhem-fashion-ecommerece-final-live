@@ -62,13 +62,14 @@ export const FooterBlog = ({ blogCategories }) => {
                     <div className="row">
                         <div className="col-lg-3">
                             <div className="doiwqjejir_inner py-4 h-100">
-                                <img src={Logo} className="mb-4" alt="" />
-
-                                <p className="mb-0">
+                                <div className="text-center">
+                                    <img src={Logo} className="mb-4" alt="" />
+                                </div>
+                                {/* <p className="mb-0">
                                     Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                                     Veniam non atque eligendi explicabo ipsum iusto officiis
                                     eveniet alias facilis nemo.
-                                </p>
+                                </p> */}
 
                                 <h6 className="mb-2 mt-3">
                                     CERTIFIED & VERIFIED BY :
@@ -87,7 +88,7 @@ export const FooterBlog = ({ blogCategories }) => {
 
                         <div className="col-lg-3">
                             <div className="doiwqjejir_inner py-4 h-100">
-                                <h5 className="mb-3">Recent Posts</h5>
+                                <h5 className="mb-3">{"Recent Posts".toUpperCase()}</h5>
                                 {recentblogs.map((recentblogsItem) => (
                                     <Link
                                         key={recentblogsItem.slug}
@@ -97,13 +98,12 @@ export const FooterBlog = ({ blogCategories }) => {
                                         {recentblogsItem.title}
                                     </Link>
                                 ))}
-                                {/* <Link to="">Lorem ipsum dolor sit amet</Link> */}
                             </div>
                         </div>
 
                         <div className="col-lg-3">
                             <div className="doiwqjejir_inner py-4 h-100">
-                                <h5 className="mb-3">Popular Posts</h5>
+                                <h5 className="mb-3">{"Popular Posts".toUpperCase()}</h5>
                                 {popularblogs.map((popularblogsItem) => (
                                     <Link
                                         key={popularblogsItem.slug}
@@ -120,7 +120,7 @@ export const FooterBlog = ({ blogCategories }) => {
 
                         <div className="col-lg-3">
                             <div className="doiwqjejir_inner border-end-0 py-4 h-100">
-                                <h5 className="mb-3">Categories</h5>
+                                <h5 className="mb-3">{"Categories".toUpperCase()}</h5>
                                 {blogCategories.map((item) => (
                                     <Link
                                         key={item?.category}
@@ -138,7 +138,7 @@ export const FooterBlog = ({ blogCategories }) => {
             </div>
 
             <div className="sadfdfgeadetr py-2 text-center text-white">
-                <p className="mb-0">Vinhem Fashion Blog <i class="bi bi-c-circle"></i> 2012-2026, All Rights Reserved.</p>
+                <p className="mb-0">Vinhem Fashion Blog <i class="bi bi-c-circle"></i> 2012 - 2026, All Rights Reserved.</p>
             </div>
         </div>
     );

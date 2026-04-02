@@ -289,6 +289,18 @@ button.btn.btn-main.asfedeer:hover{
     color: #fff;
 }
 
+.erhbgsdertbhgsdfg .btn-transparent {
+  border: 1px solid var(--pink-main-color) !important;
+  background: var(--pink-main-color);
+  color: #fff;
+}
+
+.erhbgsdertbhgsdfg .btn-transparent:hover {
+  border: 1px solid var(--pink-main-color) !important;
+  background: var(--pink-main-color) !important;
+  color: #fff;
+}
+
 /* article.fgfrfdrdtreere:nth-child(even) .dosjifrjwer{
     --bs-gutter-x: 1.5rem;
     --bs-gutter-y: 0;

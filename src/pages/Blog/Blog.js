@@ -4,9 +4,8 @@ import { Link, useLocation } from "react-router-dom";
 import { BlogItem } from "./Components/BlogItem";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 import http from "../../http";
@@ -169,12 +168,12 @@ export const Blog = () => {
             
             <section className="dsgbtgfewfrrr container-fluid mb-4">
                 <Swiper
-                    modules={[Navigation, Pagination, Autoplay]}
+                    modules={[Pagination, Autoplay]}
                     spaceBetween={5}
                     slidesPerView={1}
-                    navigation
+                    // navigation
                     pagination={{ clickable: true }}
-                    autoplay={{ delay: 4000, disableOnInteraction: false }}
+                    autoplay={{ delay: 3000, disableOnInteraction: false }}
                     className="featured-swiper"
                 >
                     {blogBanner.map(blogBannerItem => (

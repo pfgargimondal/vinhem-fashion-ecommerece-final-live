@@ -163,7 +163,7 @@ export const Career = () => {
             />
           </div>
 
-          <CareerForm />
+          <CareerForm jobOpenings={jobOpenings}/>
         </div>
       </div>
 
