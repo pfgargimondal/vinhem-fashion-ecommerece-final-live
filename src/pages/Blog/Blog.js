@@ -1,15 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-
 import { BlogItem } from "./Components/BlogItem";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-
 import http from "../../http";
-
 import "./Css/Blog.css";
 import { FooterBlog, HeaderBlog } from "../../components";
 import Loader from "../../components/Loader/Loader";
@@ -23,6 +19,7 @@ export const Blog = () => {
     const [imageBaseUrl, setImageBaseUrl] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [blogCategories, setBlogCategories] = useState([]);
+    const [allblogCategories, setAllBlogCategories] = useState([]);
     const [blogTags, setBlogTags] = useState([]);
      // eslint-disable-next-line
     const [blogvedio, setBlogVedio] = useState("");
@@ -38,7 +35,6 @@ export const Blog = () => {
     if (pathName.includes("/category")) {
         urlLastSegment = pathName.split("/").filter(Boolean).pop();
     }
-
     if (pathName.includes("/tag")) {
         urlTagLastSegment = pathName.split("/").filter(Boolean).pop();
     }
@@ -111,6 +107,9 @@ export const Blog = () => {
 
                 setBlogCategories(dataCategoriesTags.blog_category);
                 setBlogTags(dataCategoriesTags.data);
+
+                setAllBlogCategories(dataCategoriesTags.allBlog_categories);
+
             } catch (error) {
                 console.error("Error fetching users:", error);
             } finally {
@@ -373,7 +372,7 @@ export const Blog = () => {
                 </div>
             </div>
 
-            <FooterBlog blogCategories={blogCategories} />
+            <FooterBlog blogCategories={blogCategories} allblogCategories={allblogCategories}/>
         </>
     )
 }

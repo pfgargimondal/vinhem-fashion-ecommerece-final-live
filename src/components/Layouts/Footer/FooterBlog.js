@@ -6,7 +6,7 @@ import Loader from "../../Loader/Loader";
 import http from "../../../http";
 import { useEffect, useState } from "react";
 
-export const FooterBlog = ({ blogCategories }) => {
+export const FooterBlog = ({ blogCategories, allblogCategories }) => {
     const [loading, setLoading] = useState(false);
      // eslint-disable-next-line
     const [blogsHeader, setBlogsHeader] = useState([]);
@@ -121,13 +121,13 @@ export const FooterBlog = ({ blogCategories }) => {
                         <div className="col-lg-3">
                             <div className="doiwqjejir_inner border-end-0 py-4 h-100">
                                 <h5 className="mb-3">{"Categories".toUpperCase()}</h5>
-                                {blogCategories.map((item) => (
+                                {allblogCategories.map((item) => (
                                     <Link
-                                        key={item?.category}
-                                        to={`/blog/category/${item?.category.toLowerCase()}`}
+                                        key={item?.blog_category}
+                                        to={`${item?.category_url}`}
                                         target="_blank"
                                     >
-                                        {item?.category}
+                                        {item?.blog_category}
                                     </Link>
                                 ))}
                                 {/* <Link to="">Lorem ipsum dolor sit amet</Link> */}
