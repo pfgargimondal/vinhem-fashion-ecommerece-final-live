@@ -21,7 +21,6 @@ export const Blog = () => {
     const [blogCategories, setBlogCategories] = useState([]);
     const [allblogCategories, setAllBlogCategories] = useState([]);
     const [blogTags, setBlogTags] = useState([]);
-     // eslint-disable-next-line
     const [blogvedio, setBlogVedio] = useState("");
 
     const [blogBanner, setBlogBanner] = useState([]);
@@ -64,7 +63,6 @@ export const Blog = () => {
             } catch (e) {
                 console.warn("Invalid tags JSON:", dtBl.tags);
             }
-
             return tags.some(
                 (tag) => tag.toLowerCase() === decodedTag.toLowerCase()
             );

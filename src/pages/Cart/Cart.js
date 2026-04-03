@@ -4,6 +4,7 @@ import Table from "react-bootstrap/Table";
 import "./Css/Cart.css";
 import "swiper/css";
 import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../../context/AuthContext";
 import http from "../../http";
 import { useWishlist } from "../../context/WishlistContext";

@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { toggleZohoChatWindow } from "../../../utils/zohoChat";
+import { useLocation } from "react-router-dom";
 
 const GlobalChat = () => {
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -14,6 +16,10 @@ const GlobalChat = () => {
     toggleZohoChatWindow(!isOpen);
     setIsOpen(!isOpen);
   };
+
+  if (location.pathname.startsWith("/blog")) {
+    return null;
+  }
 
   return (
     <div

@@ -13,7 +13,9 @@ export const BlogDetails = () => {
   const [blogs, setBlogs] = useState([]);
   const [popularblogs, setPopularBlogs] = useState([]);
   const [imageBaseUrl, setImageBaseUrl] = useState("");
+  const [blogvedio, setBlogVedio] = useState("");
   const [blogCategories, setBlogCategories] = useState([]);
+  const [allblogCategories, setAllBlogCategories] = useState([]);
   const [blogTags, setBlogTags] = useState([]);
   const [comments, setComments] = useState([]);
 
@@ -28,6 +30,7 @@ export const BlogDetails = () => {
         setBlogs(data.data);
         setPopularBlogs(data.popularblog);
         setImageBaseUrl(data.image_url);
+        setBlogVedio(data.blog_vedio);
       } catch (error) {
         console.error("Error fetching blog details:", error);
       } finally {
@@ -45,6 +48,7 @@ export const BlogDetails = () => {
         const data = res.data;
         setBlogCategories(data.blog_category);
         setBlogTags(data.data);
+        setAllBlogCategories(data.allBlog_categories);
       } catch (error) {
         console.error("Error fetching tags/categories:", error);
       } finally {
@@ -341,7 +345,7 @@ export const BlogDetails = () => {
                   Follow Us On
                 </h5>
 
-                <ul className="opsdjfopsdjkfopsdkof d-flex align-items-center justify-content-around follow-card list-inline py-3 mx-4">
+                {/* <ul className="opsdjfopsdjkfopsdkof d-flex align-items-center justify-content-around follow-card list-inline py-3 mx-4">
                   <li className="list-inline-item">
                     <a href="/">
                       <i class="fa-brands p-2 text-light fa-facebook-f"></i>
@@ -371,7 +375,7 @@ export const BlogDetails = () => {
                       <i class="fa-brands p-2 text-light fa-youtube"></i>
                     </a>
                   </li>
-                </ul>
+                </ul> */}
 
                 <div className="social-icons-container">
                     <ul className="mb-0 ps-0">
@@ -422,13 +426,11 @@ export const BlogDetails = () => {
                                 ></iframe>
                             )} */}
 
-                  <img
-                    width="100%"
-                    className="dckisehiwehrr"
-                    style={{ height: "100%" }}
-                    src="./images/fashion40.png"
-                    alt=""
-                  />
+                  {blogvedio?.vedio_url ? (
+                      <img width="100%" className="dckisehiwehrr" style={{height: "100%"}} src={blogvedio.vedio_url} alt="" />
+                  ) : (
+                      <img width="100%" className="dckisehiwehrr" style={{height: "100%"}} src="./images/fashion40.png" alt="" />
+                  )}
                 </div>
               </section>
             </div>
@@ -441,7 +443,7 @@ export const BlogDetails = () => {
           style={{ zIndex: 9999999999 }}
         />
       </div>
-      <FooterBlog blogCategories={blogCategories} />
+      <FooterBlog blogCategories={blogCategories} allblogCategories={allblogCategories}/>
     </>
   );
 };
