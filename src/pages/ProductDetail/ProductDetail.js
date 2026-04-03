@@ -37,7 +37,9 @@ import { useAuthModal } from "../../context/AuthModalContext";
 import { useMetaData } from "../../hooks/useMetaData";
 // eslint-disable-next-line
 import GlobalChat from "../../components/Elements/ChatProfileDetails/GlobalChat";
+// eslint-disable-next-line
 import { useChat } from "../../context/ChatContext";
+import { toggleZohoChatWindow } from "../../utils/zohoChat";
 
 export const ProductDetail = () => {
   const { token, user } = useAuth();
@@ -65,6 +67,7 @@ export const ProductDetail = () => {
   // const [chatProfileDetailsShow, setChatProfileDetailsShow] = useState(false);
   const [videoMute, setVideoMute] = useState(true);
   const { handleLoginModal } = useAuthModal();
+  // eslint-disable-next-line
   const { setChatProfileDetailsShow } = useChat();
 
   const [touchStart, setTouchStart] = useState(null);
@@ -435,22 +438,83 @@ export const ProductDetail = () => {
     updateQtyAndPriceBySize(normalizedSize);
   };
 
-  const handleQuantitySelect = (qty) => {
+  // const handleQuantitySelect = (qty) => {
+  //   if (qty > 5) {
+  //     toast.error("You can purchase a maximum of 5 quantities only.");
+  //     return;
+  //   }
+
+  //   setSelectedQuantity(qty);
+
+  //   // Recalculate final price when quantity changes
+  //   const basePrice = parseFloat(
+  //     selectedPrice || productDetails?.data?.selling_price || 0
+  //   );
+
+  //   let total = basePrice * qty;
+
+  //   // Optional addon charges
+  //   const stitchingCharge = parseFloat(
+  //     productDetails?.data?.stiching_charges?.price || 0
+  //   );
+  //   const customFitCharge = parseFloat(
+  //     productDetails?.data?.extra_charges?.price || 0
+  //   );
+  //   const turbanPrice = parseFloat(
+  //     productDetails?.data?.turban_charges?.price || 0
+  //   );
+  //   const mojriPrice = parseFloat(
+  //     productDetails?.data?.mojri_charges?.price || 0
+  //   );
+  //   const stolePrice = parseFloat(
+  //     productDetails?.data?.stole_charges?.price || 0
+  //   );
+
+  //   // Add optional selections if chosen
+  //   if (selectedStitchOption === "stitch") total += stitchingCharge;
+  //   if (selectedStitchOption === "customFit") total += customFitCharge;
+  //   if (isTurbanChecked) total += turbanPrice;
+  //   if (isMojriChecked) total += mojriPrice;
+  //   if (isStoleChecked) total += stolePrice;
+
+  //   setFinalPrice(total);
+  // };
+
+  const handleQuantitySelect = async (qty) => {
     if (qty > 5) {
       toast.error("You can purchase a maximum of 5 quantities only.");
       return;
     }
 
-    setSelectedQuantity(qty);
+     setLoading(true);
 
-    // Recalculate final price when quantity changes
+    try {
+      const response = await http.post("/user/update-cart-quantity", {
+        product_id: productDetails?.data?.id,
+        size: selectedSize,
+        quantity: qty,
+      });
+
+      if (response.data.success) {
+        setSelectedQuantity(qty);
+        setFinalPrice(calculateFinalPrice(qty));
+        toast.success(response.data.message);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      toast.error("Failed to update cart");
+    } finally {
+      setLoading(false);
+    }
+  };
+  const calculateFinalPrice = (qty) => {
     const basePrice = parseFloat(
       selectedPrice || productDetails?.data?.selling_price || 0
     );
 
     let total = basePrice * qty;
 
-    // Optional addon charges
     const stitchingCharge = parseFloat(
       productDetails?.data?.stiching_charges?.price || 0
     );
@@ -467,15 +531,18 @@ export const ProductDetail = () => {
       productDetails?.data?.stole_charges?.price || 0
     );
 
-    // Add optional selections if chosen
     if (selectedStitchOption === "stitch") total += stitchingCharge;
     if (selectedStitchOption === "customFit") total += customFitCharge;
     if (isTurbanChecked) total += turbanPrice;
     if (isMojriChecked) total += mojriPrice;
     if (isStoleChecked) total += stolePrice;
 
-    setFinalPrice(total);
+    return total;
   };
+
+
+
+
 
   const updateQtyAndPriceBySize = useCallback((normalizedSize) => {
     const base = productDetails?.data || {};
@@ -975,6 +1042,57 @@ export const ProductDetail = () => {
         behavior: "smooth",
       });
     }
+  };
+
+
+  const productSpecs = [
+    { label: "No of Component", value: productDetails?.data?.no_of_component },
+    { label: "Type of Work", value: productDetails?.data?.type_of_work },
+    { label: "Color", value: productDetails?.data?.color },
+    { label: "Dupatta Color", value: productDetails?.data?.dupatta_color },
+    { label: "Jacket Color", value: productDetails?.data?.jacket_color },
+    { label: "Bottom Closure", value: productDetails?.data?.bottom_closure },
+    { label: "Inner Lining", value: productDetails?.data?.inner_lining },
+    { label: "Weight Details", value: productDetails?.data?.weight },
+    { label: "Components", value: productDetails?.data?.component },
+    { label: "Occasions", value: productDetails?.data?.occasion },
+    { label: "Style", value: productDetails?.data?.celebrity },
+    { label: "Pattern", value: productDetails?.data?.pattern },
+    { label: "Material", value: productDetails?.data?.fabric },
+    { label: "Fit", value: productDetails?.data?.fit_type },
+    { label: "Care Instruction", value: productDetails?.data?.care_instruction },
+  ];
+
+  // remove null, undefined, empty, "0"
+  const filteredSpecs = productSpecs.filter(
+    (item) =>
+      item.value !== null &&
+      item.value !== undefined &&
+      item.value !== "" &&
+      item.value !== "0"
+  );
+
+  // split equally
+  const middleIndex = Math.ceil(filteredSpecs.length / 2);
+  const leftColumn = filteredSpecs.slice(0, middleIndex);
+  const rightColumn = filteredSpecs.slice(middleIndex);
+
+
+  const handleMailClick = () => {
+    const subject = `Product Inquiry - ${
+      productDetails?.data?.product_name || ""
+    }`;
+
+    const body = `Hi Team,\n\nI need help regarding this product: ${
+      productDetails?.data?.product_name || ""
+    }`;
+
+    window.open(
+      `https://mail.google.com/mail/?view=cm&fs=1&to=support@vinhemfashion.com&su=${encodeURIComponent(
+        subject
+      )}&body=${encodeURIComponent(body)}`,
+      "_blank"
+    );
   };
 
 
@@ -2180,7 +2298,7 @@ export const ProductDetail = () => {
                             <div className="col-lg-4">
                               <button
                                 className="btn w-100 btn-transparent"
-                                onClick={() => setChatProfileDetailsShow(true)}
+                                onClick={() => toggleZohoChatWindow(true)}
                               >
                                 <i class="bi me-1 bi-chat-left-text"></i> Chat Now
                               </button>
@@ -2199,8 +2317,11 @@ export const ProductDetail = () => {
                             </div>
 
                             <div className="col-lg-4">
-                              <button className="btn w-100 btn-transparent">
-                                <i class="bi me-1 bi-envelope"></i> Mail Us
+                              <button type="button"
+                                className="btn w-100 btn-transparent"
+                                onClick={handleMailClick}
+                              >
+                                <i className="bi me-1 bi-envelope"></i> Mail Us
                               </button>
                             </div>
                           </div>
@@ -2239,230 +2360,27 @@ export const ProductDetail = () => {
                                   <div className="row">
                                     <div className="col-lg-6 col-md-6 col-sm-6 col-6 mb-4">
                                       <div className="idnewihrwer_inner">
-                                        {productDetails?.data?.no_of_component !==
-                                          null &&
-                                          productDetails?.data?.no_of_component !==
-                                            "0" && (
-                                            <div className="odjjkwehrihwerewr mb-4">
-                                              <p>
-                                                No of Component <br />{" "}
-                                                <span>
-                                                  {
-                                                    productDetails?.data
-                                                      ?.no_of_component
-                                                  }
-                                                </span>
-                                              </p>
-                                            </div>
-                                          )}
-                                        {productDetails?.data?.type_of_work !==
-                                          null &&
-                                          productDetails?.data?.type_of_work !==
-                                            "0" && (
-                                            <div className="odjjkwehrihwerewr mb-4">
-                                              <p>
-                                                Type of Work <br />{" "}
-                                                <span>
-                                                  {
-                                                    productDetails?.data
-                                                      ?.type_of_work
-                                                  }
-                                                </span>
-                                              </p>
-                                            </div>
-                                          )}
-
-                                        {productDetails?.data?.color !== null &&
-                                          productDetails?.data?.color !== "0" && (
-                                            <div className="odjjkwehrihwerewr mb-4">
-                                              <p>
-                                                Color <br />{" "}
-                                                <span>
-                                                  {productDetails?.data?.color}
-                                                </span>
-                                              </p>
-                                            </div>
-                                          )}
-
-                                        {productDetails?.data?.dupatta_color !==
-                                          null &&
-                                          productDetails?.data?.dupatta_color !==
-                                            "0" && ( // optional: also check empty string
-                                            <div className="odjjkwehrihwerewr mb-4">
-                                              <p>
-                                                Dupatta Color <br />
-                                                <span>
-                                                  {
-                                                    productDetails?.data
-                                                      ?.dupatta_color
-                                                  }
-                                                </span>
-                                              </p>
-                                            </div>
-                                          )}
-
-                                        {productDetails?.data?.jacket_color !==
-                                          null &&
-                                          productDetails?.data?.jacket_color !==
-                                            "0" && (
-                                            <div className="odjjkwehrihwerewr mb-4">
-                                              <p>
-                                                Jacket Color <br />
-                                                <span>
-                                                  {
-                                                    productDetails?.data
-                                                      ?.jacket_color
-                                                  }
-                                                </span>
-                                              </p>
-                                            </div>
-                                          )}
-
-                                        {productDetails?.data?.bottom_closure !==
-                                          null &&
-                                          productDetails?.data?.bottom_closure !==
-                                            "0" && (
-                                            <div className="odjjkwehrihwerewr mb-4">
-                                              <p>
-                                                Bottom Closure <br />
-                                                <span>
-                                                  {
-                                                    productDetails?.data
-                                                      ?.bottom_closure
-                                                  }
-                                                </span>
-                                              </p>
-                                            </div>
-                                          )}
-
-                                        {productDetails?.data?.inner_lining !==
-                                          null &&
-                                          productDetails?.data?.inner_lining !==
-                                            "0" && (
-                                            <div className="odjjkwehrihwerewr mb-4">
-                                              <p>
-                                                Inner Lining <br />
-                                                <span>
-                                                  {
-                                                    productDetails?.data
-                                                      ?.inner_lining
-                                                  }
-                                                </span>
-                                              </p>
-                                            </div>
-                                          )}
-
-                                        {productDetails?.data?.weight !== null &&
-                                          productDetails?.data?.weight !== "0" && (
-                                            <div className="odjjkwehrihwerewr mb-4">
-                                              <p>
-                                                Weight Details <br />
-                                                <span>
-                                                  {/* Approximate Product Weight:{" "} */}
-                                                  {productDetails?.data?.weight}
-                                                </span>
-                                              </p>
-                                            </div>
-                                          )}
+                                        {leftColumn.map((item, index) => (
+                                          <div className="odjjkwehrihwerewr mb-4" key={index}>
+                                            <p>
+                                              {item.label} <br />
+                                              <span>{item.value}</span>
+                                            </p>
+                                          </div>
+                                        ))}
                                       </div>
                                     </div>
 
                                     <div className="col-lg-6 col-md-6 col-sm-6 col-6 mb-4">
                                       <div className="idnewihrwer_inner">
-                                        {productDetails?.data?.component !== null &&
-                                          productDetails?.data?.component !==
-                                            "0" && (
-                                            <div className="odjjkwehrihwerewr mb-4">
-                                              <p>
-                                                Components <br />{" "}
-                                                <span>
-                                                  {productDetails?.data?.component}
-                                                </span>
-                                              </p>
-                                            </div>
-                                          )}
-
-                                        {productDetails?.data?.occasion !== null &&
-                                          productDetails?.data?.occasion !==
-                                            "0" && (
-                                            <div className="odjjkwehrihwerewr mb-4">
-                                              <p>
-                                                Occasions <br />{" "}
-                                                <span>
-                                                  {/* Suitable for{" "} */}
-                                                  {productDetails?.data?.occasion}
-                                                </span>
-                                              </p>
-                                            </div>
-                                          )}
-
-                                        {productDetails?.data?.celebrity !== null &&
-                                          productDetails?.data?.celebrity !==
-                                            "0" && (
-                                            <div className="odjjkwehrihwerewr mb-4">
-                                              <p>
-                                                Style <br />{" "}
-                                                <span>
-                                                  {productDetails?.data?.celebrity}
-                                                </span>
-                                              </p>
-                                            </div>
-                                          )}
-
-                                        {productDetails?.data?.pattern !== null &&
-                                          productDetails?.data?.pattern !== "0" && (
-                                            <div className="odjjkwehrihwerewr mb-4">
-                                              <p>
-                                                Pattern <br />{" "}
-                                                <span>
-                                                  {productDetails?.data?.pattern}
-                                                </span>
-                                              </p>
-                                            </div>
-                                          )}
-
-                                        {productDetails?.data?.fabric !== null &&
-                                          productDetails?.data?.fabric !== "0" && (
-                                            <div className="odjjkwehrihwerewr mb-4">
-                                              <p>
-                                                Material <br />{" "}
-                                                <span>
-                                                  {productDetails?.data?.fabric}
-                                                </span>
-                                              </p>
-                                            </div>
-                                          )}
-
-                                        {productDetails?.data?.fit_type !== null &&
-                                          productDetails?.data?.fit_type !==
-                                            "0" && (
-                                            <div className="odjjkwehrihwerewr mb-4">
-                                              <p>
-                                                Fit <br />{" "}
-                                                <span>
-                                                  {productDetails?.data?.fit_type}
-                                                </span>
-                                              </p>
-                                            </div>
-                                          )}
-
-                                        {productDetails?.data?.care_instruction !==
-                                          null &&
-                                          productDetails?.data?.care_instruction !==
-                                            "0" && (
-                                            <div className="odjjkwehrihwerewr mb-4">
-                                              <p>
-                                                Care Instruction <br />{" "}
-                                                <span>
-                                                  {" "}
-                                                  {
-                                                    productDetails?.data
-                                                      ?.care_instruction
-                                                  }
-                                                </span>
-                                              </p>
-                                            </div>
-                                          )}
+                                        {rightColumn.map((item, index) => (
+                                          <div className="odjjkwehrihwerewr mb-4" key={index}>
+                                            <p>
+                                              {item.label} <br />
+                                              <span>{item.value}</span>
+                                            </p>
+                                          </div>
+                                        ))}
                                       </div>
                                     </div>
 
