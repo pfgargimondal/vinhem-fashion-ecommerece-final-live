@@ -59,8 +59,8 @@ export const ProductDetail = () => {
   const [showLaterModal, setShowLaterModal] = useState(false);
   // const [activeKey, setActiveKey] = useState("first");
   const [activeKey, setActiveKey] = useState("img-1");
-  const [pd, setPd] = useState(true);
-  const [sr, setSr] = useState(true);
+  const [pd, setPd] = useState(window.innerWidth >= 992);
+  const [sr, setSr] = useState(window.innerWidth >= 992);
    // eslint-disable-next-line
   // const [chatProfileDetailsShow, setChatProfileDetailsShow] = useState(false);
   const [videoMute, setVideoMute] = useState(true);
@@ -71,6 +71,20 @@ export const ProductDetail = () => {
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
   const [isMobileView, setIsMobileView] = useState(window.innerWidth < 992);
+  const [slideIndex, setSlideIndex] = useState(0);
+
+
+  useEffect(() => {
+    const handleResize = () => {
+      const isDesktop = window.innerWidth >= 992;
+      setPd(isDesktop);
+      setSr(isDesktop);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -95,7 +109,7 @@ export const ProductDetail = () => {
   const handleTouchEnd = () => {
     if (!isMobileView) return;
 
-    if (!touchStart || !touchEnd) return;
+    if (touchStart === null || touchEnd === null) return;
 
     const distance = touchStart - touchEnd;
 
@@ -109,22 +123,48 @@ export const ProductDetail = () => {
       "encoded_image_url_7",
       "encoded_image_url_8",
       "encoded_image_url_9",
-    ].filter(
-      (key) => productDetails?.data?.product_image?.[key]
-    );
+    ]
+      .filter((key) => productDetails?.data?.product_image?.[key])
+      .map((_, i) => `img-${i + 1}`);
 
-    const currentIndex = images.findIndex(
-      (_, i) => `img-${i + 1}` === activeKey
-    );
+    // add video if exists
+    if (productDetails?.data?.product_image?.encoded_vedio_link) {
+      images.push("video");
+    }
 
+    const currentIndex = images.indexOf(activeKey);
+
+    // swipe left
     if (distance > 50 && currentIndex < images.length - 1) {
-      setActiveKey(`img-${currentIndex + 2}`);
+      setSlideIndex(currentIndex + 1);   // slide animation
+      setTimeout(() => {
+        setActiveKey(images[currentIndex + 1]);
+      }, 50);
     }
 
+    // swipe right
     if (distance < -50 && currentIndex > 0) {
-      setActiveKey(`img-${currentIndex}`);
+      setSlideIndex(currentIndex - 1);   // slide animation
+      setTimeout(() => {
+        setActiveKey(images[currentIndex - 1]);
+      }, 50);
     }
+
+    setTouchStart(null);
+    setTouchEnd(null);
   };
+
+  useEffect(() => {
+    if (!isMobileView) return;
+
+    const keys = [
+      "img-1","img-2","img-3","img-4",
+      "img-5","img-6","img-7","img-8","img-9","video"
+    ];
+
+    const index = keys.indexOf(activeKey);
+    if (index !== -1) setSlideIndex(index);
+  }, [activeKey, isMobileView]);
 
   const scrollRef = useRef(null);
   const scrollLargeRef = useRef(null);
@@ -483,7 +523,6 @@ export const ProductDetail = () => {
       toast.error("You can purchase a maximum of 5 quantities only.");
       return;
     }
-    console.log(productDetails, 'productDetails');
 
     if(productDetails?.data?.product_INCart === 1){
       setLoading(true);
@@ -1316,7 +1355,15 @@ export const ProductDetail = () => {
                                 </div>
                               </Tab.Pane>
                             </Tab.Content> */}
-                              <Tab.Content>
+                            <div className="slider-wrapper">
+                              <Tab.Content className="slider-inner"
+                                style={{
+                                  transform: isMobileView
+                                    ? `translateX(-${slideIndex * 100}%)`
+                                    : "none",
+                                  transition: isMobileView ? "transform .4s ease" : "none",
+                                  display: isMobileView ? "flex" : "block"
+                                }}>
                                 {[
                                   "encoded_image_url_1",
                                   "encoded_image_url_2",
@@ -1349,10 +1396,7 @@ export const ProductDetail = () => {
                                 })}
 
                                 {/* ================= VIDEO VIEW ================= */}
-                                <Tab.Pane
-                                  eventKey="video"
-                                  className="odjeowmkoiwewer"
-                                >
+                                <Tab.Pane eventKey="video" className="odjeowmkoiwewer">
                                   <video
                                     loop
                                     autoPlay
@@ -1360,34 +1404,29 @@ export const ProductDetail = () => {
                                     onClick={handleVideoControl}
                                   >
                                     <source
-                                      src={
-                                        productDetails?.data?.product_image
-                                          ?.encoded_vedio_link
-                                      }
+                                      src={productDetails?.data?.product_image?.encoded_vedio_link}
                                       type="video/mp4"
                                     />
                                   </video>
 
-                                  <div
-                                    className="dweuihrweuhre bg-white rounded-3 px-3 py-1 position-absolute d-flex align-items-center"
-                                    onClick={handleMuteToggle}
-                                  >
-                                    <i
-                                      className={`bi ${
-                                        videoMute
-                                          ? "bi-volume-mute"
-                                          : "bi-volume-up"
-                                      } me-1`}
-                                    ></i>
-
-                                    <span>
-                                      {videoMute
-                                        ? "Enable sound"
-                                        : "Disable sound"}
-                                    </span>
-                                  </div>
+                                  {activeKey === "video" && (
+                                    <div
+                                      className="dweuihrweuhre bg-white rounded-3 px-3 py-1 position-absolute d-flex align-items-center"
+                                      onClick={handleMuteToggle}
+                                    >
+                                      <i
+                                        className={`bi ${
+                                          videoMute ? "bi-volume-mute" : "bi-volume-up"
+                                        } me-1`}
+                                      ></i>
+                                      <span>
+                                        {videoMute ? "Enable sound" : "Disable sound"}
+                                      </span>
+                                    </div>
+                                  )}
                                 </Tab.Pane>
                               </Tab.Content>
+                            </div>
 
                               {/* <div className="gbsdeeer dscnt-prce px-0">
                               <span className="price">30% OFF</span>
@@ -1440,7 +1479,7 @@ export const ProductDetail = () => {
                             </h2>
                           </div>
 
-                          <div className="dfhdfhd">
+                          <div className="dfhdfhd fggswfsgedrr">
                             {/* <p className="mb-0 d-flex align-items-center">
                             <span className="me-2">Share:</span>
 
@@ -1483,6 +1522,28 @@ export const ProductDetail = () => {
                             {productDetails?.data?.views} Views{" "}
                             <i class="bi ms-2 bi-eye"></i>
                           </p>
+
+                          <div className="dfhdfhd d-block d-lg-none d-md-none">
+                            {user ? (
+                              <>
+                                <i
+                                  onClick={() =>
+                                    toggleWishlist(productDetails?.data?.id)
+                                  }
+                                  className={
+                                    wishlistIds.includes(productDetails?.data?.id)
+                                      ? "fa-solid fa-heart"
+                                      : "fa-regular fa-heart"
+                                  }
+                                ></i>
+                              </>
+                            ) : (
+                              <>
+                                <i class="fa-regular fa-heart" onClick={handleLoginModal}></i>
+                                <i class="fa-solid d-none fa-heart"></i>
+                              </>
+                            )}
+                          </div>
                         </div>
 
                         <div className="dfjghdfgdff58 mb-4">

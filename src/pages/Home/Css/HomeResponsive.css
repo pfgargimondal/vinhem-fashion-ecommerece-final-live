@@ -685,6 +685,11 @@
     .xcoiekoiewopekrr li:last-child{
         margin-right: 0;
     }
+
+    .dfgdfvsdfsdfsdf .swiper-button-prev,
+    .dfgdfvsdfsdfsdf .swiper-button-next{
+        display: none;
+    }
 }
 
 

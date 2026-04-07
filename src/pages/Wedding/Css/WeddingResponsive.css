@@ -75,6 +75,11 @@
         grid-template-columns: 33% 33% 33%;
     }
 
+    .dfgjhdfgdf .swiper-button-prev,
+    .dfgjhdfgdf .swiper-button-next{
+      display: none;
+    }
+
     .dfgdfg255,
     .jdfkdf,
     .dfbhhfgdf,

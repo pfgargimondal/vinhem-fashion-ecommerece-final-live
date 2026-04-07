@@ -103,7 +103,7 @@ export const AboutUs = () => {
         <div className="dfgjhdfbgdfgd px-5">
           <div className="adfsdfwreerer">
             <div className="dfdfhsdff">
-              <div className="row">
+              <div className="row align-items-center">
                 <div className="col-lg-6">
                   <div className="dfngjhdfgfd">
                     {AboutUsDetails.data?.second_section_image && (
