@@ -1,5 +1,5 @@
   // eslint-disable-next-line
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { SwiperSlide } from 'swiper/react';
 import { useAuth } from "../../../context/AuthContext";
@@ -14,8 +14,7 @@ import { useWishlist } from "../../../context/WishlistContext";
 import { useCurrency } from "../../../context/CurrencyContext";
 import { useAuthModal } from "../../../context/AuthModalContext";
 import { ResponsiveNavbarBottom } from "../../../components";
-  // eslint-disable-next-line
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
@@ -25,7 +24,6 @@ import {BASE_URL} from "../../../http";
 
 export const Header = ({ shouldHideHeader, shouldHideFullHeaderFooterRoutes, shouldHideHeaderCategoryRoutes }) => {
   const [resMenu, setResMenu] = useState(false);
-    // eslint-disable-next-line
   const [userDropdown, setUserDropdown] = useState(false);
   const [searchCurrency, setSearchCurrency] = useState("");
     // eslint-disable-next-line

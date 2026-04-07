@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { UseFormattedDate } from "../../hooks/UseFormattedDate";
 import http from "../../http";
 import "./Css/Blog.css";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { FooterBlog, HeaderBlog } from "../../components";
 import Loader from "../../components/Loader/Loader";
 
@@ -436,12 +436,6 @@ export const BlogDetails = () => {
             </div>
           </aside>
         </div>
-
-        <ToastContainer
-          position="top-right"
-          autoClose={3000}
-          style={{ zIndex: 9999999999 }}
-        />
       </div>
       <FooterBlog blogCategories={blogCategories} allblogCategories={allblogCategories}/>
     </>

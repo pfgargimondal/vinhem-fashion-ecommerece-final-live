@@ -3,7 +3,7 @@ import "./Css/TrackOrder.css";
 import { useEffect, useState } from "react";
 import http, { BASE_URL } from "../../http";
 import Loader from "../../components/Loader/Loader";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { useMetaData } from "../../hooks/useMetaData";
 import { useLocation } from "react-router-dom";
 
@@ -277,11 +277,6 @@ export const TrackOrder = () => {
           </div>
         </div>
       </div>
-      <ToastContainer
-          position="top-right"
-          autoClose={3000}
-          style={{ zIndex: 9999999999 }}
-      />
       </div>
     </>
   );

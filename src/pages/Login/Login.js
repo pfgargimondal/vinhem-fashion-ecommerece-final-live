@@ -3,8 +3,7 @@ import "./Css/Login.css";
 import { useState } from "react";
 import { loginAPI } from "../../api/auth";
 import { useAuth } from "../../context/AuthContext"; 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import ReCAPTCHA from "react-google-recaptcha";
 
 export const Login = () => {
@@ -206,11 +205,6 @@ export const Login = () => {
             className="img-fluid"
           />
         </div>
-        <ToastContainer
-          position="top-right"
-          autoClose={3000}
-          style={{ zIndex: 9999999999 }}
-        />
       </div>
     </div>
   );

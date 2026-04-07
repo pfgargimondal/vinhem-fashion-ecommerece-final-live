@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 import { useAuth } from "../../context/AuthContext";
 import { UserProfileNavMenu } from "../../components";
@@ -187,12 +186,6 @@ export const ChangePassword = () => {
                     </div>
                   </div>
                 </form> */}
-
-                <ToastContainer
-                  position="top-right"
-                  autoClose={3000}
-                  style={{ zIndex: 9999999999 }}
-                />
               </div>
             </div>
           </div>

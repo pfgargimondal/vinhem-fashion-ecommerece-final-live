@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import http from "../../../http";
 
 export const CareerForm = ({ jobOpenings }) => {
@@ -232,8 +232,6 @@ export const CareerForm = ({ jobOpenings }) => {
           </div>
         </div>
       </form>
-
-      <ToastContainer position="top-right" autoClose={3000} style={{ zIndex: 9999999999 }} />
     </div>
   );
 };

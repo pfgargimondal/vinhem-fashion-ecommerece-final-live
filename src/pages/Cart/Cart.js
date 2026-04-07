@@ -3,8 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import "./Css/Cart.css";
 import "swiper/css";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import { useAuth } from "../../context/AuthContext";
 import http from "../../http";
 import { useWishlist } from "../../context/WishlistContext";
@@ -2900,12 +2899,6 @@ export const Cart = () => {
           <RecentlyViewed />
         </div>
       </div> */}
-
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        style={{ zIndex: 9999999999 }}
-      />
 
       {/*coupon code modal*/}
 

@@ -5,7 +5,7 @@ import "swiper/css";
 import RecentlyViewed from "../../hooks/RecentlyViewed";
 import TrandingProduct from "../../hooks/TrandingProduct";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { useAuth } from "../../context/AuthContext";
 import http from "../../http";
 import { useCurrency } from "../../context/CurrencyContext";
@@ -1064,7 +1064,6 @@ export const Checkout = () => {
         </div>
       </div>
 
-      <ToastContainer position="top-right" autoClose={3000} style={{ zIndex: 9999999999 }} />
     </div>
   );
 };

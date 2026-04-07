@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./ContactUs.module.css";
 import http from "../../http";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import ReCAPTCHA from "react-google-recaptcha";
 import Loader from "../../components/Loader/Loader";
 import { useMetaData } from "../../hooks/useMetaData";
@@ -444,12 +444,6 @@ export const ContactUs = () => {
                 </div>
               </div>
             </div>
-
-            <ToastContainer
-              position="top-right"
-              autoClose={3000}
-              style={{ zIndex: 9999999999 }}
-            />
           </div>
         </div>
       </div>

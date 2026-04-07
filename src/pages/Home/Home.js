@@ -4,7 +4,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation, Mousewheel } from "swiper/modules";
 import http from "../../http";
 import { FeaturedProducts } from "../../components";
-import { ToastContainer } from "react-toastify";
 import "swiper/css";
 import "./Css/Home.css";
 import "./Css/HomeResponsive.css";
@@ -534,11 +533,6 @@ export const Home = () => {
         </div>
       </div>
 
-      <ToastContainer
-          position="top-right"
-          autoClose={3000}
-          style={{ zIndex: 9999999999 }}
-      />
 
       <hr className="doewjirhweiewrer" />
       {/* <div class="yudfdfgdfbgdfgdffgfg">

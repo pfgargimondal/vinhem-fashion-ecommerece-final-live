@@ -2,9 +2,8 @@ import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { register } from '../../api/auth';
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "./Css/Register.css";
-import "react-toastify/dist/ReactToastify.css";
 import ReCAPTCHA from 'react-google-recaptcha';
 
 export const Register = () => {
@@ -296,11 +295,6 @@ export const Register = () => {
             Already have an account? <Link to="/login">Login</Link>
           </p>
         </div>
-        <ToastContainer
-          position="top-right"
-          autoClose={3000}
-          style={{ zIndex: 9999999999 }}
-        />
       </div>
     </div>
   );

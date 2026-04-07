@@ -2,8 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation, Mousewheel } from "swiper/modules";
-// eslint-disable-next-line
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 import Col from "react-bootstrap/Col";
 import Nav from "react-bootstrap/Nav";
@@ -37,7 +36,6 @@ import { useAuthModal } from "../../context/AuthModalContext";
 import { useMetaData } from "../../hooks/useMetaData";
 // eslint-disable-next-line
 import GlobalChat from "../../components/Elements/ChatProfileDetails/GlobalChat";
-// eslint-disable-next-line
 import { useChat } from "../../context/ChatContext";
 import { toggleZohoChatWindow } from "../../utils/zohoChat";
 
@@ -3082,12 +3080,6 @@ export const ProductDetail = () => {
           Close
         </button>
       </Modal>
-
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        style={{ zIndex: 9999999999 }}
-      />
     </>
   );
 };

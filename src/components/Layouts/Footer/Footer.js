@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import Loader from "../../Loader/Loader";
 import http from "../../../http";
 import { useAuth } from "../../../context/AuthContext";
@@ -711,12 +711,6 @@ export const Footer = ({ shouldHideFullHeaderFooterRoutes }) => {
         </div>
       </div>      
 
-
-      <ToastContainer
-          position="top-right"
-          autoClose={3000}
-          style={{ zIndex: 9999999999 }}
-      />
     </>
   )
 }

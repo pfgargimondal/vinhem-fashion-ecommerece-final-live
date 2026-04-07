@@ -5,6 +5,8 @@ import { useLocation } from "react-router-dom";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import "../node_modules/bootstrap/dist/js/bootstrap.js";
 import './App.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const {pathname} = useLocation();
@@ -32,6 +34,12 @@ function App() {
       <ScrollToTop />
 
       <ScrollToTopButton />
+
+       <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          style={{ zIndex: 9999999999 }}
+        />
     </div>
   );
 }

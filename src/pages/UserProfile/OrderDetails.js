@@ -2,7 +2,7 @@ import React,{ useCallback, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./Css/OrderDetails.css";
 import http from "../../http";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useAuth } from "../../context/AuthContext";
 import Loader from "../../components/Loader/Loader";
 
@@ -2166,8 +2166,6 @@ export const OrderDetails = () => {
           )}
         </div>
       </div>
-      <ToastContainer position="top-right" autoClose={3000} style={{ zIndex: 9999999999 }} />
-
     </div>
     </>
   );

@@ -4,7 +4,6 @@ import "./Css/Filter.css";
 import "./Css/FilterResponsive.css";
 import http from "../../http";
 import { useAuth } from "../../context/AuthContext";
-import { ToastContainer } from "react-toastify";
 import { useCart } from "../../context/CartContext";
 import { useWishlist } from "../../context/WishlistContext";
 import FilterSection from "./FilterSection";
@@ -1042,12 +1041,6 @@ export const Filter = () => {
             </div>
           </div>
         </div>
-        
-        <ToastContainer
-          position="top-right"
-          autoClose={3000}
-          style={{ zIndex: 9999999999 }}
-        />
       </div>
 
       {allFilterData?.filter_content?.description && (

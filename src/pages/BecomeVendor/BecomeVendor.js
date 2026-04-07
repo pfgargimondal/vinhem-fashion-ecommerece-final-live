@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./BecomeVendor.module.css";
 import http from "../../http";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import Loader from "../../components/Loader/Loader";
 import { useMetaData } from "../../hooks/useMetaData";
 import { useLocation } from "react-router-dom";
@@ -391,11 +391,6 @@ export const BecomeVendor = () => {
             </div>
           </div>
         </div>
-        <ToastContainer
-          position="top-right"
-          autoClose={3000}
-          style={{ zIndex: 9999999999 }}
-        />
       </div>
     </>
   );

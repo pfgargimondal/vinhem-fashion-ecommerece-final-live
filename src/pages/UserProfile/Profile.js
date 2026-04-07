@@ -3,7 +3,7 @@ import styles from "./Css/Profile.module.css";
 import { useAuth } from "../../context/AuthContext";
 import { useEffect, useState } from "react";
 import http from "../../http";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import Loader from "../../components/Loader/Loader";
 
 export const Profile = () => {
@@ -486,7 +486,6 @@ export const Profile = () => {
               </div>
             </div>
           </div>
-          <ToastContainer position="top-right" autoClose={250000} style={{ zIndex: 9999999999 }} />
         </div>
       </div>
     </div>
