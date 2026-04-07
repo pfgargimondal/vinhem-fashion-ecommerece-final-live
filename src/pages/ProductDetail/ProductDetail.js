@@ -483,28 +483,36 @@ export const ProductDetail = () => {
       toast.error("You can purchase a maximum of 5 quantities only.");
       return;
     }
+    console.log(productDetails, 'productDetails');
 
-     setLoading(true);
+    if(productDetails?.data?.product_INCart === 1){
+      setLoading(true);
 
-    try {
-      const response = await http.post("/user/update-cart-quantity", {
-        product_id: productDetails?.data?.id,
-        size: selectedSize,
-        quantity: qty,
-      });
+      try {
+        const response = await http.post("/user/update-cart-quantity", {
+          product_id: productDetails?.data?.id,
+          size: selectedSize,
+          quantity: qty,
+        });
 
-      if (response.data.success) {
-        setSelectedQuantity(qty);
-        setFinalPrice(calculateFinalPrice(qty));
-        toast.success(response.data.message);
-      } else {
-        toast.error(response.data.message);
+        if (response.data.success) {
+          setSelectedQuantity(qty);
+          setFinalPrice(calculateFinalPrice(qty));
+          toast.success(response.data.message);
+        } else {
+          toast.error(response.data.message);
+        }
+      } catch (error) {
+        toast.error("Failed to update cart");
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      toast.error("Failed to update cart");
-    } finally {
-      setLoading(false);
+    }else{
+      setSelectedQuantity(qty);
+      setFinalPrice(calculateFinalPrice(qty));
     }
+
+
   };
   const calculateFinalPrice = (qty) => {
     const basePrice = parseFloat(
@@ -537,7 +545,6 @@ export const ProductDetail = () => {
 
     return total;
   };
-
 
 
 
