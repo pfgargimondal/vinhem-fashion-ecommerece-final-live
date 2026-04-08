@@ -331,12 +331,24 @@ p.sadfdtwrwrwr{
 
 
 
-.doewjorjwoejrwer .col-lg-4:nth-child(odd) .oeijmewrwer{
+.doewjorjwoejrwer .col-lg-4:nth-child(5n+1) .oeijmewrwer{
   background: #fff8f8;
 }
 
-.doewjorjwoejrwer .col-lg-4:nth-child(even) .oeijmewrwer{
+.doewjorjwoejrwer .col-lg-4:nth-child(5n+2) .oeijmewrwer{
   background: #edf6ef;
+}
+
+.doewjorjwoejrwer .col-lg-4:nth-child(5n+3) .oeijmewrwer{
+  background: #f3f4ff;
+}
+
+.doewjorjwoejrwer .col-lg-4:nth-child(5n+4) .oeijmewrwer{
+  background: #fff7ed;
+}
+
+.doewjorjwoejrwer .col-lg-4:nth-child(5n+5) .oeijmewrwer{
+  background: #eef7ff;
 }
 
 .ascokpscdjoi{

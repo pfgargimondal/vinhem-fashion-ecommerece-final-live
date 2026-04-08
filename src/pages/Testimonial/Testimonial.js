@@ -80,7 +80,7 @@ export const Testimonial = () => {
     };
 
     const [expandedIndex, setExpandedIndex] = useState(null);
-
+      // eslint-disable-next-line
     const toggleExpand = (index) => {
         setExpandedIndex(expandedIndex === index ? null : index);
     };
@@ -689,13 +689,12 @@ export const Testimonial = () => {
                                                         <h5 className="duiwehrwerwer my-2">{contentVal.head_title}</h5>
 
                                                         <p
-                                                            className={`sftgrewrrr mb-0 ${expandedIndex === index ? "expanded" : ""
-                                                                }`}
+                                                            className={`sftgrewrrr mb-0`}
                                                         >
                                                             {contentVal.description}
                                                         </p>
 
-                                                        {contentVal.description.length > 120 && (
+                                                        {/* {contentVal.description.length > 120 && (
                                                             <div className="dewoihrwer text-end mt-1">
                                                                 <span
                                                                     onClick={(e) => {
@@ -706,7 +705,7 @@ export const Testimonial = () => {
                                                                     {expandedIndex === index ? "See Less" : "See More…"}
                                                                 </span>
                                                             </div>
-                                                        )}
+                                                        )} */}
                                                     </div>
 
                                                     <h6 className="dwerfqwer mb-0">

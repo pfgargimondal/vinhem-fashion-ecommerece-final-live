@@ -543,7 +543,6 @@ article.fgfrfdrdtreere .dosjifrjwer .diewhirwer{
 .social-icons-container ul > li:nth-child(5) > a i {
   color: #F60100;
 }
-
 .social-icons-container ul > li:nth-child(1) > a::before {
   background: #1773EA;
 }
@@ -561,6 +560,14 @@ article.fgfrfdrdtreere .dosjifrjwer .diewhirwer{
 }
 .social-icons-container ul > li > a:hover::before {
   top: 0;
+}
+
+.sgfthrherwygtiydfsdde .video-wrapper {
+    height: 39vh;
+}
+
+.sgfthrherwygtiydfsdde .video-wrapper img{
+    object-fit: cover;
 }
 
 img.dckisehiwehrr{

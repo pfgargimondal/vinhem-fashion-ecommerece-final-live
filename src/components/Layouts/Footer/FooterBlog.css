@@ -3,8 +3,12 @@
     border-top: 1px solid var(--pink-main-color);
 }
 
-.doiwqjejir_inner{
+.dweoriwenirjweoijrwer .col-lg-3{
     border-right: 1px solid var(--grey-border-color);
+}
+
+.dweoriwenirjweoijrwer .col-lg-3:last-child{
+    border-right: 0;
 }
 
 .doiwqjejir_inner img{
@@ -23,6 +27,7 @@
     display: block;
     margin-bottom: 1rem;
     user-select: none;
+    text-align: justify;
 }
 
 .sadfdfgeadetr{

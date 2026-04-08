@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { UseFormattedDate } from "../../hooks/UseFormattedDate";
 import http from "../../http";
 import "./Css/Blog.css";
+import "./Css/BlogResponsive.css";
 import { toast } from "react-toastify";
 import { FooterBlog, HeaderBlog } from "../../components";
 import Loader from "../../components/Loader/Loader";
@@ -378,66 +379,85 @@ export const BlogDetails = () => {
                 </ul> */}
 
                 <div className="social-icons-container">
-                    <ul className="mb-0 ps-0">
-                        <li>
-                            <a href="/">
-                                <i className="fa-brands fa-facebook-f" />
-                            </a>
-                        </li>
+                  <ul className="mb-0 ps-0">
+                    <li>
+                      <a href="/">
+                        <i className="fa-brands fa-facebook-f" />
+                      </a>
+                    </li>
 
-                        <li>
-                            <a href="/">
-                                <i className="fa-brands fa-x" />
-                            </a>
-                        </li>
+                    <li>
+                      <a href="/">
+                        <i className="fa-brands fa-x" />
+                      </a>
+                    </li>
 
-                        <li>
-                            <a href="/">
-                                <i className="fa-brands fa-instagram" />
-                            </a>
-                        </li>
+                    <li>
+                      <a href="/">
+                        <i className="fa-brands fa-instagram" />
+                      </a>
+                    </li>
 
-                        <li>
-                            <a href="/">
-                                <i className="fa-brands fa-linkedin-in" />
-                            </a>
-                        </li>
+                    <li>
+                      <a href="/">
+                        <i className="fa-brands fa-linkedin-in" />
+                      </a>
+                    </li>
 
-                        <li>
-                            <a href="/">
-                                <i className="fa-brands fa-youtube" />
-                            </a>
-                        </li>
-                    </ul>
+                    <li>
+                      <a href="/">
+                        <i className="fa-brands fa-youtube" />
+                      </a>
+                    </li>
+                  </ul>
                 </div>
               </div>
 
-              <section className="video-sidebar-section">
+              <section className="sgfthrherwygtiydfsdde video-sidebar-section">
+                <div className="video-wrapper mb-4">
+                  {/* {blogvedio?.vedio_url && (
+                                        <iframe
+                                            width="100%"
+                                            height="400"
+                                            src={blogvedio.vedio_url.replace('shorts/', 'embed/')}
+                                            title="YouTube Shorts Video"
+                                            frameBorder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowFullScreen
+                                        ></iframe>
+                                    )} */}
+                  {blogvedio?.vedio_url ? (
+                    <img width="100%" className="dckisehiwehrr" style={{ height: "100%" }} src={blogvedio.vedio_url} alt="" />
+                  ) : (
+                    <img width="100%" className="dckisehiwehrr" style={{ height: "100%" }} src="./images/fashion40.png" alt="" />
+                  )}
+                </div>
+
                 <div className="video-wrapper">
                   {/* {blogvedio?.vedio_url && (
-                                <iframe
-                                    width="100%"
-                                    height="400"
-                                    src={blogvedio.vedio_url.replace('shorts/', 'embed/')}
-                                    title="YouTube Shorts Video"
-                                    frameBorder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen
-                                ></iframe>
-                            )} */}
-
-                  {blogvedio?.vedio_url ? (
-                      <img width="100%" className="dckisehiwehrr" style={{height: "100%"}} src={blogvedio.vedio_url} alt="" />
+                                        <iframe
+                                            width="100%"
+                                            height="400"
+                                            src={blogvedio.vedio_url.replace('shorts/', 'embed/')}
+                                            title="YouTube Shorts Video"
+                                            frameBorder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowFullScreen
+                                        ></iframe>
+                                    )} */}
+                  {blogvedio?.blog_image_two ? (
+                    <img width="100%" className="dckisehiwehrr" style={{ height: "100%" }} src={blogvedio.blog_image_two} alt="" />
                   ) : (
-                      <img width="100%" className="dckisehiwehrr" style={{height: "100%"}} src="./images/fashion40.png" alt="" />
+                    <img width="100%" className="dckisehiwehrr" style={{ height: "100%" }} src="./images/fashion40.png" alt="" />
                   )}
                 </div>
               </section>
             </div>
           </aside>
         </div>
+
       </div>
-      <FooterBlog blogCategories={blogCategories} allblogCategories={allblogCategories}/>
+      <FooterBlog blogCategories={blogCategories} allblogCategories={allblogCategories} />
     </>
   );
 };

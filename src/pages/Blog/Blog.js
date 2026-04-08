@@ -7,6 +7,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import http from "../../http";
 import "./Css/Blog.css";
+import "./Css/BlogResponsive.css";
 import { FooterBlog, HeaderBlog } from "../../components";
 import Loader from "../../components/Loader/Loader";
 
@@ -163,7 +164,7 @@ export const Blog = () => {
 
             <div className="dsgbtgfewfrrr555 container-fluid mb-4"></div>
             
-            <section className="dsgbtgfewfrrr container-fluid mb-4">
+            <section className="dsgbtgfewfrrr container mb-4">
                 <Swiper
                     modules={[Pagination, Autoplay]}
                     spaceBetween={5}
@@ -199,7 +200,7 @@ export const Blog = () => {
                 </Swiper>
             </section>
 
-            <div className="container-fluid my-5">
+            <div className="container my-5">
                 <div className="row">
                     <main className="col-lg-8">
                         {currentBlogs.map(blog => (
@@ -345,8 +346,8 @@ export const Blog = () => {
                                 </div>
                             </div>  
 
-                            <section className="video-sidebar-section">
-                                <div className="video-wrapper">
+                            <section className="sgfthrherwygtiydfsdde video-sidebar-section">
+                                <div className="video-wrapper mb-4">
                                     {/* {blogvedio?.vedio_url && (
                                         <iframe
                                             width="100%"
@@ -360,6 +361,25 @@ export const Blog = () => {
                                     )} */}
                                     {blogvedio?.vedio_url ? (
                                         <img width="100%" className="dckisehiwehrr" style={{height: "100%"}} src={blogvedio.vedio_url} alt="" />
+                                    ) : (
+                                        <img width="100%" className="dckisehiwehrr" style={{height: "100%"}} src="./images/fashion40.png" alt="" />
+                                    )}
+                                </div>
+
+                                <div className="video-wrapper">
+                                    {/* {blogvedio?.vedio_url && (
+                                        <iframe
+                                            width="100%"
+                                            height="400"
+                                            src={blogvedio.vedio_url.replace('shorts/', 'embed/')}
+                                            title="YouTube Shorts Video"
+                                            frameBorder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowFullScreen
+                                        ></iframe>
+                                    )} */}
+                                    {blogvedio?.blog_image_two ? (
+                                        <img width="100%" className="dckisehiwehrr" style={{height: "100%"}} src={blogvedio.blog_image_two} alt="" />
                                     ) : (
                                         <img width="100%" className="dckisehiwehrr" style={{height: "100%"}} src="./images/fashion40.png" alt="" />
                                     )}

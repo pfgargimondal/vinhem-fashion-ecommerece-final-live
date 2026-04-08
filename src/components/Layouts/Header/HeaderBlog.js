@@ -71,6 +71,28 @@ export const HeaderBlog = () => {
         <div id="header-blog" className="pt-3 pb-4">
             <div className="container-flud">
                 <div className="doiwejuirjweoirwept position-relative">
+                    <label className="dewnrwejorewr" htmlFor="daer">
+                        <i class="fa-solid dbghsdfadarttt d-block d-lg-none d-md-none fa-bars"></i>
+
+                        <input type="checkbox" id="daer" className="d-none position-absolute" />
+
+                        <div className="dwejnrkhweijrwer fghdrgtdrrtgewewr d-none mt-4">
+                            <ul className="mb-0 ps-0">
+                                <li className="mx-3">
+                                    <Link to="/blog">HOME</Link>
+                                </li>
+                                {blogsHeader.map(blogHeaderItem => (
+                                    <li className="mx-3">
+                                        <Link to={blogHeaderItem.category_url}>{blogHeaderItem.head_category}</Link>
+                                    </li>
+                                ))}
+                                <li className="mx-3">
+                                    <Link to="https://www.vinhemfashion.com/">SHOP NOW</Link>
+                                </li>
+                            </ul>
+                        </div>
+                    </label>
+
                     <div className="deowjrkjweirew text-center">
                         <Link to="/"><img src={Logo} alt="" /></Link>
                     </div>

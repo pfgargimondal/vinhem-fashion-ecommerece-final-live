@@ -58,7 +58,7 @@ export const FooterBlog = ({ blogCategories, allblogCategories }) => {
     return (
         <div id="footer-blog">
             <div className="dweoriwenirjweoijrwer">
-                <div className="container-fluid">
+                <div className="container">
                     <div className="row">
                         <div className="col-lg-3">
                             <div className="doiwqjejir_inner py-4 h-100">
