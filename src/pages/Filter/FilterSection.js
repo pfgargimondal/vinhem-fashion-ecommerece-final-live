@@ -599,10 +599,17 @@ export default function FilterSection({ setResFltrMenu, allFilterMappingdata, fi
                         })
                       ) : (
 
-                        FilterMappingdata.filter_values
-                          .split(",")
-                          .slice(0, valuesToShow)
-                          .map((item, indexdsvd) => {
+                      FilterMappingdata.filter_values
+                        .split(",")
+                        .map(item => item.trim())
+                        .filter(item => item !== "")
+                        .slice(0, valuesToShow)
+                        .map((item, indexdsvd) => {
+
+                        // FilterMappingdata.filter_values
+                        //   .split(",")
+                        //   .slice(0, valuesToShow)
+                        //   .map((item, indexdsvd) => {
                             // const trimmedValue = (item || "").trim().toLowerCase();
                             if (typeof item !== "string") return null;
 
@@ -708,7 +715,7 @@ export default function FilterSection({ setResFltrMenu, allFilterMappingdata, fi
                 <i class="fa-solid fa-xmark" onClick={() => setResFltrMenu(false)}></i>
               </div>
 
-              <Row>
+              <Row className="gx-3">
                 <Col xs={4}>
                   <Nav variant="pills" className="dfgefsertttt sticky-top flex-column h-100">
                     <Nav.Item>

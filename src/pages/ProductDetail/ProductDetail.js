@@ -294,11 +294,13 @@ export const ProductDetail = () => {
     navigation: true,
     pagination: { clickable: true },
     breakpoints: {
-      0: { slidesPerView: 1 },
-      420: { slidesPerView: 2 },
-      768: { slidesPerView: 2 },
-      1024: { slidesPerView: 4 },
-      1200: { slidesPerView: 4 },
+      0: { slidesPerView: 1.2 },
+      320: { slidesPerView: 1.2 },
+      393: { slidesPerView: 1.2 },
+      576: { slidesPerView: 2.2 },
+      768: { slidesPerView: 3.2 },
+      992: { slidesPerView: 4.2 },
+      1200: { slidesPerView: 4 }
     },
   };
 
@@ -1158,9 +1160,11 @@ export const ProductDetail = () => {
                       to={`/${productDetails?.data?.product_category_slug}`}
                     >
                       {productDetails?.data?.product_category
-                        .charAt(0)
-                        .toUpperCase() +
-                        productDetails?.data?.product_category.slice(1)}
+                      ?.charAt(0)
+                      .toUpperCase() +
+                      productDetails?.data?.product_category
+                        ?.slice(1)
+                        .toLowerCase()}
                     </Link>
                   </li>
                   <li className="mx-2">/</li>
@@ -1453,7 +1457,7 @@ export const ProductDetail = () => {
                       </Tab.Container>
                     </div>
 
-                    <div className={`vfeghrfgfferrer d-none align-items-center ${(productDetails?.data?.rts_quantity > '0' && (productDetails?.data?.best_seller === '1' || productDetails?.data?.best_seller === true) ? "justify-content-between" : "")}`}>
+                    <div className={`vfeghrfgfferrer d-none align-items-center ${(productDetails?.data?.rts_quantity > '0' && (productDetails?.data?.best_seller === '1' || productDetails?.data?.best_seller === true) ? "justify-content-between" : "jakdjhhuewyuhr")}`}>
                         <h6><i class="bi me-1 bi-truck"></i> Ships in {productDetails?.data?.shipping_time}</h6>
 
                         {/* {product.product_category === "READY TO SHIP" && (
@@ -1576,8 +1580,8 @@ export const ProductDetail = () => {
                           {(productDetails?.data?.stitching_option !==
                             "Ready To Wear" && productDetails?.data?.stitching_option !== "Ready to Wear") && (
                             <div class="diwenjrbwebrwehgrwer">
-                              <div className="d-flex align-items-center justify-content-between">
-                                <h4 class="pb-2">Stitching Options</h4>
+                              <div className="d-flex align-items-center justify-content-between mb-3">
+                                <h4 class="mb-0">Stitching Options</h4>
 
                                 <div className="dfhdfhd pe-0">
                                     <p className="d-flex align-items-center mb-0">
@@ -1607,7 +1611,7 @@ export const ProductDetail = () => {
                                         onClick={handlePinterestShare}
                                       />
                                     </p>
-                                  </div>
+                                </div>
                               </div>
 
                               <hr class="mt-0" style={{ width: "86%" }} />                              
@@ -2333,11 +2337,11 @@ export const ProductDetail = () => {
                               {productDetails?.data?.coupon_code &&
                                 productDetails.data.coupon_code
                                   .split(" , ") // Split by comma to get each coupon
-                                  .map((coupon, index) => {
+                                  .map((coupon, index, arr) => {
                                     return (
                                       <div
                                         key={index}
-                                        className="copn-cde text-center p-2 mb-2 me-5 rounded-2"
+                                        className={(arr.length === 1) ? "copn-cde text-center dfswgfwqwgrtwewee p-2 mb-2 me-5 rounded-2" : "copn-cde text-center p-2 mb-2 me-5 rounded-2"}
                                       >
                                         <h5 className="mb-0">{coupon.trim()}</h5>
                                       </div>

@@ -37,6 +37,10 @@
     .filtr-wrppr .fdbdfgdfgdf.col-lg-12 .dlksfskjrewrwere.d-flex {
         display: flex !important;
     }
+    
+    #res-filtr-nav .col-8 > .py-4.tab-content{
+        padding-right: 1rem;
+    }
 
     .doikwenirnwekhrwer{
         visibility: initial;
@@ -67,6 +71,10 @@
 
     .idasijhdmsiejr::-webkit-scrollbar{
         height: 0;
+    }
+
+    .doihweuijewrr .btn-main{
+        font-size: 1.2rem;
     }
 
     .iduhweihriweurwerwer .btn-main {

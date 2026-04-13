@@ -5,6 +5,7 @@ import { Autoplay, Pagination, Navigation, Mousewheel } from "swiper/modules";
 import http from "../../http";
 import { FeaturedProducts } from "../../components";
 import "swiper/css";
+import "swiper/css/pagination";
 import "./Css/Home.css";
 import "./Css/HomeResponsive.css";
 import { FooterTopComponent } from "../../components/Others/FooterTopComponent";
@@ -90,6 +91,7 @@ export const Home = () => {
             spaceBetween={10}
             slidesPerView={1}
             navigation
+            pagination={{ clickable: true }}
             autoplay={{ delay: 3000 }}
             loop={true}
           >

@@ -628,8 +628,9 @@ p.sidifsdiyhr{
   box-shadow: rgba(132, 13, 86, 0.35) 0px 5px 15px;
 }
 .customize-modal #co-close-btn {
-  right: 5%;
-  /* top: 5%; */
+  right: 2%;
+  top: 50%;
+  transform: translateY(-50%);
   font-size: 2.8rem;
   cursor: pointer;
 }
@@ -1131,17 +1132,17 @@ h4.oijiwuihfih-eiuheir{
 .ihjnugherewr{
   width: auto;
   text-align: center;
-  margin: 0 0 0.2rem auto;
-  min-height: 120px;
-  line-height: 120px;
+  margin: 0 0 0.4rem auto;
+  min-height: 180px;
+  line-height: 180px;
   overflow: hidden;
   position: relative;
-  max-height: 120px;
+  max-height: 180px;
 }
 
 .ihjnugherewr img{
   max-width: 100%;
-  max-height: 100px;
+  max-height: 180px;
   border-radius: 0.375rem; 
 }
 
@@ -1562,6 +1563,14 @@ h4.oijiwuihfih-eiuheir{
   border-bottom: 2px solid var(--pink-main-color) !important;
   border: 0;
   color: var(--black-background-color) !important;
+}
+
+.okdjeiwirwejrwerwer.size-guide-modal-header h4{
+  margin-bottom: 0 !important;
+}
+
+.okdjeiwirwejrwerwer.size-guide-modal-header{
+  position: relative;
 }
 
 .opmkojwojoiwere .checkbox-wrapper-2 .ikxBAC {

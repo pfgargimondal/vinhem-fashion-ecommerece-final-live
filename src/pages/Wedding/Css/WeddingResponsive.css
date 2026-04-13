@@ -80,6 +80,28 @@
       display: none;
     }
 
+    .dfgjhdfgdf .swiper-pagination{
+      width: auto;
+      display: inline-flex !important;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      border-radius: 50px;
+      padding: 0.5rem;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .dfgjhdfgdf .swiper-pagination-bullet-active{
+      background: var(--pink-main-color) !important;
+    }
+
+    .dfgjhdfgdf .swiper-pagination-bullet{
+      background: #fff;
+      opacity: 1;
+    }
+
     .dfgdfg255,
     .jdfkdf,
     .dfbhhfgdf,

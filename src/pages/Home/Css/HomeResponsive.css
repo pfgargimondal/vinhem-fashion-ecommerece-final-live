@@ -690,6 +690,36 @@
     .dfgdfvsdfsdfsdf .swiper-button-next{
         display: none;
     }
+
+    .dfgdfvsdfsdfsdf .swiper-pagination{
+        width: auto;
+        display: inline-flex;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(10px);
+        border-radius: 50px;
+        padding: 0.5rem;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .dfgdfvsdfsdfsdf .swiper-pagination-bullet-active{
+        background: var(--pink-main-color) !important;
+    }
+
+    .dfgdfvsdfsdfsdf .swiper-pagination-bullet{
+        background: #fff;
+        opacity: 1;
+    }
+
+    .fbgvdsdfd6568{
+        margin-top: 0 !important;
+    }
+
+    .fbgvdsdfd6568.pb-5{
+        padding-bottom: 0 !important;
+    }
 }
 
 

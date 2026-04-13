@@ -217,4 +217,8 @@
   .banner img{
     height: auto;
   }
+
+  .dhgdfhgdfg:global(.px-5){
+    padding-inline: 0 !important;
+  }  
 }
